@@ -235,28 +235,31 @@ three text files in the same working directory.
 
 myadd.h
 
-    #ifndef _MYADD_H_
-    #define _MYADD_H_
-    int add(int x, int y);
-    #endif
-
+```c
+#ifndef _MYADD_H_
+#define _MYADD_H_
+int add(int x, int y);
+#endif
+```
 
 myadd.c
 
-    #include "myadd.h"
-    int add(int x, int y)
-    {
-        return x + y;
-    }
-
+```c
+#include "myadd.h"
+int add(int x, int y)
+{
+    return x + y;
+}
+```
 main.c
 
-    #include "myadd.h"
-    int main(int argc, char **argv) 
-    {
-        add(2, 4);
-    }
-
+```c
+#include "myadd.h"
+int main(int argc, char **argv) 
+{
+    add(2, 4);
+}
+```
 We'll be using gcc to compile our programs. `gcc` as a terminal command accepts
 a few parameters that we'll be making use of often.
 
