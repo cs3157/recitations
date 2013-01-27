@@ -1,8 +1,6 @@
-First Recitation
-================
+# First Recitation #
 
-Logging in
-----------
+## Logging in ##
 
 
 Logging in is fairly simple if you're in the clic lab. Just use your UNI and 
@@ -40,8 +38,10 @@ Also note, if you ever need to connect to a specific machine in the clic
 cluster (this will be necessary if you want multiple sessions on the same 
 machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
 
-Basic UNIX
-----------
+## Basic UNIX ##
+
+
+### Paths ###
 
 A good palce to start with UNIX is the filesystem structure. Our clic machines 
 run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
@@ -56,6 +56,8 @@ path, you can do so using *either* `/usr` (this is known as an absolute path),
 or you can use `../` (this is a relative path. `../` denotes the directory above
 the current directory. You could reference the root directory `/` from the
 directory `/usr/bin` using the relative path `../../`.
+
+### Basic Navigation ###
 
 When you log into clic, your current (working) directory will be
 `/home/your_uni`. Check this by typing:
@@ -121,3 +123,71 @@ to learn more about the ls command:
     man ls
 
 Use `q` to quit out of a man page.
+
+## Text Editors ##
+
+
+There are two main text editors that you can use from inside terminal: emacs and
+vim. Which you use will ultimately be your decision (you could even write
+everything in pico if you really wanted, but this would be difficult).
+
+### Vim ###
+
+Vim is a difficult to use text editor and very confusing at first. It's goal is
+to be incredibly efficient by preventing unnecessary movement of your hands
+around the keyboard. It operates in different modes, the most important of 
+which will be *edit mode* and *insert mode*.
+
+Open vim, editing a new file "vimtest".
+
+    vim vimtest
+
+When you open vim, it will be in Normal mode. Typing will cause a variety of
+different operations to happen. For now switch to Insert Mode by pressing `i`.
+You should see `-- INSERT --` appear at the bottom of the screen. At this point
+anything you type will appear as text in the text file. This is fine for basic
+editing. Now let's switch back to Normal mode. Press the `esc` key to switch
+back.
+
+Most vim commands execute as soon as you type them. Here are some basic commands
+that will execute immediately:
+
+  - `h` `j` `k` and `l` are how you move while in Normal mode. They are,
+    respectively, left, down, up, right. Notice that this will save you time in
+    moving to the arrows keys.
+  - `dd` will delete the current line
+  - `D` will delete from the current location to the end of the line
+  - `yy` will copy the current line
+  - `p` will paste whatever is the buffer (kind of like a clipboard)
+  - `0` jumps to the beginning of the line
+  - `$` jumps to the end of the current line
+  - `u` undoes the last change
+
+Some vim commands will not be executed until you press enter. These begin with a
+colon.
+
+  - `:w [optional filename]` This will save the current file if no file name is
+    passed or write the current file to specified location.
+  - `:e filename` will open the filename specified
+  - `:q` will quite vim and take you back to terminal
+  - `:[line numer]` will jump to that line
+
+That should be enough for basic vim navigation. If you want to learn to be a
+real vim ninja, get used to switching between modes first. Then try to expand
+your Normal mode vocabulary one command at a time. In vim, most commands work
+with some sort of combination between prepositions and actions. For example,
+`gg=G` would indent the entire file, as `gg` takes you to the beginning of the
+file, `=` auto-indents a line, and `G` jumps to the end of the file. 
+
+You can also use vimtutor to really learn the ins and outs. In terminal, just
+type
+
+    vimtutor
+
+### Emacs ###
+
+More to come
+
+## Compiling and linking a C Program ##
+
+More to come
