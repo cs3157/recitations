@@ -1,7 +1,7 @@
 # First Recitation #
 
 ## Logging in ##
-
+ 
 
 Logging in is fairly simple if you're in the clic lab. Just use your UNI and 
 password on any of the machines when prompted. You may have to back out once 
@@ -39,10 +39,10 @@ cluster (this will be necessary if you want multiple sessions on the same
 machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
 
 ## Basic UNIX ##
-
+ 
 
 ### Paths ###
-
+ 
 A good palce to start with UNIX is the filesystem structure. Our clic machines 
 run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
 the break between directories and files. An example file path in UNIX might be 
@@ -125,22 +125,22 @@ to learn more about the ls command:
 Use `q` to quit out of a man page.
 
 ### Useful Tricks ###
-
+ 
 #### Tab Complete ####
-
+ 
 When in bash, try to make use of *tab-complete* as often as possible. This just
 means pressing tab after typing the first few letters of a command. For example
 typing `tou` followed by the tab key will complete to `touch`. Tab complete also
 works for directory and file names.
 
 #### Previous command ####
-
+ 
 You can go through your history by pressing the up and down arrows in terminal.
 This will navigate between previously used commands so that you can easily use
 the same commands over and over.
 
 #### back i search ####
-
+ 
 For long complicated commands that you only use every so often you can use the
 reverse search to locate them in your history. Pressing `ctrl` `r` in terminal
 will bring up a backward search through your history. Start typing until you
@@ -148,14 +148,14 @@ find the command you're looking for.
 
 
 ## Text Editors ##
-
+ 
 
 There are two main text editors that you can use from inside terminal: emacs and
 vim. Which you use will ultimately be your decision (you could even write
 everything in pico if you really wanted, but this would be difficult).
 
 ### Vim ###
-
+ 
 Vim is a difficult to use text editor and very confusing at first. It's goal is
 to be incredibly efficient by preventing unnecessary movement of your hands
 around the keyboard. It operates in different modes, the most important of 
@@ -211,7 +211,7 @@ Alternatively, check out [Open Vim's Tutorial](http://www.openvim.com/tutorial.h
 for another interactive vim lesson.
 
 ### Emacs ###
-
+ 
 
 
 ## Compiling and linking a C Program ##
@@ -315,3 +315,6 @@ You should now have an executable file in your directory `main`. Calling
 the shell that you want to execute the program main in the current directory.
 Otherwise it will go looking in all the places it searches for commands like
 `ls` and `touch` to find `main`.
+
+For more on compiling, linking, and debugging, see 
+[this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf)
