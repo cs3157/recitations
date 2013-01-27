@@ -124,6 +124,29 @@ to learn more about the ls command:
 
 Use `q` to quit out of a man page.
 
+### Useful Tricks ###
+
+#### Tab Complete ####
+
+When in bash, try to make use of *tab-complete* as often as possible. This just
+means pressing tab after typing the first few letters of a command. For example
+typing `tou` followed by the tab key will complete to `touch`. Tab complete also
+works for directory and file names.
+
+#### Previous command ####
+
+You can go through your history by pressing the up and down arrows in terminal.
+This will navigate between previously used commands so that you can easily use
+the same commands over and over.
+
+#### back i search ####
+
+For long complicated commands that you only use every so often you can use the
+reverse search to locate them in your history. Pressing `ctrl` `r` in terminal
+will bring up a backward search through your history. Start typing until you
+find the command you're looking for.
+
+
 ## Text Editors ##
 
 
