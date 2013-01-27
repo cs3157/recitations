@@ -207,10 +207,108 @@ type
 
     vimtutor
 
+Alternatively, check out [Open Vim's Tutorial](http://www.openvim.com/tutorial.html)
+for another interactive vim lesson.
+
 ### Emacs ###
 
-More to come
+
 
 ## Compiling and linking a C Program ##
 
-More to come
+There are many steps to compiling a program in C. They occur in the following
+order:
+
+  1. *Pre-processing*: This is when the compiler processes lines that start with
+     a hash-mark (#).
+  2. *Compiling*: This converts a source code file (foo.c) into an object file
+     (foo.o) which contains a system dependent compiled representation of the
+     program as described in the source file. This code may contain symbols
+     (like variables and function names) that are not defined in the individual
+     source files.
+  3. *Linking*: This step links code in various object files together, linking
+     up the pieces that are required in all the .o files. This will produce an
+     executable file. 
+
+Let's take a look at this process in an actual program: myadd. We'll create
+three text files in the same working directory.
+
+myadd.h
+
+    #ifndef _MYADD_H_
+    #define _MYADD_H_
+    int add(int x, int y);
+    #endif
+
+
+myadd.c
+
+    #include "myadd.h"
+    int add(int x, int y)
+    {
+        return x + y;
+    }
+
+main.c
+
+    #include "myadd.h"
+    int main(int argc, char **argv) 
+    {
+        add(2, 4);
+    }
+
+We'll be using gcc to compile our programs. `gcc` as a terminal command accepts
+a few parameters that we'll be making use of often.
+
+  - `-g` This flag will include debugging flags when you compile. If you're going
+    to be shipping your program, you won't want to include this flag, but for
+    the purposes of this class, you'll probably always want these flags. They'll
+    enable debugging tools to give you more useful information like the line
+    number and file of the code that crashed.
+  - `-Wall` This will turn on all warnings. Essentially, if there's a problem in
+    your code that isn't a compiler error, it will be reported as a warning.
+    These can be small problems now that cause big crashes later, so its best to
+    turn this on when compiling.
+  - `-c [files]` This will compile a list of .c files into .o files without
+    going through the linking stage. You'll need this in the future for
+    Makefiles.
+  - `-o [file]` specifies what gcc's output should be. If none is specified this
+    will default to either foo.o or a.out. foo.o will be the case if you're only
+    compiling without linking. If you're creating an executable file, a.out is
+    the default executable filename.
+
+Now let's try to compile myadd. First we'll build object files for both myadd.c
+and main.c. Notice the compiler directive `#include`. This tells the compiler to
+just copy paste the specified file into the current file at that location. The
+reason we include this line in main.c and myadd.c is so that if we reference a
+function in either of these files before it is defined, the compiler can know
+its header. 
+
+As an example, in main.c we have `add(2, 4);`. The compiler wants to make sure
+that this is a valid function call but knows nothing of the function "add", what
+type it will return, or what its explicit parameters are. Including myadd.h will
+tell the compiler that "add" returns type int, and accepts two integer
+parameters.
+
+Let's compile these two files:
+
+    gcc -c myadd.c myadd.h
+    gcc -c main.c myadd.h
+    ls
+
+You should see that you now have a myadd.o and main.o in your directory. There 
+was one other set of directives that we've used now. The `#ifndef` `#define` 
+and `#endif` directives. The first and the last define a block of code that 
+should only be executed if a pre-processor variable is *not* defined. This will
+prevent multiple header files from conflicting. If myadd.h is included more 
+than once, the first time the pre-processor will define \__MYADD_H_ and each 
+time thereafter will skip over the entire file. Now let's link these two files.
+
+    gcc myadd.o main.o -o main
+    ls
+
+You should now have an executable file in your directory `main`. Calling
+`./main` will run your program. In this scenario, you *must* use `./` to note to
+the shell that you want to execute the program main in the current directory.
+Otherwise it will go looking in all the places it searches for commands like
+`ls` and `touch` to find `main`.
