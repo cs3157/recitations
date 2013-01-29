@@ -210,9 +210,51 @@ type
 Alternatively, check out [Open Vim's Tutorial](http://www.openvim.com/tutorial.html)
 for another interactive vim lesson.
 
+After learning vim, you might want to configure it. This is done by editting the .vimrc file in your home directory. Let's check out our current settings.
+
+    vim ~/.vimrc
+
+There should be default settings there already, but you can look to make changes here in the future.
+
 ### Emacs ###
  
+Emacs is an easier to pick up text editor but has less efficient keyboard
+shortcuts compared to vim.
 
+Let's start by editing a new file in emacs
+
+    emacs emacstest
+
+As soon as emacs starts running, you will be able to type into it. There is no special insert mode like in vim. You can backspace at any time without having to switch between modes. 
+
+Emacs has much of the functionality that vim has and we present the basics below:
+  
+  - 'Ctrl-f' will move your cursor forward, 'Ctrl-b' will move it back, 'Ctrl-p' will move it up, 'Ctrl-n' will move it down
+  - 'Ctrl-k' will delete the current line
+  - 'Ctrl-s' will search for a word forward, 'Ctrl-r' will search for a word backward
+  - 'Ctrl-a' goes to beginning of line, 'Ctrl-e' goes to end
+  - 'Ctrl-spacebar' to select text to manipulate
+  - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most recently copied/deleted text
+
+Unfortunately, emacs makes some commonly used shortcuts a real pain to use:
+
+  - 'Esc-x' then type in 'goto-line' and then the line number to go to a specific line (I usually map this to 'Ctrl-l' so it's actually useful)
+  
+
+To exit and save we will use Ctrl-X + Ctrl-C. If you just want to save then use Ctrl-X + Ctrl-S.
+
+Just like vim, emacs also has a configuration file that you can edit. This is .emacs file within your home directory. Let's check out our emacs settings.
+
+    emacs ~/.emacs
+
+There should be default settings there already, but feel free to add more for shortcuts.
+
+*Note that backspaces can be a little funky when ssh-ing into CLIC and your backspace button might actually be sending "Ctrl + H" instead! To fix this you will have to add the following lines to your .emacs file.
+
+    ;; make sure backspace deletes backwards
+    (normal-erase-is-backspace-mode 1)
+    ;; make sure your backspace is mapped correctly
+    (global-set-key "\C-h" 'backward-delete-char)
 
 ## Compiling and linking a C Program ##
 
