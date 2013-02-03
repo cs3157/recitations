@@ -111,8 +111,8 @@ myadd.o: myadd.c myadd.h
 
 We'll include two phony targets. We tell make that they're "phony" so that it
 doesn't attempt to use implicit rules or try to compile them. The first target
-we make is "clean" which should remove all intermediate files. _Always include a
-clean_ so that `make clean` can be used to remove intermediate files like object
+we make is "clean" which should remove all intermediate files. *Always include a
+clean* so that `make clean` can be used to remove intermediate files like object
 files, compiled code, etc. This should return your directory to just its source
 code that can generate all the other files. *Be careful:* Using `rm -r` will not
 prompt you to remove files. This is customary for `make clean` but it also means
@@ -191,7 +191,57 @@ Remotes
 
 *Important*: statuses of files
 
-  1) Untracked
-  2) Tracked, unmodified
-  3) Tracked, modified, unstaged
-  4) Tracked, modified, staged
+1. Untracked
+2. Tracked, unmodified
+3. Tracked, modified, unstaged
+4. Tracked, modified, staged
+
+Lastly, all of these recitation notes are tracked using git. You should try and
+learn a little bit about github for yourself. Create an account there, try
+forking this repository, adding some changes, and submitting a pull-request to
+add some useful info. If there's time at the end of recitation we can talk about 
+using git and github.
+
+## How NOT to get a Zero ##
+
+Jae makes it pretty easy to not get a zero when submitting your lab. His
+instructions are pretty clear, but let's just make sure we've got it all
+straight. Here's the process you should follow when you're working on your lab:
+
+1. **Clone Jae's repository** by using the following command:
+
+    git clone /home/jae/cs3157-pub/labN labN
+
+2. **Work on the lab and make FIVE commits** using
+
+    git commit
+
+  or
+
+    git commit -m "A message about your commit"
+
+3. **Make sure you have**:
+    1. `README.txt` spelled and capitalized exactly like that. It MUST contain
+your name, UNI, the lab number, and a description of your solution to the
+assignment.
+    2. tested your code. Run `make all` to ensure you're compiling the latest
+version of your code and test it. If your code does not compile you will receive
+a zero for that portion of the assignment, without exception.
+    3. only commited what is necessary. Run `make clean` followed by `git
+status` to ensure that the only code that you've committed is source, not object
+file or executable. git status should show nothing changed after running make
+clean if all has been done properly.
+
+4. **Submit your lab** using the following command:
+
+    /home/w3157/submit/submit-lab labN
+
+This will create a patch for your code, clone Jae's code into a folder
+`./labN-CURRENT_TIME`, apply your patch to that directory, copy your patch to
+the submission directory that TAs can access, and lastly print "SUCCESS!"
+
+5. **Test your submission** by going into the `./labN-CURRENT_TIME` directory,
+running `make` and checking that your program runs. Also make sure that if the
+lab instructions specified how to name your compiled files, they are properly
+named. If anything is wrong, fix it in your initial repository, commit the
+changes, and go back to step 4 :smiley:
