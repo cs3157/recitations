@@ -237,6 +237,11 @@ teams, both private and open-source. Github and git are great tools for managing
 all sorts of things, even notes, so make sure you're familiar with them.
 Proficiency in git and github is a desirable trait to have when job-hunting.
 
+Other useful tutorials:
+
+- [Be Social](https://help.github.com/articles/be-social)
+- [Create a Repository](https://help.github.com/articles/create-a-repo)
+
 ## How NOT to get a Zero ##
 
 Jae makes it pretty easy to not get a zero when submitting your lab. His
