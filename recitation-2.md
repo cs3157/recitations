@@ -204,12 +204,13 @@ All you should need to do is Step 4 - adding ssh keys.
 
 3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
 repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
-your local machine. Now here's where it gets tricky. In git, one of the reasons
-its so great for working in distributed is a feature called branching. Branches
-are subsections of git commits that don't affect other branches. For example
-"master" is the branch that you'll do all your work on for this class. Let's say
-though you want to add more unix commands to recitation-1.md. You could create a
-branch called improve_recitation1_unix like so:
+your local machine. 
+    **Digression**: One of the reasons git is so grea for working 
+in distributed is a feature called branching. Branches are subsections of git 
+commits that don't affect other branches. For example "master" is the branch 
+that you'll do all your work on for this class. Let's say though you want to 
+add more unix commands to recitation-1.md. You could create a branch called 
+`improve_recitation1_unix` like so:
 
         git checkout -b improve_recitation1_unix
 
