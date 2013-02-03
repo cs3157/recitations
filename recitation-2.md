@@ -102,13 +102,6 @@ Lastly, we specify the target for myadd.o:
 myadd.o: myadd.c myadd.h
 ```
 
-# Always provide the "clean" target that removes intermediate files.
-# What you remove depend on your choice of coding tools
-# (different editors generate different backup files for example).
-#
-# And the "clean" target is not a file name, so we tell make that
-# it’s a "phony" target.
-
 We'll include two phony targets. We tell make that they're "phony" so that it
 doesn't attempt to use implicit rules or try to compile them. The first target
 we make is "clean" which should remove all intermediate files. *Always include a
@@ -210,15 +203,15 @@ straight. Here's the process you should follow when you're working on your lab:
 
 1. **Clone Jae's repository** by using the following command:
 
-    git clone /home/jae/cs3157-pub/labN labN
+        git clone /home/jae/cs3157-pub/labN labN
 
 2. **Work on the lab and make FIVE commits** using
 
-    git commit
+        git commit
 
-  or
+    or
 
-    git commit -m "A message about your commit"
+        git commit -m "A message about your commit"
 
 3. **Make sure you have**:
     1. `README.txt` spelled and capitalized exactly like that. It MUST contain
@@ -234,9 +227,9 @@ clean if all has been done properly.
 
 4. **Submit your lab** using the following command:
 
-    /home/w3157/submit/submit-lab labN
+        /home/w3157/submit/submit-lab labN
 
-This will create a patch for your code, clone Jae's code into a folder
+    This will create a patch for your code, clone Jae's code into a folder
 `./labN-CURRENT_TIME`, apply your patch to that directory, copy your patch to
 the submission directory that TAs can access, and lastly print "SUCCESS!"
 
