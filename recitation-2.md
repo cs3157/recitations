@@ -205,6 +205,7 @@ All you should need to do is Step 4 - adding ssh keys.
 3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
 repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
 your local machine. 
+
     **Digression**: One of the reasons git is so grea for working 
 in distributed is a feature called branching. Branches are subsections of git 
 commits that don't affect other branches. For example "master" is the branch 
