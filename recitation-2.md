@@ -135,5 +135,63 @@ all: clean main
 ## Git ##
 
 For this part of the recitation, we will follow Jae's "git-tutorial" which can
-be found on CourseWorks
+be found on CourseWorks. Here's a quick run through of the operations reviewed
+in the tutorial, along with some bonus operations:
 
+Configuration:
+
+    git config --global user.name "Your Full Name" 
+    git config --global user.email your_uni@columbia.edu
+    git config --global --add color.ui true
+
+Working with repositories
+
+    git init
+    git status
+    git add
+    git commit
+    git commit -m
+
+Checking up on your changes
+
+    git status
+    git diff
+    git diff --cached
+    git log
+    git log --state --summary
+    git log -p
+
+Removing and renaming
+
+    git rm
+    git mv
+
+Undoing
+
+    git checkout -- [filename]
+    git reset HEAD [filename]
+
+Tools
+
+    git grep [pattern]
+    git help
+    man git
+    man gittutorial
+
+Patches
+
+    git format-patch --stdout origin > mywork.mbox
+    git am path/to/mywork.mbox
+
+Remotes
+
+    git remote add
+    git pull
+    git fetch && git merge
+
+*Important*: statuses of files
+
+  1) Untracked
+  2) Tracked, unmodified
+  3) Tracked, modified, unstaged
+  4) Tracked, modified, staged
