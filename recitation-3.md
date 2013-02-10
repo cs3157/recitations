@@ -194,3 +194,130 @@ else
 ```
 
 Note that any integer is also a boolean!! 0 is false, any other number is true!
+
+## Statements ##
+
+### If-Else Statements ###
+
+```c
+if(condition)
+  if(condition2) {
+    printf("conditions met");
+    return 0;
+  }
+  else
+    printf("no conditions met");
+```
+
+### Switch Statements ###
+
+```c
+switch(v)
+  case 1: // v == 1
+    printf("v is 1");
+    break;
+  case 2:
+    printf("v is 2");
+    break;
+  default:
+    printf("v is neither 1 nor 2");
+end
+```
+
+### Loops ###
+
+```c
+int i;
+for(i = 0; 1 < 10; i++) {
+    // do things here
+}
+while(i) { //condition checked at the beginning
+    //other things
+    i--;
+}
+
+do {
+    //more things
+} while(i < 5); //condition is checked at the end
+```
+
+Using `break;` inside a loop will break out of the innermost loop. Using
+`continue;` will stop executing the current iteration of the loop and skip to
+the next iteration. `for(;;)` is an idiom for an infinite loop. `goto label`
+will jump to a line beginning with `label: `. Be careful with gotos.
+
+## Variables ##
+
+###Stack Variables ###
+
+When you declare a variable in C, it is defined for the current scope and will
+be released at the end of the scope. If you redeclare a variable inside a scope
+within a scope (see below) you won't be able to change the outer variable.
+
+```c
+int x;
+x = 0;
+//do things with x
+{
+    int x;
+    x = 1;
+    //x is now 1 within here
+}
+//x is still 0 out here
+```
+
+The above are automatic variables or **stack variables**. Their scope is local
+to a block, they are created when entering the block and destroyed upon exit.
+
+### Static Variables ###
+
+Many different meanings depending on where you declare:
+
+```c
+int global_static = 0;
+
+static int file_static = 0;
+
+int foo(int auto_1) {
+    static int block_static = 0;
+}
+```
+In general, global/static variables are created when the program runs and
+persist until the program ends. This means they will not be re-declared or
+re-initialized.
+
+### Global Variables ###
+
+Global variables are like a special case of static variables. They are
+accessible from all files in the program, and if they are declared within the
+current file already you don't need to use the `extern`. See below:
+
+In one file:
+```c
+int global_static = 0;
+
+int main() {
+    int global_static;
+    global_static++;
+    magicPrint();
+}
+```
+
+In another file:
+
+```c
+void magicPrint() {
+    extern int global_static;
+    printf("%d", global_static); //prints 1
+}
+```
+
+## Address Space ##
+
+Every process gets 512G of virtual memory space. The stack grows downward (see Jae's
+notes for a diagram) starting from 512G while the program code, static
+variables, and heap variables are all at the bottom (0). Basically, this means
+when functions are called, space for them is built up on the stack and cleared
+as they complete. Heap variables (you'll learn more about these later) will be
+allocated on the heap and therefore, like static variables, will not be cleared
+after each function call.
