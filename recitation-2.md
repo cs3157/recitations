@@ -151,7 +151,7 @@ Checking up on your changes
     git diff
     git diff --cached
     git log
-    git log --state --summary
+    git log --stat --summary
     git log -p
 
 Removing and renaming
