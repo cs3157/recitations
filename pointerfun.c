@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int add(const int *, const int *);
 int multiply(const int *, const int *);
@@ -21,8 +22,10 @@ int main(int argc, char **argv) {
 
     int *c = malloc(sizeof(int));
     int *d = malloc(sizeof(int));
-    printf("The memory address of heap variable c is %p\n", c);
-    printf("The memory address of heap variable d is %p\n", d);
+    *c = 9;
+    printf("The memory address on the heap int *c points to is %p.\n", c);
+    printf("\tBut note that c itself is in the address %p.  %p ->  %p, which contains %d \n", c, &c, c, *c);
+    printf("The memory address on the heap int *d points to is %p\n", d);
     printf("\n");
 
     printf("The memory address of the function add is %p\n", &add);
@@ -40,6 +43,14 @@ int main(int argc, char **argv) {
 
     free(c);
     free(d);
+    printf("\n\n");
+
+    char *sl = "This is a string literal";
+    printf("'%s' is stored in char *sl at %p\n", sl, sl);
+    printf("\t(Is this close to add and multiply?)\n");
+    char *lastChar = sl+strlen(sl)-1;
+    printf("The last character of sl is '%c', stored at %p\n", *lastChar, lastChar);
+
     return 0;
 }
 

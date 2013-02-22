@@ -1,21 +1,27 @@
 The memory address of global variable globalvar is 0x602050
 The memory address of static variable staticvar is 0x602058
 
-The memory address of local variable a is 0x7fff0e504748
-The memory address of local variable b is 0x7fff0e50474c
+The memory address of local variable a is 0x7fff307ac788
+The memory address of local variable b is 0x7fff307ac78c
 
-The memory address of heap variable c is 0x776010
-The memory address of heap variable d is 0x776030
+The memory address on the heap int *c points to is 0x2350010.
+	But note that c itself is in the address 0x2350010.  0x7fff307ac768 ->  0x2350010, which contains 9 
+The memory address on the heap int *d points to is 0x2350030
 
-The memory address of the function add is 0x400832
-The memory address of the function multiply is 0x40087b
+The memory address of the function add is 0x4008f1
+The memory address of the function multiply is 0x40093a
 
 Ok, now let's try to add, by asking the operate function to use the add function...
-  (inside operate) Storing into 0x776010 results of operation at memory address 0x400832
-    (inside add) Adding the contents of 0x7fff0e504748 and 0x7fff0e50474c. (4+3)
-The contents of malloc'd space 0x776010, "c", is 7
+  (inside operate) Storing into 0x2350010 results of operation at memory address 0x4008f1
+    (inside add) Adding the contents of 0x7fff307ac788 and 0x7fff307ac78c. (4+3)
+The contents of malloc'd space 0x2350010, "c", is 7
 
 Ok, now let's try to multiply, by asking the operate function to use the multiply function...
-  (inside operate) Storing into 0x602050 results of operation at memory address 0x40087b
-    (inside multiply) Multiplying the contents of 0x7fff0e504748 and 0x7fff0e50474c. (4*3)
+  (inside operate) Storing into 0x602050 results of operation at memory address 0x40093a
+    (inside multiply) Multiplying the contents of 0x7fff307ac788 and 0x7fff307ac78c. (4*3)
 The contents of global variable 0x602050, "globalvar", is 12
+
+
+'This is a string literal' is stored in char *sl at 0x400d9a
+	(Is this close to add and multiply?)
+The last character of sl is 'l', stored at 0x400db1
