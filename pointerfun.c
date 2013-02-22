@@ -29,14 +29,14 @@ int main(int argc, char **argv) {
     printf("The memory address of the function multiply is %p\n", &multiply);
     printf("\n");
 
+    printf("Ok, now let's try to add, by asking the operate function to use the add function...\n");
     operate(&a, &b, c, &add);
     printf("The contents of malloc'd space %p, \"c\", is %d\n", c, *c);
     printf("\n");
 
+    printf("Ok, now let's try to multiply, by asking the operate function to use the multiply function...\n");
     operate(&a, &b, &globalvar, &multiply);
     printf("The contents of global variable %p, \"globalvar\", is %d\n", &globalvar, globalvar);
-    printf("\n");
-
 
     free(c);
     free(d);
@@ -44,16 +44,16 @@ int main(int argc, char **argv) {
 }
 
 void operate(const int *a, const int *b, int *dest, int (*operationPtr)(const int *, const int*)) {
-    printf("Storing into %p results of operation at memory address %p\n", dest, operationPtr);
+    printf("  (inside operate) Storing into %p results of operation at memory address %p\n", dest, operationPtr);
     *dest = (*operationPtr)(a, b);
 }
 
 int add(const int *a, const int *b) {
-    printf("Adding the contents of %p and %p. (%d+%d)\n", a, b, *a, *b);
+    printf("    (inside add) Adding the contents of %p and %p. (%d+%d)\n", a, b, *a, *b);
     return *a + *b;
 }
 
 int multiply(const int *a, const int *b) {
-    printf("Multiplying the contents of %p and %p. (%d*%d)\n", a, b, *a, *b);
+    printf("    (inside multiply) Multiplying the contents of %p and %p. (%d*%d)\n", a, b, *a, *b);
     return *a * *b;
 }
