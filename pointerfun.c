@@ -33,8 +33,8 @@ int main(int argc, char **argv) {
     printf("The contents of malloc'd space %p, \"c\", is %d\n", c, *c);
     printf("\n");
 
-    operate(&a, &b, d, &multiply);
-    printf("The contents of malloc'd space %p, \"d\", is %d\n", d, *d);
+    operate(&a, &b, &globalvar, &multiply);
+    printf("The contents of global variable %p, \"globalvar\", is %d\n", &globalvar, globalvar);
     printf("\n");
 
 

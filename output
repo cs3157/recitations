@@ -1,20 +1,20 @@
 The memory address of global variable globalvar is 0x601048
 The memory address of static variable staticvar is 0x601050
 
-The memory address of local variable a is 0x7fff7b7ac768
-The memory address of local variable b is 0x7fff7b7ac76c
+The memory address of local variable a is 0x7fffc62d2b38
+The memory address of local variable b is 0x7fffc62d2b3c
 
-The memory address of heap variable c is 0x2224010
-The memory address of heap variable d is 0x2224030
+The memory address of heap variable c is 0xace010
+The memory address of heap variable d is 0xace030
 
-The memory address of the function add is 0x4007e9
-The memory address of the function multiply is 0x400832
+The memory address of the function add is 0x4007e8
+The memory address of the function multiply is 0x400831
 
-Storing into 0x2224010 results of operation at memory address 0x4007e9
-Adding the contents of 0x7fff7b7ac768 and 0x7fff7b7ac76c. (4+3)
-The contents of malloc'd space 0x2224010, "c", is 7
+Storing into 0xace010 results of operation at memory address 0x4007e8
+Adding the contents of 0x7fffc62d2b38 and 0x7fffc62d2b3c. (4+3)
+The contents of malloc'd space 0xace010, "c", is 7
 
-Storing into 0x2224030 results of operation at memory address 0x400832
-Multiplying the contents of 0x7fff7b7ac768 and 0x7fff7b7ac76c. (4*3)
-The contents of malloc'd space 0x2224030, "d", is 12
+Storing into 0x601048 results of operation at memory address 0x400831
+Multiplying the contents of 0x7fffc62d2b38 and 0x7fffc62d2b3c. (4*3)
+The contents of global variable 0x601048, "globalvar", is 12
 
