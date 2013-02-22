@@ -5,8 +5,14 @@ int add(const int *, const int *);
 int multiply(const int *, const int *);
 void operate(const int *, const int *, int *, int(*functionPtr)(const int *, const int *));
 
+int globalvar = 0;
 
 int main(int argc, char **argv) {
+    static double staticvar = 0.0;
+    printf("The memory address of global variable globalvar is %p\n", &globalvar);
+    printf("The memory address of static variable staticvar is %p\n", &staticvar);
+    printf("\n");
+
     int a = 4;
     int b = 3;
     printf("The memory address of local variable a is %p\n", &a);
@@ -15,8 +21,8 @@ int main(int argc, char **argv) {
 
     int *c = malloc(sizeof(int));
     int *d = malloc(sizeof(int));
-    printf("The memory address of heap variable c is %p\n", &c);
-    printf("The memory address of heap variable d is %p\n", &d);
+    printf("The memory address of heap variable c is %p\n", c);
+    printf("The memory address of heap variable d is %p\n", d);
     printf("\n");
 
     printf("The memory address of the function add is %p\n", &add);
