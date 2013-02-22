@@ -1,14 +1,17 @@
-The memory address of local variable a is 0x7fff07454e48
-The memory address of local variable b is 0x7fff07454e4c
+The memory address of local variable a is 0x7fff14678768
+The memory address of local variable b is 0x7fff1467876c
 
-The memory address of heap variable c is 0x7fff07454e38
-The memory address of heap variable d is 0x7fff07454e40
+The memory address of heap variable c is 0x7fff14678758
+The memory address of heap variable d is 0x7fff14678760
 
-The memory address of the function add is 0x40076b
-The memory address of the function multiply is 0x4007b4
+The memory address of the function add is 0x4007b1
+The memory address of the function multiply is 0x4007fa
 
-Operating with operator at memory address 0x40076b
-Adding the contents of 0x7fff07454e48 and 0x7fff07454e4c. (4+3)
+Storing into 0x1430010 results of operation at memory address 0x4007b1
+Adding the contents of 0x7fff14678768 and 0x7fff1467876c. (4+3)
+The contents of malloc'd space 0x1430010, "c", is 7
 
-Operating with operator at memory address 0x4007b4
-Multiplying the contents of 0x7fff07454e48 and 0x7fff07454e4c. (4*3)
+Storing into 0x1430030 results of operation at memory address 0x4007fa
+Multiplying the contents of 0x7fff14678768 and 0x7fff1467876c. (4*3)
+The contents of malloc'd space 0x1430030, "d", is 12
+

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int add(const int*, const int*);
-int multiply(const int*, const int*);
-int operate(const int*, const int*, int(*functionPtr)(const int *, const int *));
+int add(const int *, const int *);
+int multiply(const int *, const int *);
+void operate(const int *, const int *, int *, int(*functionPtr)(const int *, const int *));
 
 
 int main(int argc, char **argv) {
@@ -23,19 +23,23 @@ int main(int argc, char **argv) {
     printf("The memory address of the function multiply is %p\n", &multiply);
     printf("\n");
 
-    *c = operate(&a, &b, &add);
+    operate(&a, &b, c, &add);
+    printf("The contents of malloc'd space %p, \"c\", is %d\n", c, *c);
     printf("\n");
 
-    *d = operate(&a, &b, &multiply);
+    operate(&a, &b, d, &multiply);
+    printf("The contents of malloc'd space %p, \"d\", is %d\n", d, *d);
+    printf("\n");
+
 
     free(c);
     free(d);
     return 0;
 }
 
-int operate(const int *a, const int *b, int (*operationPtr)(const int *, const int*)) {
-    printf("Operating with operator at memory address %p\n", operationPtr);
-    return (*operationPtr)(a, b);
+void operate(const int *a, const int *b, int *dest, int (*operationPtr)(const int *, const int*)) {
+    printf("Storing into %p results of operation at memory address %p\n", dest, operationPtr);
+    *dest = (*operationPtr)(a, b);
 }
 
 int add(const int *a, const int *b) {

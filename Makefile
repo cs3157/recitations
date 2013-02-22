@@ -6,6 +6,9 @@ pointerfun:
 
 pointerfun.o: 
 
+output: pointerfun
+	./pointerfun > output
+
 
 .PHONY: clean all valgrind
 clean:
