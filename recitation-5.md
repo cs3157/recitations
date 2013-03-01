@@ -211,7 +211,7 @@ string operations. I'm not going to explain them all here, but I will point out
 some nasty little things to be aware of.
 
   - `strlen` runs in O(n) because you can't know the length of a string without
-    reversing it.
+    traversing it to find the null character.
   - `strcpy` and `strncpy` require that there is enough space in your
     destination memory location for the source string. Also watch out when using
     `strncpy` that all your strings are null terminated.
