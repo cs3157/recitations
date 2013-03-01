@@ -206,6 +206,34 @@ another. While possible, the behavior is compiler dependent.
 
 ## Odds and Ends ##
 ### String Operations in C Library ###
+Jae has some functions listed in the notes from the Standard C Library for
+string operations. I'm not going to explain them all here, but I will point out
+some nasty little things to be aware of.
+
+  - `strlen` runs in O(n) because you can't know the length of a string without
+    reversing it.
+  - `strcpy` and `strncpy` require that there is enough space in your
+    destination memory location for the source string. Also watch out when using
+    `strncpy` that all your strings are null terminated.
+  - `strcat` runs in O(n) too. So if you're running lots of strcats, watch out
+    because you could end up with tons of passes over a single string.
+    Exponential even.
+  - `memcpy` is great for cleaning things up. Just sayin'.
 
 ### Const ###
 
+`const` is a keyword for types in C that prevents them from being modified. It's
+important to understand that this means once the variable is declared, the
+memory it is refering to cannot be modified. Some examples:
+
+```c
+const char *string = "bai";
+string[0] = 'h'; //invalid, because the values that string points to are immutable
+string = "hello"; //valid, because we're changing what string points to.
+
+char *const stuck = "hello";
+stuck = string; //invalid, because the pointer is immutable
+stuck[0] = 'f'; //valid, because the memory the pointer points to is mutable.
+
+const char *const why = "You'll never change anything about me. Ever";
+```
