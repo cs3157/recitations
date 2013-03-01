@@ -95,9 +95,114 @@ function.
 ## Structs (K&R 6) ##
 
 Structs are kind of like Java's objects but for C. Fundamentally, they allow you
-to declare a collection of one or more variables grouped under a single type.
+to declare a collection of one or more variables grouped under a single type. A
+struct cannot, however, contain functions/methods. A struct can only contain
+other datatypes such as `int` `char` `float` or even other structs. An example
+struct:
+
+```c
+struct point {
+  int x;
+  int y;
+}
+```
+
+and usage
+
+```c
+struct point pt;
+pt = {50, 100};
+pt.x == 50; // 1
+pt.y = 3;
+pt.y == 100; // 0
+```
+
+Notice that values within a struct can be accessed and modified using the `.`
+operator in the form `structure-name.member`. We can declare another structure
+that uses the one we already have.
+
+```c
+struct rect {
+  struct point p1;
+  struct point p2;
+}
+// Usage:
+struct point leftTop = {50, 50};
+struct point rightBottom = {100, 0};
+struct rect myRect = {leftTop, rightBottom};
+```
+
+Structs, like everything in C, are passed by value. This means if you pass a
+structure as a parameter to a function, the function will receive a copy of the
+struct, with all its values copied by value. This means if your struct contains
+a pointer, the value of the pointer will be copied (and it will point to the
+same location in memory). If you want to pass a pointer to a struct, you can
+dereference it with the `&` operator. Pointers to structure are frequently used,
+so there is a shorthand for accessing their members:
+
+```c
+struct point pt = {50, 50};
+struct point *ppt = &pt;
+ppt->x = 25;
+ppt->x == (*ppt).x; // 1
+```
+
+The shorthand just saves you the hassle of writing out line 4 of the code above.
+Also, if you don't want to write out the keyword `struct` everytime, you can
+just declare your struct as follows:
+
+```c
+typedef struct {
+  int x;
+  int y;
+} Point;
+
+Point pt = {50, 50};
+```
+
+Make sure to read the K&R on this to learn some interesting use cases for
+structures. Note that a struct can contain a member of its own type. This is
+particular useful for data structures like trees.
+
+```c
+typedef struct {
+  void *value;
+  Node *parent;
+} Node;
+
+Node root, child1, child2, child3, child4;
+child4.parent = child2;
+child3.parent = child2;
+child2.parent = root;
+child1.parent = root;
+```
 
 ### Union ###
+
+A union is really nifty. It's like a structure, but, wait for it, all of its
+members are stored at the same location in memory. This means when you allocate
+a union, enough space is allocated for the largest member's type. This means if
+you were to declare a type as follows, you could use it to store any one of the
+three types.
+
+```c
+union u_tag {
+  int integer_value;
+  float float_value;
+  char *string_value;
+}
+
+union u_tag u;
+u.integer_value = 5;
+int x = u.integer_value;
+u.float_value = 3.14f;
+float f = u.float_value;
+```
+
+Union's are nifty for situations where you don't know just yet what kind of data
+you need to store but want to be smart about the space you allocate. Just be
+careful that you don't store something as one type and then read it out as
+another. While possible, the behavior is compiler dependent.
 
 ## Odds and Ends ##
 ### String Operations in C Library ###
