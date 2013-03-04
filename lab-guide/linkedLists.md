@@ -188,8 +188,7 @@ point to the node before it. If we have this list structure:
 Then what we want is this:
 
 <pre>
-NULL&lt;-[next|data]1&lt;-[next|data]2&lt;-[next|data]3&lt;-...&lt;-[next|data]
-n
+NULL&lt;-[next|data]1&lt;-[next|data]2&lt;-[next|data]3&lt;-...&lt;-[next|data]n
                                                         head^
 </pre>
 
