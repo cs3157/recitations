@@ -1,9 +1,9 @@
 Linked Lists
 ============
-Linked Lists are one of many different data structures that use nodes to store 
-data in a structured format. The nodes from all these classes share a 
-consistent similarity: they all hold some **data** and **point to** one or 
-more other **nodes**. Other node structures include:
+Linked Lists are one of many different data structures that use nodes to 
+store data in a structured format. The nodes from all these classes share 
+a consistent similarity: they all hold some **data** and **point to** one 
+or more other **nodes**. Other node structures include:
 
 -   Trees
 -   Heaps
@@ -12,10 +12,10 @@ more other **nodes**. Other node structures include:
 Singly Linked Lists
 -------------------
 In Lab 3, what we are asked to do is implement a singly linked list. Those of 
-you who took Data Structures (and Algorithms) will be familiar with linked 
-lists, and thus most of this lab is converting what you know about linked 
-lists in Java to C. For those who have no idea what a linked list is, keep 
-reading on.
+you who took Data Structures (and Algorithms) will be familiar with 
+linked lists, and thus most of this lab is converting what you know about 
+linked lists in Java to C. For those who have no idea what a linked list 
+is, keep reading on.
 
 A *singly* linked list, as opposed to a *doubly* linked list, is a node 
 structure as shown below:
@@ -28,23 +28,23 @@ A *doubly* linked list would have this node structure:
     
 `prev` and `next` are variables that refer to the previous and next node in 
 the list, respectively. `data` could be a pointer to or the actual data 
-that the list is to contain. From here on out, we'll just be talking about 
-singly linked lists.
+that the list is to contain. From here on out, we'll just be talking 
+about singly linked lists.
 
 ### The Lab 3 List Structure
 
 <pre>
-[data|next]->[data|next]->[data|next]->...[data|next]->NULL
+[data|next]-&gt;[data|next]-&gt;[data|next]-&gt;...[data|next]-&gt;NULL
    head^  
 </pre>
 
-As you can see above, our linked list is just a collection of nodes. Each node 
-has a `next` pointer, a `struct Node *` that points to the next element of 
-the list. The last node points to `NULL`. `data` is a `void *`, a pointer 
-to some piece of data that we do not manage. This means our list obeys 
-_pointer semantics_, as opposed to _value semantics_. Simply put, our list 
-does not manage the data the user wishes to use; it simply presents an 
-organized and usable structure to access that data.
+As you can see above, our linked list is just a collection of nodes. Each 
+node has a `next` pointer, a `struct Node *` that points to the next 
+element of the list. The last node points to `NULL`. `data` is a `void 
+*`, a pointer to some piece of data that we do not manage. This means our 
+list obeys _pointer semantics_, as opposed to _value semantics_. Simply 
+put, our list does not manage the data the user wishes to use; it simply 
+presents an organized and usable structure to access that data.
 
 Making a Linked List
 --------------------
@@ -82,9 +82,9 @@ void traverseList(struct List *list, void (*f)(void *))
 ```
 
 We visit each node in the list and call `f` on `data` as we visit each node. 
-In order to move along the list, we start at the head, and then keep going 
-to the next node until we reach the end, in which case the next node will 
-be `NULL`.
+In order to move along the list, we start at the head, and then keep 
+going to the next node until we reach the end, in which case the next 
+node will be `NULL`.
 
 ### Flipping the Sign of a Double
 
@@ -105,14 +105,14 @@ you flip the sign, you must first cast it and then dereference it.
 int compareDouble(const void *data1, const void *data2)
 ```
 
-This function is similar to the previous function. Just cast, dereference, and 
-compare. However, something you should not do is:
+This function is similar to the previous function. Just cast, dereference, 
+and compare. However, something you should not do is:
     
 `data1 == data2`
     
-Doing this will almost never work, since `data1` and `data2` are pointers, and 
-pointers are only equal when the memory addresses they point to are the 
-same.
+Doing this will almost never work, since `data1` and `data2` are pointers, 
+and pointers are only equal when the memory addresses they point to are 
+the same.
 
 ### Finding a Specific Node
 
@@ -122,10 +122,10 @@ struct Node *findNode(struct List *list, const void *dataSought, int
 ```
 
 This function is very similar to `traverseList` (it's like this lab is 
-building on itself). Instead of calling `f`, we are calling `compar` which 
-takes two arguments, the `data` from the node we are currently at and 
-`dataSought`. There is a caveat though; we should return the node we are 
-currently at if `compar` returns 0. This is still not a significant 
+building on itself). Instead of calling `f`, we are calling `compar` 
+which takes two arguments, the `data` from the node we are currently at 
+and `dataSought`. There is a caveat though; we should return the node we 
+are currently at if `compar` returns 0. This is still not a significant 
 departure from `traverseList`.
 
 ### Removing the Head of a List
@@ -140,9 +140,9 @@ This function is the functional reverse of `addFront`:
 - Unallocated the old head and return its `data`.
 
 Be careful though, there's a particular order in which changing the head, 
-unallocating the node, and getting and returning the data of the node must 
-be done, otherwise you'll run into memory issues (which valgrind will 
-inform you of).
+unallocating the node, and getting and returning the data of the node 
+must be done, otherwise you'll run into memory issues (which valgrind 
+will inform you of).
 
 ### Removing All Nodes of a List
 
@@ -177,22 +177,23 @@ void reverseList(struct List *list)
 
 Perhaps the trickiest function to write. There are two (and probably more) 
 ways to solve this problem. I'll defer it to the internet to provide a 
-proper explanation of them. One method is to make each node's `next` point 
-to the node before it. If we have this list structure:
+proper explanation of them. One method is to make each node's `next` 
+point to the node before it. If we have this list structure:
 
 <pre>
-1[data|next]->2[data|next]->3[data|next]->...->n[data|next]->NULL
+1[data|next]-&gt;2[data|next]-&gt;3[data|next]-&gt;...-&gt;n[data|next]-&gt;NULL
    head^
 </pre>
 
 Then what we want is this:
 
 <pre>
-NULL<-[next|data]1<-[next|data]2<-[next|data]3<-...<-[next|data]n
+NULL&lt;-[next|data]1&lt;-[next|data]2&lt;-[next|data]3&lt;-...&lt;-[next|data]
+n
                                                         head^
 </pre>
-  
-A, perhaps simpler, method is to create a temporary list. Traverse through the 
+
+Perhaps a simpler method is to create a temporary list. Traverse through the 
 original list and then add each node to the front of the temporary list. 
 The temporary list will be the reverse of the original list. Of course, 
 there's an equivalent method that doesn't involve traversal, but still 
@@ -207,7 +208,7 @@ line arguments we are given and to find "dude" among them.
 Using the methods discussed above, and treating `char **argv` as a "list," we 
 can easily reverse `argv` by adapting the two methods discussed in 
 **Reversing a List**. Then to find "dude", we can write our own function 
-or use the functionality of `findNode`. In the latter case we have to make 
-a string comparison function. We could, of course, use `strcmp` as the 
-`compar` argument, but we have to cast `strcmp` (from `<string.h>`) to the 
-correct signature first. See K&R section 5.11 on how to do this.
+or use the functionality of `findNode`. In the latter case we have to 
+make a string comparison function. We could, of course, use `strcmp` as 
+the `compar` argument, but we have to cast `strcmp` (from `<string.h>`) 
+to the correct signature first. See K&R section 5.11 on how to do this.
