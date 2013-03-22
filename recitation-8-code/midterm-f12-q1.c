@@ -67,7 +67,7 @@ int main(int argc, char **argv)
      * y = 0xffffffff which is -1 in twos complement
      * a 4 byte integer is 32 bits
      * each symbol 'f' occupies 4 bits
-     * 'f' is the hexadecimal symbol for 15 decimal = 1111 in decimal
+     * 'f' is the hexadecimal symbol for 15 decimal = 1111 in binary
      * in other words x and y is full of 1s
      * if the most significant bit (the left one) is 1 (which it is here)
      * two find the value of a negative number in twos complement
