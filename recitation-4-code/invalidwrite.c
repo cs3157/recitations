@@ -25,9 +25,9 @@ int main()
     int *p2 = p;
 
     // here we are using pointer arithmetic to point to the next location in memory
-    // our address location + 4 bytes
+    // our address location + 4 bytes (size of integer in our system. pointer arithmetic)
     // so now p2 will be pointing past where we have officially allocated memory
-    p2 += 4;
+    p2 += 1;
 
     // so if we assign a value into this memory location we're not allowed bad things could happen!
     *p2 = 17;
