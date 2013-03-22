@@ -66,7 +66,7 @@ int main(int argc, char **argv)
  * ==32573== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
  * ==32573== Command: ./a.out abc 123
  * ==32573== 
- * aBCabc123
+ * ABCabc123
  * ==32573== 
  * ==32573== HEAP SUMMARY:
  * ==32573==     in use at exit: 7 bytes in 1 blocks
