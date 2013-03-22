@@ -74,7 +74,7 @@ int main(int argc, char **argv)
      * the trick is to flip the bits and add one
      * example: 1101 = -3 because we flip the bits 0010 and add one 0011
      */
-    printf("Question 1.10: %20d\n", x + y); // -2
+   printf("Question 1.10: %20d\n", x + y); // -2
 
     /*
      * let's unpack c[2]...
@@ -90,10 +90,16 @@ int main(int argc, char **argv)
      * The above stars are the locations pointed to by c[2]
      * 
      * Because the byte is interpreted as an unsigned char
-     * we know that these 8 bytes will not be interpreted as negative
+     * we know that these 8 bits will not be interpreted as negative
      * and all 8 bits will be used to calculate the number
      * 2^8-1 = 255
      *
+     */
+    /*
+     * int z = 0x01020304;
+     * unsigned char *d = (unsigned char *)&z;
+     * printf("Example of the above description: (least significant bit) d[0] = %d, d[1] = %d, "
+     * "d[2] = %d, d[3] = %d\n", d[0], d[1], d[2], d[3]);
      */
     printf("Question 1.11: %20d\n", c[2]); // 255
 
