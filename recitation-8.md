@@ -500,3 +500,7 @@ Just some things it might pay to know well:
   - What the pipeline for lab5 looked like and how it worked
   - The ASCII Table (See [Recitation 3](recitation-3.md))
   - malloc and free...this is tough
+  - **PLEASE PLEASE PLEASE PLEASE FOLLOW DIRECTIONS** The exam will be graded
+    in the same way your labs are graded if not less lenient. Read all the
+    directions. If it says "write the line number and the code that should be
+    on that line," do just that!
