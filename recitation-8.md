@@ -2,7 +2,7 @@
 
 ## Signed and Unsigned Integers ##
 
-From Recitation 3:
+From [Recitation 3](recitation-3.md):
 
 ### Bits Bytes and Binary ###
 
@@ -126,7 +126,7 @@ make up a string, but more on this later.
 
 ## Bitwise Operators ##
 
-Also from Recitation 3:
+Also from [Recitation 3](recitation-3.md):
 
 Bit-wise operators are tricky and can be used for a variety of purposes:
 
@@ -227,8 +227,8 @@ Make sure you know what levels of git tracking exist:
   - tracked, committed (??? What's wrong here?)
 
 Also know how dependencies work in Make. Jae's sample makefile is really great
-to use to understand this. I've included the relevant sections from recitation 2
-below:
+to use to understand this. I've included the relevant sections from [recitation
+2](recitation-2.md) below:
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
 `sample-makefile`
@@ -346,3 +346,157 @@ clean:
 all: clean main
 ```
 
+## Function Pointers ##
+
+From [Recitation 5](recitation-5.md):
+
+It is often the case in programming that you'll want your program to change its
+behavior for the person using your program but have no idea how they may want to
+do this. For example, when writing a sort function, you could just specify a
+parameter that let's them choose between sorting ascending and descending.
+However, what if they wanted to sort characters by their unicode value instead of
+lexicographically? For this, the user has to supply their own functionality.
+That's where you need function pointers. Some higher level (read
+lambda-programming languages) support this is in a more intuitive way, but C
+does a pretty good job itself.
+
+### Accepting functions as a parameter to your function ###
+
+Function pointers allow you to accept as a parameter to your function, another
+function. Let's start out with accepting functions as a parameter:
+
+```c
+void notifier(int (*fn)()) {
+  printf("Starting\n");
+  fn();
+  printf("Finished\n");
+}
+```
+
+Let's examine this more closely. We have a function called notifier whose only
+parameter is another function. How do we do this? we specify what kind of
+function it accepts. The basic layout for a function pointer type is `returntype
+(*functionName)(parameter1type, parameter2type, ...)`. Why? Well the returntype
+denotes the type of the function. The name of the function being preceded with
+an asterisk tells us its a pointer. The function is surrounded by parentheses so
+that the compiler doesn't think we've got a variable `returntype *functionName`.
+The parenthese following the declaration are necessary as well, even if the
+function we want to accept doesn't have any arguments. The parameter's only need
+their types declared so that the compiler can check these. Since you won't have
+access to the code you don't need to worry about what to call them.
+
+### Passing a function as a parameter ###
+
+```c
+int wasteTime() {
+  int i = 0;
+  while(i < 1000000)
+    i++;
+  return i;
+}
+
+int main(int argc, char **argv) {
+  wasteTime();
+  notifier(wasteTime);
+  return 0;
+}
+```
+
+Notice how we have a function `wasteTime`. And when we follow it with
+perentheses it gets called. When we don't, it is automatically a function
+pointer. Why is this?
+
+Well everything in the program is stored in memory, even the functions, which
+means even they have an address. So `wasteTime` has an address in memory. When
+you follow `wasteTime` with perentheses (`wasteTime()`), C goes to the address
+and executes the function. If you think of `wasteTime` as storing a pointer to a
+function, then you can think of `wasteTime()` as dereferencing the pointer.
+Therefore, when we call `notifier` and pass it `wasteTime` without parentheses, it
+passes the address to `wasteTime` to the `notifier` function.
+
+### Calling functions from pointers ###
+We could further use the functions above as follows:
+
+```c
+int main(int argc, char **argv) {
+  int (*f1)();
+  char *(*f2)(char *, const char *);
+  char arr[5] = "bann"
+
+  f1 = wasteTime;
+  f2 = strcpy;
+
+  notifier(f1);
+  f2(arr, "hihi");
+}
+```
+
+As you can see from the above code, you can declare variables of "function
+pointer" type and assign function pointers to their values. Then you can call
+those functions simply by adding parentheses to the end of the variable name.
+Make sure to check out Jae's notes (lecture 7) for more complicated examples of
+this. Notice that we did the same thing when calling `fn()` in our `notifier`
+function.
+
+## Order of Operations ##
+
+Binary Operators, Increasing Order of Precedence:
+
+  - < > <= =>
+  - + -
+  - * / %
+  - &
+  - ^
+  - |
+  - &&
+  - ||
+  - ternary
+  - += -= *= /= <<= >>= 7= ^= |= %= >>= =
+  - ,
+
+Unary Operators, Increasing Order of Precedence:
+
+  - (expression), [],  ->,  .
+  - !, ~, ++, --, (type), sizeof, +,  -,  *,  &,   (right to left)
+  
+## On Memory Errors ##
+
+Source: http://www.cprogramming.com/tutorial/memory_debugging_parallel_inspector.html
+
+### Invalid Memory Access ###
+
+```c
+char *pStr = (char*) malloc(25); 
+free(pStr); 
+strcpy(pStr, "parallel programming"); // Invalid write to deallocated memory in heap
+```
+
+### Missing Allocation ###
+
+```c
+char* pStr = (char*) malloc(20); 
+free(pStr); 
+free(pStr); // results in an invalid deallocation
+```
+
+### Uninitialized Memory Access ###
+
+```c
+char *pStr = (char*) malloc(512);
+char c = pStr[0]; // the contents of pStr were not initialized
+int a; 
+int b = a * 4; // uninitialized read of variable a 
+```
+
+For more information, reference [Recitation 4](recitation-4.md).
+
+## Good to Know Additional Topics ##
+
+Just some things it might pay to know well:
+
+  - What mdbrec's look like and how you interacted with them
+  - How the functions you implemented in lab3 should work, what they return,
+    etc. etc.
+  - What the pipeline for lab5 looked like and how it worked
+  - The ASCII Table (See [Recitation 3](recitation-3.md))
+  - malloc and free...this is tough
