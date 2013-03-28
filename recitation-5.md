@@ -171,10 +171,10 @@ typedef struct {
 } Node;
 
 Node root, child1, child2, child3, child4;
-child4.parent = child2;
-child3.parent = child2;
-child2.parent = root;
-child1.parent = root;
+child4.parent = &child2;
+child3.parent = &child2;
+child2.parent = &root;
+child1.parent = &root;
 ```
 
 ### Union ###

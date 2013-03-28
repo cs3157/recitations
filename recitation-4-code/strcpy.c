@@ -17,7 +17,7 @@ int main()
     printf("t = %s\n", t);
 
     // what is p and p2 pointing to?
-    // it is pointing to the '\0' in memory for the s string and the t string respectively
+    // it is pointing to one past the '\0' in memory for the s string and the t string respectively
 
     return 0;
 }

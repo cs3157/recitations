@@ -6,13 +6,10 @@ int main()
     int j;
     int k;
 
-    j = i++; // j is 4
-             // i is incremented
+    j = i++; // j is set to i, which is 4, then i is incremented
     k = i;   // k is 5
 
-    
-    j = ++i; // i is incremented to 5, j = 5
-
+    j = ++i; // i is incremented, then j is set to i, which is 6
 
     return 0;
 }

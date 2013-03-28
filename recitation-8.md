@@ -9,7 +9,7 @@ From [Recitation 3](recitation-3.md):
 Let's just refresh our memory about memory:
 
   - A **bit** is a single digit in binary; on or off; 1 or 0
-  - 8 bits form a single **byte**: 11111111 = 2^7 - 1 = 255
+  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
   - **Hexadecimal** is another notation to count even higher in fewer places
     - Two hexadecimal places express 1 byte
     - FF in Hexadecimal is 255
@@ -102,7 +102,7 @@ long x = 0L;    | 0       | -
 Preceding a constant with 0x denotes hexadecimal notation:
 
     (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
-    (0177777 == -1); //returns 1 (true)
+    (037777777777 == -1); //returns 1 (true)
     sizeof(1234L); //returns 8
     sizeof(1234); //returns 4
     0xFFFFU; //returns 65535

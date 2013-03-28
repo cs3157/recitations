@@ -206,8 +206,8 @@ All you should need to do is Step 4 - adding ssh keys.
 repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
 your local machine. 
 
-    **Digression**: One of the reasons git is so grea for working 
-in distributed is a feature called branching. Branches are subsections of git 
+    **Digression**: One of the reasons git is so great for working 
+in distributed teams is a feature called branching. Branches are subsections of git 
 commits that don't affect other branches. For example "master" is the branch 
 that you'll do all your work on for this class. Let's say though you want to 
 add more unix commands to recitation-1.md. You could create a branch called 
