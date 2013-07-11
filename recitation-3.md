@@ -267,7 +267,8 @@ x = 0;
 ```
 
 The above are automatic variables or **stack variables**. Their scope is local
-to a block (code enclosed by curly braces as shown above) - they are created when entering the block and destroyed upon exit.
+to a block (code enclosed by curly braces as shown above) - they are created 
+when entering the block and destroyed upon exit.
 
 ### Static Variables ###
 
