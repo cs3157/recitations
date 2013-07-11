@@ -167,7 +167,7 @@ int main() {
 What will this program print?
 
 ```
-They're the same thing"
+They're the same thing
 ```
 
 Why? Because referencing a pointer to a function just gets you the same

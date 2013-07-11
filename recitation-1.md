@@ -43,7 +43,7 @@ machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
 
 ### Paths ###
  
-A good palce to start with UNIX is the filesystem structure. Our clic machines 
+A good place to start with UNIX is the filesystem structure. Our clic machines 
 run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
 the break between directories and files. An example file path in UNIX might be 
 `/usr/bin/dict`. The path `/` by itself denotes *the highest level directory*. 
@@ -359,4 +359,4 @@ Otherwise it will go looking in all the places it searches for commands like
 `ls` and `touch` to find `main`.
 
 For more on compiling, linking, and debugging, see 
-[this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf)
+[this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf).
