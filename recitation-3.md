@@ -20,8 +20,8 @@ Let's just refresh our memory about memory:
     - To convert: 1010 (read as ten if unsigned), first note that it is
       negative. Then find its magnitude by flipping all the bits (0101, 5) and
       then adding 1 (0110) meaning the value is -6.
-    - Consult the following table to see something interesting: (note the
-      wraparound effect
+    - Consult the following table to see something interesting (note the
+      wraparound effect):
       
 Binary | usigned decimal | two's complement decimal
 ------ | --------------- | ----------------------- 
@@ -146,7 +146,7 @@ Comparison operators:
   - < > <= >=
 
 All of these comparison operators have the same precedence, and are more tightly
-binding than the equality and inequality operators (==/!==)
+binding than the equality and inequality operators (==/!==).
 
 The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
 and "and" operators short-circuit.
@@ -267,7 +267,8 @@ x = 0;
 ```
 
 The above are automatic variables or **stack variables**. Their scope is local
-to a block, they are created when entering the block and destroyed upon exit.
+to a block (code enclosed by curly braces as shown above) - they are created 
+when entering the block and destroyed upon exit.
 
 ### Static Variables ###
 
