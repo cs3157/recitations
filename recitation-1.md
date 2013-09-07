@@ -278,8 +278,8 @@ three text files in the same working directory.
 myadd.h
 
 ```c
-#ifndef _MYADD_H_
-#define _MYADD_H_
+#ifndef __MYADD_H__
+#define __MYADD_H__
 int add(int x, int y);
 #endif
 ```
@@ -302,12 +302,12 @@ int main(int argc, char **argv)
     add(2, 4);
 }
 ```
-We'll be using gcc to compile our programs. `gcc` as a terminal command accepts
+We'll be using gcc to compile our programs. `gcc` as a shell command accepts
 a few parameters that we'll be making use of often.
 
   - `-g` This flag will include debugging flags when you compile. If you're going
     to be shipping your program, you won't want to include this flag, but for
-    the purposes of this class, you'll probably always want these flags. They'll
+    the purposes of this class, you'll probably always want this flag. It'll
     enable debugging tools to give you more useful information like the line
     number and file of the code that crashed.
   - `-Wall` This will turn on all warnings. Essentially, if there's a problem in
