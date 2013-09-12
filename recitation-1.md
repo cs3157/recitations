@@ -235,11 +235,7 @@ Emacs has much of the functionality that vim has and we present the basics below
   - 'Ctrl-a' goes to beginning of line, 'Ctrl-e' goes to end
   - 'Ctrl-spacebar' to select text to manipulate
   - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most recently copied/deleted text
-
-Unfortunately, emacs makes some commonly used shortcuts a real pain to use:
-
-  - 'Esc-x' then type in 'goto-line' and then the line number to go to a specific line (I usually map this to 'Ctrl-l' so it's actually useful)
-  
+  - 'Esc-g g' then enter a line number to jump to a particular line in the buffer
 
 To exit and save we will use Ctrl-X + Ctrl-C. If you just want to save then use Ctrl-X + Ctrl-S.
 
@@ -337,8 +333,8 @@ parameters.
 
 Let's compile these two files:
 
-    gcc -c myadd.c myadd.h
-    gcc -c main.c myadd.h
+    gcc -c myadd.c
+    gcc -c main.c
     ls
 
 You should see that you now have a myadd.o and main.o in your directory. There 
