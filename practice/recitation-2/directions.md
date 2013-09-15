@@ -31,7 +31,7 @@ The requirements for the Makefile are as follows:
      compiled files being removed, the entire project being compiled, and the
      compiled file being executed. **NOTE**: This requirement is incredibly bad
      practice, but will illustrate a point about Makefiles.
-  4. The executable should be called "main"
+  4. The executable should be called "main" and should have debugging flags
 
 p1/main.c
 
