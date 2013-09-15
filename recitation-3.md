@@ -26,7 +26,7 @@ Comparison operators:
   - < > <= >=
 
 All of these comparison operators have the same precedence, and are more tightly
-binding than the equality and inequality operators (==/!==)
+binding than the equality and inequality operators (==/!==).
 
 The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
 and "and" operators short-circuit.
@@ -74,8 +74,6 @@ else
 ```
 
 Note that any integer is also a boolean!! 0 is false, any other number is true!
-
-
 
 ## Statements ##
 
@@ -149,7 +147,8 @@ x = 0;
 ```
 
 The above are automatic variables or **stack variables**. Their scope is local
-to a block, they are created when entering the block and destroyed upon exit.
+to a block (code enclosed by curly braces as shown above) - they are created 
+when entering the block and destroyed upon exit.
 
 ### Static Variables ###
 

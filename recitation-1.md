@@ -43,7 +43,7 @@ machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
 
 ### Paths ###
  
-A good palce to start with UNIX is the filesystem structure. Our clic machines 
+A good place to start with UNIX is the filesystem structure. Our clic machines 
 run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
 the break between directories and files. An example file path in UNIX might be 
 `/usr/bin/dict`. The path `/` by itself denotes *the highest level directory*. 
@@ -235,11 +235,7 @@ Emacs has much of the functionality that vim has and we present the basics below
   - 'Ctrl-a' goes to beginning of line, 'Ctrl-e' goes to end
   - 'Ctrl-spacebar' to select text to manipulate
   - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most recently copied/deleted text
-
-Unfortunately, emacs makes some commonly used shortcuts a real pain to use:
-
-  - 'Esc-x' then type in 'goto-line' and then the line number to go to a specific line (I usually map this to 'Ctrl-l' so it's actually useful)
-  
+  - 'Esc-g g' then enter a line number to jump to a particular line in the buffer
 
 To exit and save we will use Ctrl-X + Ctrl-C. If you just want to save then use Ctrl-X + Ctrl-S.
 
@@ -278,8 +274,8 @@ three text files in the same working directory.
 myadd.h
 
 ```c
-#ifndef _MYADD_H_
-#define _MYADD_H_
+#ifndef __MYADD_H__
+#define __MYADD_H__
 int add(int x, int y);
 #endif
 ```
@@ -302,12 +298,12 @@ int main(int argc, char **argv)
     add(2, 4);
 }
 ```
-We'll be using gcc to compile our programs. `gcc` as a terminal command accepts
+We'll be using gcc to compile our programs. `gcc` as a shell command accepts
 a few parameters that we'll be making use of often.
 
   - `-g` This flag will include debugging flags when you compile. If you're going
     to be shipping your program, you won't want to include this flag, but for
-    the purposes of this class, you'll probably always want these flags. They'll
+    the purposes of this class, you'll probably always want this flag. It'll
     enable debugging tools to give you more useful information like the line
     number and file of the code that crashed.
   - `-Wall` This will turn on all warnings. Essentially, if there's a problem in
@@ -337,8 +333,8 @@ parameters.
 
 Let's compile these two files:
 
-    gcc -c myadd.c myadd.h
-    gcc -c main.c myadd.h
+    gcc -c myadd.c
+    gcc -c main.c
     ls
 
 You should see that you now have a myadd.o and main.o in your directory. There 
@@ -359,4 +355,4 @@ Otherwise it will go looking in all the places it searches for commands like
 `ls` and `touch` to find `main`.
 
 For more on compiling, linking, and debugging, see 
-[this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf)
+[this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf).
