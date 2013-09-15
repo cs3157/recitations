@@ -1,124 +1,4 @@
-# Recitation 3: Welcome to C #
-
-## Bits Bytes and Binary ##
-
-Let's just refresh our memory about memory:
-
-  - A **bit** is a single digit in binary; on or off; 1 or 0
-  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
-  - **Hexadecimal** is another notation to count even higher in fewer places
-    - Two hexadecimal places express 1 byte
-    - FF in Hexadecimal is 255
-  - **Two's complement**
-    - Most modern computers use this notation for signed integers
-    - **Most significant bit**: Usually the leftmost, but generally the bit with the
-      highest value: If 1000 = 8, then 1 is the most significant bit. If we were
-      using a different notation such as 1010 = 5, then the rightmost 0 is the
-      most significant bit. 
-    - If the most significant bit is 1, then in two's complement, you're looking
-      at a negative number
-    - To convert: 1010 (read as ten if unsigned), first note that it is
-      negative. Then find its magnitude by flipping all the bits (0101, 5) and
-      then adding 1 (0110) meaning the value is -6.
-    - Consult the following table to see something interesting: (note the
-      wraparound effect
-      
-Binary | usigned decimal | two's complement decimal
------- | --------------- | ----------------------- 
-000    | 0               | 0
-001    | 1               | 1
-010    | 2               | 2
-011    | 3               | 3
-100    | 4               | -4
-101    | 5               | -3
-110    | 6               | -2
-111    | 7               | -1
-
-
-## Data Types: Numbers ##
-
-Integer Types:
-
-  - char
-  - int
-
-Modifiers (and sugar):
-
-  - short
-  - long
-
-Memory size for each type depends on system, and only restrictions are that
-
-    char <= short <= int <= long <= long long
-
-Clic machines follow
-
-  - char = 1 byte
-  - short = 2 bytes
-  - int = 4 bytes
-  - long = 8 (these last two vary from system to system a lot)
-  - long long = 8 
-
-Test it out for yourself:
-
-```c
-#include <stdio.h>
- 
- int main(int argc, char** argv) {
-   printf("char: %d\n
-     short: %d\n
-     int: %d\n
-     long: %d\n
-     longlong: %d\n",
-     sizeof(char), sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
-   return 0;
-}
-```
-
-Here are some declarations to help you understand what really happens when we're
-talking characters and integers. Definitely take a look at [The
-Ascii Table](http://www.asciitable.com) and understand the relationships in the
-order of the first 128 ascii characters. The C language is built on a subset of
-7-bit ascii (0-127) so its important to know what the table is like, not to
-memorize it. Also note that in C, single quotes means a character.
-
-Declaration     | x (dec) | y (dec)
---------------- | ------- | -------
-int x;          | NULL    | -
-int x, y;       | NULL    | NULL
-int x = 0, y;   | 0       | NULL
-char x = 'x';   | 120     | -
-char x = '\n';  | 10      | -
-char x = '\13'; | 11      | -
-char x = '0';   | 48      | -
-char x = '\0';  | 0       | -
-char x = 0;     | 0       | -
-long x = 0L;    | 0       | -
-
-Preceding a constant with 0x denotes hexadecimal notation:
-
-    (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
-    (037777777777 == -1); //returns 1 (true)
-    sizeof(1234L); //returns 8
-    sizeof(1234); //returns 4
-    0xFFFFU; //returns 65535
-    0177777U; //returns 65535
-
-Float and double are the two floating point types (decimal) and can be expressed
-with a decimal point or as scientific notation:
-
-    float miles = 1.8;
-    double big = 1e10;
-
-The only implementation constraint is that
-
-    float <= double <= long double
-
-so they could all be one size, or be three distinct sizes.
-
-In C there is no such thing as a string, just an array and pointers.
-Essentially, a bunch of single characters located consecutively in memory will
-make up a string, but more on this later.
+# Recitation 3: The C Language and Git#
 
 ## Expressions ##
 
@@ -194,6 +74,8 @@ else
 ```
 
 Note that any integer is also a boolean!! 0 is false, any other number is true!
+
+
 
 ## Statements ##
 
@@ -321,3 +203,167 @@ when functions are called, space for them is built up on the stack and cleared
 as they complete. Heap variables (you'll learn more about these later) will be
 allocated on the heap and therefore, like static variables, will not be cleared
 after each function call.
+
+## Git ##
+
+For this part of the recitation, we will follow Jae's "git-tutorial" which can
+be found on CourseWorks. Here's a quick run through of the operations reviewed
+in the tutorial, along with some bonus operations:
+
+Configuration:
+
+    git config --global user.name "Your Full Name" 
+    git config --global user.email your_uni@columbia.edu
+    git config --global --add color.ui true
+
+Working with repositories
+
+    git init
+    git status
+    git add
+    git commit
+    git commit -m
+
+Checking up on your changes
+
+    git status
+    git diff
+    git diff --cached
+    git log
+    git log --stat --summary
+    git log -p
+
+Removing and renaming
+
+    git rm
+    git mv
+
+Undoing
+
+    git checkout -- [filename]
+    git reset HEAD [filename]
+
+Tools
+
+    git grep [pattern]
+    git help
+    man git
+    man gittutorial
+
+Patches
+
+    git format-patch --stdout origin > mywork.mbox
+    git am path/to/mywork.mbox
+
+Remotes
+
+    git remote add
+    git pull
+    git fetch && git merge
+
+*Important*: statuses of files
+
+1. Untracked
+2. Tracked, unmodified
+3. Tracked, modified, unstaged
+4. Tracked, modified, staged
+
+### Bonus ###
+
+All of these recitation notes are tracked using git and hosted on github. If we
+have time we'll come back to this during recitation, but here's some github 101.
+
+1. Create an account by going to [github.com](http://github.com) and signing up.
+Then, [configure git for use with remote
+servers](https://help.github.com/articles/set-up-git).
+
+2. Add your SSH keys to github. They have [a handy
+tutorital](https://help.github.com/articles/generating-ssh-keys) to help out.
+All you should need to do is Step 4 - adding ssh keys.
+
+3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
+repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
+your local machine. 
+
+    **Digression**: One of the reasons git is so great for working 
+in distributed teams is a feature called branching. Branches are subsections of git 
+commits that don't affect other branches. For example "master" is the branch 
+that you'll do all your work on for this class. Let's say though you want to 
+add more unix commands to recitation-1.md. You could create a branch called 
+`improve_recitation1_unix` like so:
+
+        git checkout -b improve_recitation1_unix
+
+    This would create a new branch, and switch to it. On this branch you would make
+and commit your changes. When finished, you could switch back to the master
+branch and merge your changes from the feature branch as follows:
+
+        git checkout master
+        git merge improve_recitation1_unix
+
+    The reason branching is so useful is that it allows for multiple people to work
+on their own issues, and then merge their changes in only *after* they are
+certain their changes will not cause problems to the master branch. In this way,
+the master branch always represents a completely functioning project, while the
+branches may have broken code.
+
+    Anyway, all this was a bit of a digression to discuss branching, but now that
+you have a fork of my respository, you can make changes on the master branch.
+When you're done, use `git push origin master` to push your changes back up to
+your fork, and then go to github.com to pull-request your changes. If I like
+what you've done, I'll definitely accept your pull request.
+
+And that's about it for github. Forking and branching are crucial to working on
+teams, both private and open-source. Github and git are great tools for managing
+all sorts of things, even notes, so make sure you're familiar with them.
+Proficiency in git and github is a desirable trait to have when job-hunting.
+
+Other useful tutorials:
+
+- [Be Social](https://help.github.com/articles/be-social)
+- [Create a Repository](https://help.github.com/articles/create-a-repo)
+
+## How NOT to get a Zero ##
+
+Jae makes it pretty easy to not get a zero when submitting your lab. His
+instructions are pretty clear, but let's just make sure we've got it all
+straight. Here's the process you should follow when you're working on your lab:
+
+1. **Clone Jae's repository** by using the following command:
+
+        git clone /home/jae/cs3157-pub/labN labN
+
+2. **Work on the lab and make FIVE commits** using
+
+        git commit
+
+    or
+
+        git commit -m "A message about your commit"
+
+3. **Make sure you have**:
+    1. `README.txt` spelled and capitalized exactly like that. It MUST contain
+your name, UNI, the lab number, and a description of your solution to the
+assignment.
+    2. tested your code. Run `make all` to ensure you're compiling the latest
+version of your code and test it. If your code does not compile you will receive
+a zero for that portion of the assignment, without exception.
+    3. only commited what is necessary. Run `make clean` followed by `git
+status` to ensure that the only code that you've committed is source, not object
+file or executable. git status should show nothing changed after running make
+clean if all has been done properly.
+
+4. **Submit your lab** using the following command:
+
+        /home/w3157/submit/submit-lab labN
+
+    This will create a patch for your code, clone Jae's code into a folder
+`./labN-CURRENT_TIME`, apply your patch to that directory, copy your patch to
+the submission directory that TAs can access, and lastly print "SUCCESS!"
+
+5. **Test your submission** by going into the `./labN-CURRENT_TIME` directory,
+running `make` and checking that your program runs. Also make sure that if the
+lab instructions specified how to name your compiled files, they are properly
+named. If anything is wrong, fix it in your initial repository, commit the
+changes, and go back to step 4 :smiley:
+
