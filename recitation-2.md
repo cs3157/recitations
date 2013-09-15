@@ -159,6 +159,12 @@ Binary | usigned decimal | two's complement decimal
 110    | 6               | -2
 111    | 7               | -1
 
+Be aware of some important boundaries as well:
+
+  - 0x00000000 = 0
+  - 0x7FFFFFFF = 2147483647
+  - 0x80000000 = -2147483648
+  - 0xFFFFFFFF = -1
 
 ## Data Types: Numbers ##
 
@@ -229,6 +235,15 @@ Preceding a constant with 0x denotes hexadecimal notation:
     0xFFFFU; //returns 65535
     0177777U; //returns 65535
 
+Also not that converting a signed value to an unsigned value or vice verse
+preserves the bit pattern:
+
+```c
+  char c = -1; //0xFF
+  unsigned char uc = c; //0xFF
+  int i = uc; //i == 255
+```
+
 Float and double are the two floating point types (decimal) and can be expressed
 with a decimal point or as scientific notation:
 
@@ -244,4 +259,5 @@ so they could all be one size, or be three distinct sizes.
 In C there is no such thing as a string, just an array and pointers.
 Essentially, a bunch of single characters located consecutively in memory will
 make up a string, but more on this later.
+
 

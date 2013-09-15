@@ -1,0 +1,26 @@
+CC = gcc
+CFLAGS = -g -Wall
+LDFLAGS = -g
+MAIN = main
+
+.PHONY: default
+default: all run
+
+$(MAIN): main.o ops.o opsprinter.o
+
+main.o: main.c ops.h
+
+ops.o: ops.c ops.h opsprinter.h
+
+opsprinter.o: opsprinter.c opsprinter.h
+
+.PHONY: all
+all: clean main
+
+.PHONY: clean
+clean:
+	rm -f *.o $(MAIN) 
+
+.PHONY: run
+run:
+	./$(MAIN)
