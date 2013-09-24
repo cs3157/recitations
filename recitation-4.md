@@ -13,7 +13,7 @@ The order of the increment/decrement operators in C matters:
     int y = x++; // y==1
     y = ++x; // y==3
 
-Valid bianry operators in order of increasing precedence:
+Valid binary operators in order of increasing precedence:
 
   - + -
   - * / %
@@ -56,11 +56,14 @@ Bit-wise operators are tricky and can be used for a variety of purposes:
     shifting varies from machine to machine and whether or not we're talking
     unsigned or signed.
 
-        int x = 2;
+        int x = 2;  // in binary 00000010
         x = x << 2; // x == 8
+                    // in binary 00001000
         x = x >> 1; // x == 4
+                    // in binary 00000100
 
   - `~` just does the one's complement, ie. flipping all the bits.
+  - `~0` flips all the bits in 0, getting all 1s
 
 Ternary operator:
 
