@@ -16,12 +16,16 @@ And set your editor globally (here vim, if you prefer emacs use that)
 
     echo "EDITOR=vim" >> ~/.bashrc
 
+Getting Started
+
+    git init
+    git clone remote
 
 Working with repositories
 
-    git init
     git status
     git add file1 file2
+    git add -p    #individually pick for each set of changes whether to stage it
     git commit
     git commit -m "some message"
 
