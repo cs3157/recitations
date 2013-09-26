@@ -191,8 +191,9 @@ colon.
 
   - `:w [optional filename]` This will save the current file if no file name is
     passed or write the current file to specified location.
+  - `:x` This will save and quit
   - `:e filename` will open the filename specified
-  - `:q` will quite vim and take you back to terminal
+  - `:q` will quit vim and take you back to terminal
   - `:[line numer]` will jump to that line
 
 That should be enough for basic vim navigation. If you want to learn to be a
