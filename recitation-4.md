@@ -289,7 +289,7 @@ a++; //illegal!
 In most cases, just calling an array by its variable name without the square
 brackets will be interpreted as a pointer to the first element of the array. 
 Incrementing a pointer will always move it ahead not one byte, but the size of
-the pointer. In this case we're dealing with an int so it will likely move it
+the type to which it's pointing. In this case we're dealing with an int so it will likely move it
 ahead 4 bytes to the next int. Unlike a pointer, though, an array is a constant
 variable.
 
@@ -302,12 +302,31 @@ characters with a null terminating character at the end.
 char c[] = "abc";
 char c[] = {'a', 'b', 'c', '\0'};
 char *s = "my string"; // modifiable pointer
+"my string"[0] == 'm' //true!
 ```
 
 There's a slight difference between these two definitions. c is an array which
 means you can't move where it points to, its always going to point to a. s on
 the other hand can be incremented and decremented and moved around however you
-like.
+like. "my string", however, can't be modified; it's a string literal! 
+
+Some useful string functions (need to #include string.h):
+```c
+char d[20];
+char c[] = "abc";
+strcpy(d, "123");
+strcat(d, c);
+
+printf("%s\n", d); //prints 123abc
+printf("%lu\n", strlen(d)); //prints 6
+
+//to only copy/cat the first n chars:
+strncpy(d, "456", 2); 
+strncat(d, "def", 2);
+
+printf("%s\n", d); //what does this print?
+```
+For a closer look at the strcpy function, see `recitation-4-code/strcpy.c`
 
 So how about an array of strings? Well that would be an array of arrays.
 
