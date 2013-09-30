@@ -289,7 +289,7 @@ a++; //illegal!
 In most cases, just calling an array by its variable name without the square
 brackets will be interpreted as a pointer to the first element of the array. 
 Incrementing a pointer will always move it ahead not one byte, but the size of
-the pointer. In this case we're dealing with an int so it will likely move it
+the type to which it's pointing. In this case we're dealing with an int so it will likely move it
 ahead 4 bytes to the next int. Unlike a pointer, though, an array is a constant
 variable.
 
@@ -310,7 +310,7 @@ means you can't move where it points to, its always going to point to a. s on
 the other hand can be incremented and decremented and moved around however you
 like. *s, however, can't be modified; it's a string literal! 
 
-Some useful string operations (need to #include string.h):
+Some useful string functions (need to #include string.h):
 ```c
 char d[20];
 char c[] = "abc";
