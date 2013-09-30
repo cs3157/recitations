@@ -308,7 +308,7 @@ char *s = "my string"; // modifiable pointer
 There's a slight difference between these two definitions. c is an array which
 means you can't move where it points to, its always going to point to a. s on
 the other hand can be incremented and decremented and moved around however you
-like. *s, however, can't be modified; it's a string literal! 
+like. "my string", however, can't be modified; it's a string literal! 
 
 Some useful string functions (need to #include string.h):
 ```c
