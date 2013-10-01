@@ -13,7 +13,7 @@ The order of the increment/decrement operators in C matters:
     int y = x++; // y==1
     y = ++x; // y==3
 
-Valid bianry operators in order of increasing precedence:
+Valid binary operators in order of increasing precedence:
 
   - + -
   - * / %
@@ -56,11 +56,14 @@ Bit-wise operators are tricky and can be used for a variety of purposes:
     shifting varies from machine to machine and whether or not we're talking
     unsigned or signed.
 
-        int x = 2;
+        int x = 2;  // in binary 00000010
         x = x << 2; // x == 8
+                    // in binary 00001000
         x = x >> 1; // x == 4
+                    // in binary 00000100
 
   - `~` just does the one's complement, ie. flipping all the bits.
+  - `~0` flips all the bits in 0, getting all 1s
 
 Ternary operator:
 
@@ -228,7 +231,7 @@ Note:
 makes declarations clearer.  `int* p1, p2;` would lead you to assume that both 
 p1 and p2 are being declared as type int* (a pointer to an integer), but in 
 reality the compiler interprets this statement as if it was written 
-`int *p1; int p2;` - declaring p1 as a pointer to int and p2 as a normal int.  
+`int *p1; int p2;` - declaring p1 as a pointer to int and p2 as a normal int.
 Writing the declaration as `int *p1, p2` will avoid confusion in such cases.
   - * is also an operator that will dereference a pointer (get you its value)
   - & is an operator that will reference a value (get you its address)
@@ -379,6 +382,25 @@ with the debugging flag `-g`.
 
 The following are excerpts from `recitation-4-code/invalidwrite.c` and
 `recitation-4-code/leak.c`.
+
+### Valgrind+Makefile=Good ###
+
+Remembering to run valgrind, and retyping the command, is annoying. A clever way
+to more easily run valgrind repeatedly as part of your normal edit/compile/test
+loop is to add valgrind to your makefile. Remember how you can include phony
+targets in your Makefile? We can use that to have it run Valgrind for us.
+
+For example, using Jae's Makefile template from lecture note 1, you can add a
+stanza at the end:
+
+    .PHONY: valgrind
+    valgrind: main
+        valgrind --leak-check=yes ./main
+      
+
+Then instead of running `make` followed by `./main` you can just run
+`make valgrind` and it will compile your code and run it under valgrind.
+
 
 ### Invalid Write ###
 

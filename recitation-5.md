@@ -1,6 +1,5 @@
 # Recitation 5 #
-Though late, I want to make sure you all have a secondary resource for this
-topic. The main topics for these notes will be those covered in lecture 7 and
+The main topics for these notes will be those covered in lecture 7 and
 useful for lab 3.
 
 ## Function Pointers (K&R 5.11) ##
@@ -34,7 +33,7 @@ function it accepts. The basic layout for a function pointer type is `returntype
 denotes the type of the function. The name of the function being preceded with
 an asterisk tells us its a pointer. The function is surrounded by parentheses so
 that the compiler doesn't think we've got a variable `returntype *functionName`.
-The parenthese following the declaration are necessary as well, even if the
+The parenthesis following the declaration are necessary as well, even if the
 function we want to accept doesn't have any arguments. The parameter's only need
 their types declared so that the compiler can check these. Since you won't have
 access to the code you don't need to worry about what to call them.
@@ -57,12 +56,12 @@ int main(int argc, char **argv) {
 ```
 
 Notice how we have a function `wasteTime`. And when we follow it with
-perentheses it gets called. When we don't, it is automatically a function
+parentheses it gets called. When we don't, it is automatically a function
 pointer. Why is this?
 
 Well everything in the program is stored in memory, even the functions, which
 means even they have an address. So `wasteTime` has an address in memory. When
-you follow `wasteTime` with perentheses (`wasteTime()`), C goes to the address
+you follow `wasteTime` with parentheses (`wasteTime()`), C goes to the address
 and executes the function. If you think of `wasteTime` as storing a pointer to a
 function, then you can think of `wasteTime()` as dereferencing the pointer.
 Therefore, when we call `notifier` and pass it `wasteTime` without parentheses, it
@@ -148,7 +147,7 @@ ppt->x == (*ppt).x; // 1
 ```
 
 The shorthand just saves you the hassle of writing out line 4 of the code above.
-Also, if you don't want to write out the keyword `struct` everytime, you can
+Also, if you don't want to write out the keyword `struct` every time, you can
 just declare your struct as follows:
 
 ```c
@@ -224,7 +223,7 @@ some nasty little things to be aware of.
 
 `const` is a keyword for types in C that prevents them from being modified. It's
 important to understand that this means once the variable is declared, the
-memory it is refering to cannot be modified. Some examples:
+memory it is referring to cannot be modified. Some examples:
 
 ```c
 const char *string = "bai";
