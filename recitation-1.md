@@ -107,7 +107,7 @@ our hidden file using the remove command, `rm`.
 
 Alright, now lets get rid of the directory we created here. `rm` accepts flags 
 too and won't let you delete directories unless you specify to run it 
-recursively (repeatedlygo into each subdirectory and delete all files. It will
+recursively (repeatedly go into each subdirectory and delete all files. It will
 also ask for confirmation that you want to delete files unless you tell it to 
 force the delete. For force delete, use `-f` and for recursive use `-r`:
 
@@ -211,7 +211,7 @@ type
 Alternatively, check out [Open Vim's Tutorial](http://www.openvim.com/tutorial.html)
 for another interactive vim lesson.
 
-After learning vim, you might want to configure it. This is done by editting the .vimrc file in your home directory. Let's check out our current settings.
+After learning vim, you might want to configure it. This is done by editing the .vimrc file in your home directory. Let's check out our current settings.
 
     vim ~/.vimrc
 
