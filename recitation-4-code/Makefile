@@ -9,8 +9,8 @@ pointerfun_clang: pointerfun.c
 
 pointerfun.o: 
 
-output: pointerfun
-	./pointerfun > output
+pointerfun-output: pointerfun
+	./pointerfun > pointerfun-output
 
 
 .PHONY: clean all valgrind
