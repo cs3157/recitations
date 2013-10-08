@@ -96,8 +96,8 @@ function.
 Structs are kind of like Java's objects but for C. Fundamentally, they allow you
 to declare a collection of one or more variables grouped under a single type. A
 struct cannot, however, contain functions/methods. A struct can only contain
-other datatypes such as `int` `char` `float` or even other structs. An example
-struct:
+other datatypes such as pointers, `int`, `char`, `float` or even other structs. An
+example struct:
 
 ```c
 struct point {
@@ -126,9 +126,10 @@ struct rect {
   struct point p2;
 }
 // Usage:
-struct point leftTop = {50, 50};
+struct point leftTop = {50, 40};
 struct point rightBottom = {100, 0};
 struct rect myRect = {leftTop, rightBottom};
+myRect.p1.x += 5; //now 55
 ```
 
 Structs, like everything in C, are passed by value. This means if you pass a
@@ -136,8 +137,9 @@ structure as a parameter to a function, the function will receive a copy of the
 struct, with all its values copied by value. This means if your struct contains
 a pointer, the value of the pointer will be copied (and it will point to the
 same location in memory). If you want to pass a pointer to a struct, you can
-dereference it with the `&` operator. Pointers to structure are frequently used,
-so there is a shorthand for accessing their members:
+dereference it with the `&` operator as you can with all data types. Pointers to
+structure are frequently used, so there is a shorthand for accessing their
+members:
 
 ```c
 struct point pt = {50, 50};
@@ -160,8 +162,9 @@ Point pt = {50, 50};
 ```
 
 Make sure to read the K&R on this to learn some interesting use cases for
-structures. Note that a struct can contain a member of its own type. This is
-particular useful for data structures like trees.
+structures. Note that a struct can contain a pointer to its own type (but not
+directly a member of its own type). This is particular useful for data
+structures like trees.
 
 ```c
 typedef struct {
@@ -176,6 +179,15 @@ child2.parent = &root;
 child1.parent = &root;
 ```
 
+Bad:
+
+```c
+/* this won't work */
+struct {
+    void *value;
+    Node parent;
+} Node;
+```
 ### Union ###
 
 A union is really nifty. It's like a structure, but, wait for it, all of its
