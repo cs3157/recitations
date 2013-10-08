@@ -1,0 +1,47 @@
+We'll be running a series of experiments, and printing the results
+to try to better understand pointers and memory in C. Ready?
+
+The memory address of global variable globalvar is 0x602050
+The memory address of static variable staticvar is 0x602058
+
+The memory address of local variable a is 0x7fff36c22ad4
+The memory address of local variable b is 0x7fff36c22ad8
+ptr_to_a has the address 0x7fff36c22a98, and the content 0x7fff36c22ad4. *ptr_to_a = 4 
+
+ptr_to_ptr_to_a has the address 0x7fff36c22aa0, and the content 0x7fff36c22a98.  *ptr_to_ptr_to_a = 0x7fff36c22ad4. **ptr_to_ptr_to_a = 4 
+
+Mallocing *c to sizeof(int)*5; *d to sizeof(int)
+The memory address on the heap int *c points to is 0x17c6010
+The memory address on the heap int *d points to is 0x17c6030
+	But note that c itself is in the address 0x7fff36c22aa8.	0x7fff36c22aa8 ->  0x17c6010, which contains 9 
+Look at all the different ways we can use pointers to a block of malloc'd memory
+Now looping through c+0...c+4:
+    *(c+0) ==  9    c[0] ==  9    0[c] ==  9 
+    *(c+1) == 10    c[1] == 10    1[c] == 10 
+    *(c+2) == 11    c[2] == 11    2[c] == 11 
+    *(c+3) == 12    c[3] == 12    3[c] == 12 
+    *(c+4) ==  0    c[4] ==  0    4[c] ==  0 
+
+e = NULL. Its value is (nil)
+e = 0. Its value is still (nil)
+e = '\0'. Its value is still (nil)
+
+Now let's play with functions!
+The memory address of the function add is 0x400a7e
+The memory address of the function multiply is 0x400ac7
+
+We'll try to add, by asking the operate function to use the add function...
+We'll add a + b and store into d 
+  (inside operate) Storing into 0x17c6030 results of operation at memory address 0x400a7e
+    (inside add) Adding the contents of 0x7fff36c22ad4 and 0x7fff36c22ad8. (4+3)
+The contents of malloc'd space 0x17c6030, d, is 7
+
+Ok, now let's try to multiply, by asking the operate function to use the multiply function...
+We'll multiply a * b and store into globalvar 
+  (inside operate) Storing into 0x602050 results of operation at memory address 0x400ac7
+    (inside multiply) Multiplying the contents of 0x7fff36c22ad4 and 0x7fff36c22ad8. (4*3)
+The contents of global variable 0x602050, globalvar, is 12
+
+
+"This is a string literal!" is acessed via char *sl at 0x401270
+The last character of ^ is '!', stored at 0x401288
