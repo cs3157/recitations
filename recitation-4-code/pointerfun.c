@@ -65,7 +65,24 @@ int main(int argc, char **argv) {
     }
     printf("\n");
 
+    printf("one last thing, carr is an int array of size 5. Let's do what we did with c again with carr...\n");
+    int carr[5];
+    carr[0] = 9;
+    *(carr+1) = 10;
+    carr[2] = 11;
+    3[carr] = 12;
+    *(carr+4) = 0;
+    printf("Now looping through carr+0...carr+4:\n");
+    for (i = 0; i < 5; i++) {
+        printf("    *(carr+%d) == %2d", i, *(carr+i));
+        printf("    carr[%d] == %2d", i, carr[i]);
+        printf("    %d[carr] == %2d \n", i, i[carr]);
+    }
+    printf("\n");
 
+
+
+    printf("null pointers are just pointers whose value is 0 (or in hex 0x0)\n");
     int *e;
     e = NULL;
     printf("e = NULL. Its value is %p\n", e);
@@ -73,6 +90,15 @@ int main(int argc, char **argv) {
     printf("e = 0. Its value is still %p\n", e);
     e = '\0';
     printf("e = '\\0'. Its value is still %p\n", e);
+
+    printf("null characters are the number 0. 0 == '\\0'\n");
+    char f;
+    f = '0';
+    printf("f = '0'. Its value as a char is %c, but as a number is %d\n", f, f);
+    f = 0;
+    printf("f = 0. Its value as a char is %c, but as a number is %d\n", f, f);
+    f = 'a';
+    printf("f = 'a'. Its value as a char is %c, but as a number is %d\n", f, f);
     printf("\n");
 
 
@@ -89,8 +115,8 @@ int main(int argc, char **argv) {
     printf("\n");
 
     printf("Ok, now let's try to multiply, by asking the operate function to use the multiply function...\n");
-    printf("We'll multiply a * b and store into globalvar \n");
-    operate(&a, &b, &globalvar, &multiply);
+    printf("We'll multiply a * b and store into globalvar, but use *ptr_to_ptr_to_a, rather than &a\n");
+    operate(*ptr_to_ptr_to_a, &b, &globalvar, &multiply);
     printf("The contents of global variable %p, globalvar, is %d\n", &globalvar, globalvar);
 
     /* allways free! */
