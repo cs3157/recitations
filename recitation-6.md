@@ -45,7 +45,25 @@ ability to write and read and is a value of 6. 111 would grant read, write,
 and execute and is a value of 7. Conventially, you could combine these in the
 order owner-group-other in a string like "644" which would mean the owner can
 write/read, and the group and others and only read. `chmod ### path` can
-be used to set permissions for a path.
+be used to set permissions for a path.Note that you can view permissions 
+(among other things) of files in your current directory by entering `ls -al`.
+The `-a` option includes files that begin with a dot and the `-l` option displays 
+each file in long format, which is what shows you the file permissions
+and all that good stuff. See the `ls` man page for more information. 
+
+### Some Notes About Lab 4 ###
+If you plan on doing the pair option and would like to 
+[procure a private GitHub repo](https://github.com/edu), please request one ASAP,
+because it takes a few days to process. Additionally, if you're new to GitHub/BitBucket,
+you may find the [Git Documentation](http://git-scm.com/book), the 
+[GitHub Help page](https://help.github.com/), and the 
+[BitBucket Documentation](https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+Documentation+Home)
+handy.
+
+Whether you choose to do the pair option or the solo option, you may wish to 
+review each of the I/O functions we've learned in lecture note 9. Be sure that 
+you understand the differences between them and note that there are certain situations
+when some are more appropriate than others, and vice versa (ex., `fgets()` vs. `fread()`).
 
 ### Processes ###
 
