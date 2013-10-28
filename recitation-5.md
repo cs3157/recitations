@@ -1,6 +1,6 @@
 # Recitation 5 #
-The main topics for these notes will be those covered in lecture 7 and
-useful for lab 3.
+The main topics for these notes will be those useful for lab 3, material from
+lecture note 9, and useful information for the practice midterm.
 
 ## Function Pointers (K&R 5.11) ##
 It is often the case in programming that you'll want your program to change its
@@ -91,160 +91,269 @@ Make sure to check out Jae's notes (lecture 7) for more complicated examples of
 this. Notice that we did the same thing when calling `fn()` in our `notifier`
 function.
 
-## Structs (K&R 6) ##
 
-Structs are kind of like Java's objects but for C. Fundamentally, they allow you
-to declare a collection of one or more variables grouped under a single type. A
-struct cannot, however, contain functions/methods. A struct can only contain
-other datatypes such as pointers, `int`, `char`, `float` or even other structs. An
-example struct:
+## Makefiles ##
 
-```c
-struct point {
-  int x;
-  int y;
-}
+Makefiles aren't as hard as they look so long as you understand the three steps
+to compilation. [(Source
+here)](http://stackoverflow.com/questions/6264249/how-does-the-compilation-linking-process-work)
+
+1. Pre-processing: This is when special isntructions like `#include` are
+processed.
+2. Compilation: This is when your c code is processed into an object file in
+binary form. At this point, undefined symbols are okay so long as they're
+declared. That's why you `#include` header files - to declare functions and
+variables that you don't define in that particular file. `gcc` lets you stop the
+entire process at this point using the `-c` flag. Object files generated in this
+step can be linked together to form an executable or put in a special archive
+called a static library. Most error checking takes place at this stage.
+3. Linking: The linker takes object files with binary symbols and produces
+either a shared (AKA dynamic) library, or an executable. At this point it
+replaces all the references to undefined symbols with the proper memory address.
+Most often at this stage the only errors left come from double-defined symbols
+or undefined symbols.
+
+Now let's take a look at the Makefile's default rules and variables:
+
+Compilation (includes pre-processing):
+```make
+n.o:
+  $(CC) -c $(CPPFLAGS) $(CFLAGS) n.c
+```
+Linking:
+```make
+n:
+  $(CC) $(LDFLAGS) n.o $(LOADLIBES) $(LDLIBS)
 ```
 
-and usage
+Let's take a look at some of the variable definitions we've used in the past:
 
-```c
-struct point pt;
-pt = {50, 100};
-pt.x == 50; // 1
-pt.y = 3;
-pt.y == 100; // 0
+```make
+CC  = gcc
+INCLUDES =
+CFLAGS   = -g -Wall $(INCLUDES)
+LDFLAGS = -g
+LDLIBS =
 ```
 
-Notice that values within a struct can be accessed and modified using the `.`
-operator in the form `structure-name.member`. We can declare another structure
-that uses the one we already have.
+And here are some entries from running `man gcc`:
 
-```c
-struct rect {
-  struct point p1;
-  struct point p2;
-}
-// Usage:
-struct point leftTop = {50, 40};
-struct point rightBottom = {100, 0};
-struct rect myRect = {leftTop, rightBottom};
-myRect.p1.x += 5; //now 55
+```
+gcc [-c|-S|-E] [-std=standard]
+           [-g] [-pg] [-Olevel]
+           [-Wwarn...] [-pedantic]
+           [-Idir...] [-Ldir...]
+           [-Dmacro[=defn]...] [-Umacro]
+           [-foption...] [-mmachine-option...]
+           [-o outfile] [@file] infile...
+-g  
+           Produce debugging information in the operating system's native format (stabs, COFF, XCOFF, or DWARF 2).
+           GDB can work with this debugging information.
+
+           On most systems that use stabs format, -g enables use of extra debugging information that only GDB can
+           use; this extra information makes debugging work better in GDB but will probably make other debuggers
+           crash or refuse to read the program.
+
+-Wall
+           Turns on all optional warnings which are desirable for normal code.  At present this is -Wcomment,
+           -Wtrigraphs, -Wmultichar and a warning about integer promotion causing a change of sign in "#if"
+           expressions.  Note that many of the preprocessor's warnings are on by default and have no options to
+           control them.
+
+-I dir
+           Add the directory dir to the list of directories to be searched for header files.  Directories named by -I
+           are searched before the standard system include directories.  If the directory dir is a standard system
+           include directory, the option is ignored to ensure that the default search order for system directories
+           and the special treatment of system headers are not defeated .  If dir begins with "=", then the "=" will
+           be replaced by the sysroot prefix; see --sysroot and -isysroot.
+
+-Ldir
+           Add directory dir to the list of directories to be searched for -l.
+
+-llibrary
+-l library
+           Search the library named library when linking.
 ```
 
-Structs, like everything in C, are passed by value. This means if you pass a
-structure as a parameter to a function, the function will receive a copy of the
-struct, with all its values copied by value. This means if your struct contains
-a pointer, the value of the pointer will be copied (and it will point to the
-same location in memory). If you want to pass a pointer to a struct, you can
-dereference it with the `&` operator as you can with all data types. Pointers to
-structure are frequently used, so there is a shorthand for accessing their
-members:
+Given what we know about compilation, where might we want to use these flags and
+for what purposes? The order we use these flags and the variables we insert them
+in is **very** important.
+
+## Important Things to Review ##
+
+- Arrays, pointers, and the structure of argv. Understanding how these data
+  types and structures work will be crucial to your understanding of C as this
+  class progresses. Try practice problem 1 for an understanding of this.
+- Order of operations. This stuff will make the exam much easier if you're not
+  trying to figure out whether the increment or the dereference happens first
+  when there are no parentheses.
+- Structs and Unions. You've already had to use structs on numerous occassions.
+  Though unions weren't on any labs, but are definitely in the lecture notes and
+  therefore fair game.
+- Stack and Heap allocation. Make sure you know how to use malloc and free. Try
+  to determine if there are memory leaks in some sample code. 
+- libmylist.a. Make sure you understand how the linked list is supposed to
+  function
+- Makefiles and git. These questions are always fair game as well. You've been
+  using makefiles and git long enough that you should know what tracked,
+  untracked, staged, and modified mean in the context of git. You should also
+  know about what rules are implicit to make, and how to write a makefile with pen
+  and paper.
+
+Try to work on pen and paper as much as possible leading up to the midterm.
+Compile-and-check methods aren't going to get you far when you're sitting down
+to take the test, so don't use them to practice. Try to really understand what
+you're writing so that you can be confident it works on your own without the
+compiler checking it for you.
+
+## File I/O ##
+### 3 channels ###
+A C program is automatically given 3 channels for input and output. They can all
+be redirected, but the basic three streams are:
+
+- (0) stdin (Standard input)
+  This stream is for incoming characters which normally come from the keyboard
+  but can also be from other sources.
+- (1) stdout (Standard output)
+  This stream is for outgoing characters, and normally goes to the terminal
+  screen but does not necessarily have to. (see below) This stream is buffered
+  which means it is not sent to the terminal until a new line character is sent.
+  This means if you use `printf("hello")` you likely will not see it until the
+  end of your program is reached.
+- (2) stderr (Standard error)
+  This stream is for error messages and is not buffered, meaning any characters
+  written to it will immediately be flushed to their destination. This
+  destination is normally the terminal screen but can be other locations as
+  well.
+
+If you wish to interact with these buffers you will need to `#include <stdio.h>`
+which is a library that defines standard operations such as `printf()` `scanf()`
+and others which you may or may not have already used.
+
+### Redirecting I/O ###
+
+While most input and output to/from programs will go to the shell, it is
+possible to redirect the source of stdin or the destination of stderr and
+stdout. The `<` and `>` characters are used to denote redirection at the 
+console. `2>` will redirect stderr whereas `>` will redirect stdout. `2>&1`
+will redirect stderr to the same location as stdout. `>>` will append the output
+to a file instead of overwriting the file. You can use other programs or files
+on either side of most of these operators.
+
+     [1] $ cat myfile.c 
+     [2] $ cat < myfile.c 
+     [3] $ cat myfile.c > cat
+     [4] $ cat myfile.c > myfilecopy.c
+     [5] $ cat myfile.c >> myfilecopy.c
+     [6] $ valgrind ./myprogram 2> myerrors
+     [7] $ valgrind ./myprogram > myoutput
+     [8] $ valgrind ./anotherprogram 2>> myerrors
+     [9] $ valgrind ./anotherprogram >> myoutput
+    [10] $ valgrind ./myprogram 2>&1 > ALLthethings
+    [11] $ valgrind ./anotherprogram 2>&1 >> ALLthethings
+
+Each of the above expressions build on each other. If you can tell what the
+effect of each expression above is, then you're set. If not, try them out and
+see what happens.
+
+### Formatting ###
+
+printf and scanf both use format strings to specify what how to format their
+output. They also both accept variable arguments. All arguments to scanf
+**must** be pointers whereas arguments to printf should be values (in the case
+of numbers) or `char *` in the case of strings. Pages 153-154 in the K&R explain
+how to format your format strings for `printf()` and 157-158 explain formatting
+for `scanf()`. Make sure you can identify the following two format strings:
 
 ```c
-struct point pt = {50, 50};
-struct point *ppt = &pt;
-ppt->x = 25;
-ppt->x == (*ppt).x; // 1
+printf("%-15.10s", "hello, world");
+sscanf("25 Dec 1988", "%d %s %d", &day, month, &year);
 ```
 
-The shorthand just saves you the hassle of writing out line 4 of the code above.
-Also, if you don't want to write out the keyword `struct` every time, you can
-just declare your struct as follows:
+### Functions with Variable Arguments ###
 
+`printf()` and `scanf()` family of functions accept a variable number of
+arguments. You can do this too! Once you've enumerated all the required
+arguments, you can specify that you would like to also accept variable arguments
+with `...`:
+
+    int myFWithVarArgs(int a, int b, ...);
+
+The declaration means that the number and types of all arguments after the
+integer b can vary. If you want to be able to actually access these arguments
+you'll need to `#include <stdarg.h>` whose implementation is system dependent,
+but interface is the same. To access the values, you will have to do the
+following:
+
+  1. Declare a variable of type `va_list` that will point to each argument.
 ```c
-typedef struct {
-  int x;
-  int y;
-} Point;
-
-Point pt = {50, 50};
+va_list my_arg;
 ```
-
-Make sure to read the K&R on this to learn some interesting use cases for
-structures. Note that a struct can contain a pointer to its own type (but not
-directly a member of its own type). This is particular useful for data
-structures like trees.
-
+  2. Call `va_start()` with the last named argument, and your variable that will
+     point to each argument.
 ```c
-typedef struct {
-  void *value;
-  Node *parent;
-} Node;
-
-Node root, child1, child2, child3, child4;
-child4.parent = &child2;
-child3.parent = &child2;
-child2.parent = &root;
-child1.parent = &root;
+va_start(my_arg, b);
 ```
-
-Bad:
-
+  3. Call `va_arg()` with the variable that will point to the argument as well
+     as the type of the argument (you'll need some way to figure out the type of
+     this argument from your other arguments). Assign the return value to a
+     variable. Repeat this step for each argument you want to read.
 ```c
-/* this won't work */
-struct {
-    void *value;
-    Node parent;
-} Node;
+int myvarInt = va_arg(my_arg, int);
 ```
-### Union ###
-
-A union is really nifty. It's like a structure, but, wait for it, all of its
-members are stored at the same location in memory. This means when you allocate
-a union, enough space is allocated for the largest member's type. This means if
-you were to declare a type as follows, you could use it to store any one of the
-three types.
-
+  4. Clean up by calling `va_end()` with the variable list of args variable.
 ```c
-union u_tag {
-  int integer_value;
-  float float_value;
-  char *string_value;
-}
-
-union u_tag u;
-u.integer_value = 5;
-int x = u.integer_value;
-u.float_value = 3.14f;
-float f = u.float_value;
+va_end(my_arg);
 ```
 
-Union's are nifty for situations where you don't know just yet what kind of data
-you need to store but want to be smart about the space you allocate. Just be
-careful that you don't store something as one type and then read it out as
-another. While possible, the behavior is compiler dependent.
+### File I/O ###
 
-## Odds and Ends ##
-### String Operations in C Library ###
-Jae has some functions listed in the notes from the Standard C Library for
-string operations. I'm not going to explain them all here, but I will point out
-some nasty little things to be aware of.
-
-  - `strlen` runs in O(n) because you can't know the length of a string without
-    traversing it to find the null character.
-  - `strcpy` and `strncpy` require that there is enough space in your
-    destination memory location for the source string. Also watch out when using
-    `strncpy` that all your strings are null terminated.
-  - `strcat` runs in O(n) too. So if you're running lots of strcats, watch out
-    because you could end up with tons of passes over a single string.
-    Exponential even.
-  - `memcpy` is great for cleaning things up. Just sayin'.
-
-### Const ###
-
-`const` is a keyword for types in C that prevents them from being modified. It's
-important to understand that this means once the variable is declared, the
-memory it is referring to cannot be modified. Some examples:
-
+Think of file I/O as writing/reading from stdin or stdout and your life will be
+much simpler. It all starts with File descriptors which you use to reference a 
+file. In order to work with files, you'll need to `#include <stdio.h>`. 
 ```c
-const char *string = "bai";
-string[0] = 'h'; //invalid, because the values that string points to are immutable
-string = "hello"; //valid, because we're changing what string points to.
-
-char *const stuck = "hello";
-stuck = string; //invalid, because the pointer is immutable
-stuck[0] = 'f'; //valid, because the memory the pointer points to is mutable.
-
-const char *const why = "You'll never change anything about me. Ever";
+FILE *fp; //Declare a file pointer
+fp = fopen("README.txt", "r");
 ```
+File descriptors are just fancy pointers for files. By default, all C programs
+are given three to start with: `stdin`, `stdout`, and `stderr` so note that any
+functions you can use file descriptors with you can use on the I/O streams we've
+already mentioned. A file descriptor is a pointer to a special struct that
+stores important information about where you currently are in a file, whether
+you can read/write to it, and what the file is. You don't need to know how it
+works, just accept that it does and you'll need to pass the File descriptor to
+functions that work with files.
+
+`fopen()` is how you'll open files. It takes two arguments, both strings. The
+first is a string representing the path to the file you want to open, and the
+second is the mode with which you will open it. The mode tells whether or not
+you are going to be reading, writing, or appending to the file and also how you
+want to read the file in. Make sure you know the difference between "r", "w",
+"a", "r+", "w+", "a+", and all of the above with a "b" on the end. If `fopen()`
+fails it will return a NULL pointer. This can happen because a file doesn't
+exist (in the case of r's and a's) or because you don't have permissions to
+access the file.
+
+`fclose()` will close the file when you're done. In general you will use
+`fgets()` and `fputs()` to read from and write to files. You can also use the
+variants of printf and scanf, `fprintf()` and `fscanf()` to write to and read
+from files. `getc()` and `putc()` are the lower level versions of these
+functions, and have macros for `getchar()` and `putchar()` which interact with
+`stdin` and `stdout` respectively. The functions `fread()` and `fwrite()` work
+in blocks instead of characters. These can be far more efficient than `fgets()`
+and `fputs()`
+
+### What's Buffering? ###
+
+Buffering determines how often the contents of a stream are sent to their
+destination. There's some low level stuff going on at this point, but just
+understand that its not very efficient to send data one character at a time, so
+buffering happens. Unbuffered streams are constantly flushed to its destination.
+Line-buffered streams are only flushed to its destination after a newline
+character is written. Block-buffered streams are flushed when they reach a
+certain size. You can use `fflush(fp)` to manually flush the buffer for any file
+pointer. 
+
+- stderr is unbuffered (why?)
+- stdout is line-buffered when it's connected to terminal
+- everything else is block-buffered
