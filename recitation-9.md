@@ -57,7 +57,7 @@ struct Pt
 	double x;
 	double y;
 
-	Pt(double x, double y);
+	Pt(double myX, double myY);
 };
 
 //we could have also made this inline
@@ -93,6 +93,9 @@ Pt::Pt(double myX = 0, double myY = 0)
 	//and myY == 0
 	x = myX;
 	y = myY;
+	
+	//note that we'd have to update our function
+	//prototype to Pt(double myX = 0, double myY = 0);
 }
 ```
 
@@ -135,8 +138,8 @@ There are four elements of a C++ class that you should always consider:
 We've already discussed constructors and destructors, but what about the other two? The **copy constructor** specifies how to construct a class type variable using an argument of that class type, i.e.: 
 
 ```cpp
-string myString = new string("hello");
-string myStringCopy = new string(myString)
+string myString("hello");
+string myStringCopy(myString); //invoking the copy constructor explicitly
 ```
 The copy constructor is called implicitly in a couple other scenarios: passing by value and returning by value.
 
