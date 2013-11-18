@@ -6,7 +6,7 @@
 
 At this point, you're all quite familiar with C's quirks and kinks. Perhaps one of the most notable ones is the absence of a String datatype!
 
-Recall that Strings in C are just special cases of arrays. C strings are arrays of characters with a null terminating character at the end. 
+Recall that strings in C are just special cases of arrays. C strings are arrays of characters with a null terminating character at the end. 
 
 ```c
 char buf[50]; //stack allocation
@@ -20,7 +20,7 @@ strcpy(s, "hello");
 But finally, after months of dealing with those pesky invalid reads, memory leaks, and so on, we can transition into a new language that permits a much friendlier way to handle strings: C++!
 
 ### Classes/Structs in C++ ###
-Before we go into strings in C++, let's talk about the basics of classes and structs first. Although we can define a struct in C++ the same way we do in C, structs tend to get much more complicated in C++ than their C predecessors). Here is the struct Pt example we all know and love:
+Before we go into strings in C++, let's talk about the basics of `class`es and `struct`s first. Although we can define a `struct` in C++ the same way we do in C, structs tend to get much more complicated in C++ than their C predecessors. Here is the `struct Pt` example we all know and love:
 
 ```cpp
 struct Pt 
@@ -35,11 +35,13 @@ Here's how you allocate space for a struct Pt in C++:
 
 ```cpp
 struct Pt myPt;
-//in C++, you can omit the 'struct' part. 
+
+//in C++, you can omit the 'struct' part:
+Pt myPt2;
 ```
 It looks exactly like how we allocated it in C! Boooring. But is it really doing the same thing?
 
-Classes/structs in C++ have **constructors** whose purpose is to initialize all data members and base classes. When we declared our `struct Pt`, `myPt`, the default `Pt` constructor was called under the covers. If we don't define any constructors for a class/struct, the C++ compiler implicitly defines a default constructor for us. The synthesized default constructor takes no arguments will call the default constructors of all members of class type and leave members of built-in type undefined. 
+Classes/structs in C++ have **constructors** whose purpose is to initialize all data members and base classes. When we declared our `struct Pt`, `myPt`, the default `Pt` constructor was called under the covers. If we don't define any constructors for a class/struct, the C++ compiler implicitly defines a default constructor for us. The synthesized default constructor will call the default constructors of all members of class type and leave members of built-in type undefined. 
 
 What if we attempted to call the default constructor like this?
 
@@ -71,13 +73,28 @@ And we can call it like this:
 Pt myPt2(4, 4);
 ```
 
-When we define member functions for our classes, we can choose to define them within the class definition (the part enclosed by the curly braces of struct Pt), or just declare them within the class definition and define them elsewhere. Member functions defined within a class definition are implicitly **inline**. Inline functions are kind of like macros in that calls to them are replaced with the body of the function. Inline functions should be short. If we don't define functions in the class definition, we need to use the scope resolution operator, `::`, to indicate that it's a member of the class. 
+When we define member functions for our classes, we can choose to define them within the class definition (the part enclosed by the curly braces of `struct Pt`), or just declare them within the class definition and define them elsewhere. Member functions defined within a class definition are implicitly **inline**. Inline functions are kind of like macros in that calls to them are replaced with the body of the function. Inline functions should be short. If we don't define functions inside the class definition, we need to use the scope resolution operator, `::`, to indicate that it's a member of the class. 
 
 A word of caution, though: if we define ANY constructors ourselves, we can no longer rely on the synthesized default constructor. Now that we've defined a constructor for `Pt` that takes two `double`s, we lose our synthesized default constructor. A declaration like this would be illegal now:
-```
-struct Pt myPt;
+```cpp
+struct Pt myPt; //error!
 ```
 So if we want our class to have a default constructor, we'd better make sure to define it along with our other constructors, lest the compiler complain.
+
+A convenient way to account for two constructors in one definition is to use **default arguments**. If no arguments are supplied to the constructor (as is what occurs when we call the default constructor), default values are assigned to the arguments, as if we had passed these values ourselves:
+
+```cpp
+/*this constructor deals with calls to the default 
+constructor and calls to the constructor taking
+two doubles*/
+Pt::Pt(double myX = 0, double myY = 0)
+{
+	//if no arguments are passed, myX == 0
+	//and myY == 0
+	x = myX;
+	y = myY;
+}
+```
 
 Hand-in-hand with constructors are **destructors**. The purpose of the destructor is to deallocate all data members. If our constructor allocated space on the heap for its data members, our destructor should free up that space. If we don't explicitly define a destructor, the compiler will synthesize one for us, which just calls the destructors of all class type members and does nothing for the built-in type members. A stack-allocated variable's destructor is called when the variable falls out of scope, after which the stack shrinks accordingly. 
 
@@ -86,15 +103,15 @@ Hand-in-hand with constructors are **destructors**. The purpose of the destructo
 Although you can still use `malloc` to allocate space on the heap, using `malloc` doesn't allow you to call the constructor of a class type object. A preferred way to do heap allocation in C++ is via the `new` operator:
 
 ```cpp
-Pt myPt = new Pt();
-Pt myPt = new Pt(4, 4);
+Pt *myPt = new Pt;
+Pt *myPt = new Pt(4, 4);
 
 //heap-allocated array of Pt's:
-Pt myPtArray = new Pt[10];
+Pt *myPtArray = new Pt[10];
 ```
-The `new` operator not only allocates space for myPt on the heap, but it also calls Pt's constructor, in this case, the default constructor. Like with malloc, we must remember to free up the heap space we allocated with `new`:
+The `new` operator not only allocates space for `myPt` on the heap, but it also calls `Pt`'s constructor, in this case, the default constructor. Like with `malloc`, we must remember to free up the heap space we allocated with `new`:
 
-```c
+```cpp
 delete myPt;
 delete [] myPtArray; //deleting a heap-allocated array
 ```
