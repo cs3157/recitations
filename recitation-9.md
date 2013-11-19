@@ -107,7 +107,7 @@ Although you can still use `malloc` to allocate space on the heap, using `malloc
 
 ```cpp
 Pt *myPt = new Pt; //myPt is a pointer to sizeof(Pt) allocated bytes
-Pt *myPt = new Pt(4, 4);
+Pt *myPt2 = new Pt(4, 4);
 
 //heap-allocated array of Pt's:
 Pt *myPtArray = new Pt[10];
@@ -116,6 +116,7 @@ The `new` operator not only allocates space for `myPt` on the heap, but it also 
 
 ```cpp
 delete myPt;
+delete myPt2;
 delete [] myPtArray; //deleting a heap-allocated array
 ```
 `delete` calls the Pt destructor of myPt and frees up the heap space it was using. `new` goes hand-in-hand with `delete`, and `malloc` goes hand-in-hand with `free`. But don't try to mix the four, i.e., calling `new` and freeing the memory with `free`. 
@@ -205,6 +206,9 @@ y = 7; //x is now 7
 The reference construct allows us to pass an argument by reference, without the need for all that pointer business we've seen before. For example, this function will increment the integer passed as an argument, since the variable it's working with isn't a temporary copy of the argument--it's an alias for the argument itself!
 
 ```cpp
+//note that to use iostreams this way, we need to have:
+using namespace std;
+#include <iostream>
 
 void increment(int& x)
 {
