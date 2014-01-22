@@ -294,9 +294,12 @@ main.c
 
 ```c
 #include "myadd.h"
+#include <stdio.h>
 int main(int argc, char **argv) 
 {
-    add(2, 4);
+    int sum = add(2, 4);
+    printf("The sum is: %d\n", sum);
+    return 0;
 }
 ```
 We'll be using gcc to compile our programs. `gcc` as a shell command accepts
@@ -324,9 +327,9 @@ and main.c. Notice the compiler directive `#include`. This tells the compiler to
 just copy paste the specified file into the current file at that location. The
 reason we include this line in main.c and myadd.c is so that if we reference a
 function in either of these files before it is defined, the compiler can know
-its header. 
+its header.
 
-As an example, in main.c we have `add(2, 4);`. The compiler wants to make sure
+As an example, in main.c we have `int sum = add(2, 4);`. The compiler wants to make sure
 that this is a valid function call but knows nothing of the function "add", what
 type it will return, or what its explicit parameters are. Including myadd.h will
 tell the compiler that "add" returns type int, and accepts two integer
