@@ -333,7 +333,7 @@ myadd.h
 ```c
 #ifndef __MYADD_H__
 #define __MYADD_H__
-int add(int x, int y);
+int add(int a, int b);
 #endif
 ```
 
@@ -343,7 +343,7 @@ just copy paste the specified file into the current file at that location. The
 reason we include this line in main.c is so that if we reference a function in
 either of these files before it is defined, the compiler can know its header.
 
-As an example, in main.c we have `add(2, 4);`. The compiler wants to make sure
+As an example, in main.c we have `add(1, 2);`. The compiler wants to make sure
 that this is a valid function call, but knows nothing of the function "add",
 what type it will return, or what its explicit parameters are. Including myadd.h
 will tell the compiler that "add" returns type int, and accepts two integer
