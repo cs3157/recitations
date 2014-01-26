@@ -92,6 +92,36 @@ this. Notice that we did the same thing when calling `fn()` in our `notifier`
 function.
 
 
+### Functions vs Pointers to Functions ###
+Functions aren't quite like regular variables, so function pointers aren't quite
+like regular pointers either. Think about this small program:
+
+```c
+void myFunc(int x) {
+  x++; //this function is irrelevant...
+}
+
+int functionAcceptor(void (*f)(int), void (*g)(int)) {
+  return f == g;
+}
+
+int main() {
+  char *s = functionAcceptor(myFunc, &myFunc) ? "They're the same thing" :
+    "They're totally different.";
+  printf("%s", s);
+}
+```
+
+What will this program print?
+
+```
+They're the same thing
+```
+
+Why? Because referencing a pointer to a function just gets you the same
+pointer back. It has no effect. Too bad. Boring.
+
+
 ## Makefiles ##
 
 Makefiles aren't as hard as they look so long as you understand the three steps
