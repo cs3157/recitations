@@ -29,14 +29,14 @@ or [MobaXterm](http://mobaxterm.mobatek.net/)
 - Each program has a fairly simple to use GUI for connecting, so the relevant 
 information is just:
   - Username: your_uni
-  - Password: your click password
+  - Password: your clic password
   - Remote server: clic-lab.cs.columbia.edu
 - Click connect and you'll be in a remote shell session on a random machine in 
 the clic cluster.
 
 Also note, if you ever need to connect to a specific machine in the clic 
 cluster (this will be necessary if you want multiple sessions on the same 
-machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
+machine) just use `ssh your_uni@machine.clic.cs.columbia.edu`
 
 ## Basic UNIX ##
  
@@ -312,7 +312,7 @@ Additionally, you should always use two optional flags to make gcc more helpful:
     it's best to turn this on when compiling and fix all warnings.
 
 Let's take a look at this process in an actual program: *myadd*. We'll create a 
-basic problem to add two numbers, using a custom addition function.
+basic program to add two numbers, using a custom addition function.
 
 Let's begin with our main function:
 
@@ -337,8 +337,8 @@ int add(int a, int b);
 #endif
 ```
 
-Now let's try to compile myadd. First we'll build object files for both myadd.c
-and main.c. Notice the compiler directive `#include`. This tells the compiler to
+Now let's try to compile myadd. First we'll build the object file for main.c. 
+Notice the compiler directive `#include`. This tells the compiler to
 just copy paste the specified file into the current file at that location. The
 reason we include this line in main.c is so that if we reference a function in
 either of these files before it is defined, the compiler can know its header.
@@ -380,7 +380,7 @@ So let's go ahead and write myadd.c. We need to include `myadd.h` in myadd.c,
 although it doesn't seem (and isn't strictly) necessary in this simple example.
 In general including the relevant header file helps the compiler catch any
 mistakes (for example,  if you change a function to return a long instead of an
-int, but don't fix it everwhere), and makes sure that every function in the file
+int, but don't fix it everywhere), and makes sure that every function in the file
 knows about every other function. So always include the relevant header file in
 the corresponding c file.
 
