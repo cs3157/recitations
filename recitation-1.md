@@ -29,14 +29,14 @@ or [MobaXterm](http://mobaxterm.mobatek.net/)
 - Each program has a fairly simple to use GUI for connecting, so the relevant 
 information is just:
   - Username: your_uni
-  - Password: your click password
+  - Password: your clic password
   - Remote server: clic-lab.cs.columbia.edu
 - Click connect and you'll be in a remote shell session on a random machine in 
 the clic cluster.
 
 Also note, if you ever need to connect to a specific machine in the clic 
 cluster (this will be necessary if you want multiple sessions on the same 
-machine) just use `ssh you_uni@machine.clic.cs.columbia.edu`
+machine) just use `ssh your_uni@machine.clic.cs.columbia.edu`
 
 ## Basic UNIX ##
  
@@ -69,8 +69,7 @@ much whatever you want to the files in this directory. You own the place. Let's
 make a new directory here for your work in this class. Use the `mkdir` command
 to make a new directory:
 
-    mkdir cs3157 //if you're in COMS W3157
-    mkdir cs3136 //if you're in COMS 3136
+    mkdir cs3157 
     mkdir cs3157/learning
 
 Now let's move into your working directory. Use the change directory command,
@@ -184,7 +183,10 @@ that will execute immediately:
   - `p` will paste whatever is the buffer (kind of like a clipboard)
   - `0` jumps to the beginning of the line
   - `$` jumps to the end of the current line
+  - `w` jumps to the beginning of the next word (`W` uses a broader definition of word)
+  - `b` jumps to the end of the previous word (likewise `B`)
   - `u` undoes the last change
+  - `Ctl-r` redoes the last change
 
 Some vim commands will not be executed until you press enter. These begin with a
 colon.
@@ -198,26 +200,37 @@ colon.
 
 That should be enough for basic vim navigation. If you want to learn to be a
 real vim ninja, get used to switching between modes first. Then try to expand
-your Normal mode vocabulary one command at a time. In vim, most commands work
-with some sort of combination between prepositions and actions. For example,
-`gg=G` would indent the entire file, as `gg` takes you to the beginning of the
-file, `=` auto-indents a line, and `G` jumps to the end of the file. 
+your Normal mode vocabulary one command at a time.
 
-You can also use vimtutor to really learn the ins and outs. In terminal, just
+In vim, most commands work with some sort of combination between prepositions
+and actions. For example, `gg=G` would indent the entire file, as `gg` takes you
+to the beginning of the file, `=` auto-indents a line, and `G` jumps to the end
+of the file. 
+
+You can also use *vimtutor* to really learn the ins and outs. In terminal, just
 type
 
     vimtutor
 
 Alternatively, check out [Open Vim's Tutorial](http://www.openvim.com/tutorial.html)
-for another interactive vim lesson.
+for another interactive vim lesson. Or play a little NES Zelda type game while
+learning vim, with [Vim Adventures](http://vim-adventures.com/).
 
-After learning vim, you might want to configure it. This is done by editing the .vimrc file in your home directory. Let's check out our current settings.
+After learning vim, you might want to configure it. This is done by editing the
+.vimrc file in your home directory. Let's check out our current settings.
 
     vim ~/.vimrc
 
-There should be default settings there already, but you can look to make changes here in the future.
+There should be default settings there already, but you can look to make changes
+here in the future. Jae and the TAs will send out their configurations later,
+but a good starting point is to enable line numbers by adding this line to your
+vimrc:
+
+    set number
+
 
 ### Emacs ###
+*May be skipped for time*
  
 Emacs is an easier to pick up text editor but has less efficient keyboard
 shortcuts compared to vim.
@@ -226,32 +239,42 @@ Let's start by editing a new file in emacs
 
     emacs emacstest
 
-As soon as emacs starts running, you will be able to type into it. There is no special insert mode like in vim. You can backspace at any time without having to switch between modes. 
+As soon as emacs starts running, you will be able to type into it. There is no
+special insert mode like in vim. You can backspace at any time without having to
+switch between modes.
 
 Emacs has much of the functionality that vim has and we present the basics below:
   
-  - 'Ctrl-f' will move your cursor forward, 'Ctrl-b' will move it back, 'Ctrl-p' will move it up, 'Ctrl-n' will move it down
+  - 'Ctrl-f' will move your cursor forward, 'Ctrl-b' will move it back, 'Ctrl-p'
+    will move it up, 'Ctrl-n' will move it down
   - 'Ctrl-k' will delete the current line
   - 'Ctrl-s' will search for a word forward, 'Ctrl-r' will search for a word backward
   - 'Ctrl-a' goes to beginning of line, 'Ctrl-e' goes to end
   - 'Ctrl-spacebar' to select text to manipulate
-  - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most recently copied/deleted text
+  - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most
+    recently copied/deleted text
   - 'Esc-g g' then enter a line number to jump to a particular line in the buffer
 
-To exit and save we will use Ctrl-X + Ctrl-C. If you just want to save then use Ctrl-X + Ctrl-S.
+To exit and save we will use Ctrl-X + Ctrl-C. If you just want to save then use
+Ctrl-X + Ctrl-S.
 
-Just like vim, emacs also has a configuration file that you can edit. This is .emacs file within your home directory. Let's check out our emacs settings.
+Just like vim, emacs also has a configuration file that you can edit. This is
+.emacs file within your home directory. Let's check out our emacs settings.
 
     emacs ~/.emacs
 
-There should be default settings there already, but feel free to add more for shortcuts.
+There should be default settings there already, but feel free to add more for
+shortcuts.
 
-*Note that backspaces can be a little funky when ssh-ing into CLIC and your backspace button might actually be sending "Ctrl + H" instead! To fix this you will have to add the following lines to your .emacs file.
+*Note that backspaces can be a little funky when ssh-ing into CLIC and your
+*backspace button might actually be sending "Ctrl + H" instead! To fix this you
+*will have to add the following lines to your .emacs file.
 
     ;; make sure backspace deletes backwards
     (normal-erase-is-backspace-mode 1)
     ;; make sure your backspace is mapped correctly
     (global-set-key "\C-h" 'backward-delete-char)
+
 
 ## Compiling and linking a C Program ##
 
@@ -259,7 +282,7 @@ There are many steps to compiling a program in C. They occur in the following
 order:
 
   1. *Pre-processing*: This is when the compiler processes lines that start with
-     a hash-mark (#).
+     a hash-mark (#), most significantly `#include`.
   2. *Compiling*: This converts a source code file (foo.c) into an object file
      (foo.o) which contains a system dependent compiled representation of the
      program as described in the source file. This code may contain symbols
@@ -269,17 +292,97 @@ order:
      up the pieces that are required in all the .o files. This will produce an
      executable file. 
 
-Let's take a look at this process in an actual program: myadd. We'll create
-three text files in the same working directory.
+We'll be using gcc to compile our programs. `gcc` is a shell command that accepts
+a few parameters that we'll be making use of often.
+
+  - `-c [files]` This will compile a list of .c files into .o files without
+    going through the linking stage. This helps separate compilation from linking,
+    and is very useful for Makefiles.
+  - `-o [file]` specifies what gcc's output should be. If none is specified this
+    will default to either: `foo.o` when compiling `foo.c`; or `a.out` when linking
+    to create an executable.
+
+Additionally, you should always use two optional flags to make gcc more helpful:
+  - `-g` This flag will include debugging information when you compile and link.
+    Debugging information helps you when you use tools like valgrind and gdb, for
+    example by indicating line numbers in the source code.
+  - `-Wall` This will turn on all compiler warnings. Warnings are likely problems
+    with your code, but they aren't so severe as to be errors that mean it won't
+    run at all.  These can be small problems now that cause big crashes later, so
+    it's best to turn this on when compiling and fix all warnings.
+
+Let's take a look at this process in an actual program: *myadd*. We'll create a 
+basic program to add two numbers, using a custom addition function.
+
+Let's begin with our main function:
+
+main.c
+
+```c
+#include <stdio.h>
+#include "myadd.h"
+
+int main(int argc, char **argv) {
+  printf("The sum is: %d \n", add(1, 2));
+  return 0;
+}
+```
 
 myadd.h
 
 ```c
 #ifndef __MYADD_H__
 #define __MYADD_H__
-int add(int x, int y);
+int add(int a, int b);
 #endif
 ```
+
+Now let's try to compile myadd. First we'll build the object file for main.c. 
+Notice the compiler directive `#include`. This tells the compiler to
+just copy paste the specified file into the current file at that location. The
+reason we include this line in main.c is so that if we reference a function in
+either of these files before it is defined, the compiler can know its header.
+
+As an example, in main.c we have `add(1, 2);`. The compiler wants to make sure
+that this is a valid function call, but knows nothing of the function "add",
+what type it will return, or what its explicit parameters are. Including myadd.h
+will tell the compiler that "add" returns type int, and accepts two integer
+parameters.
+
+Let's compile `main.c` (using our standard `-g -Wall` options):
+
+    gcc -g -Wall -c main.c
+    ls
+
+You should see that you now have a main.o in your directory. There 
+was one other set of directives that we've used now. The `#ifndef` `#define` 
+and `#endif` directives. The first and the last define a block of code that 
+should only be executed if a pre-processor variable is *not* defined. This will
+prevent multiple header files from conflicting. If myadd.h is included more 
+than once, the first time the pre-processor will define \__MYADD_H_ and each 
+time thereafter will skip over the entire file.
+
+Pause here for a moment, and *think*: What haven't we done yet?
+
+We haven't even written the `add()` function yet. It's nowhere at all. However,
+gcc let us compile main.c without even giving us a warning! That's because we
+included `myadd.h`, which gives a prototype for the add function, so gcc knows
+that the function call in `main()` is valid. That's all the compiler needs, it
+doesn't care how `add()` works, just that it will exist and is being validly
+used.
+
+However if we try to link it into an executable, we get an error because during
+linking, it actually needs the code for `add()`:
+
+    gcc -g main.o -o main
+
+So let's go ahead and write myadd.c. We need to include `myadd.h` in myadd.c,
+although it doesn't seem (and isn't strictly) necessary in this simple example.
+In general including the relevant header file helps the compiler catch any
+mistakes (for example,  if you change a function to return a long instead of an
+int, but don't fix it everywhere), and makes sure that every function in the file
+knows about every other function. So always include the relevant header file in
+the corresponding c file.
 
 myadd.c
 
@@ -290,70 +393,26 @@ int add(int x, int y)
     return x + y;
 }
 ```
-main.c
 
-```c
-#include "myadd.h"
-int main(int argc, char **argv) 
-{
-    add(2, 4);
-}
-```
-We'll be using gcc to compile our programs. `gcc` as a shell command accepts
-a few parameters that we'll be making use of often.
+Now let's compile `myadd.c`
 
-  - `-g` This flag will include debugging flags when you compile. If you're going
-    to be shipping your program, you won't want to include this flag, but for
-    the purposes of this class, you'll probably always want this flag. It'll
-    enable debugging tools to give you more useful information like the line
-    number and file of the code that crashed.
-  - `-Wall` This will turn on all warnings. Essentially, if there's a problem in
-    your code that isn't a compiler error, it will be reported as a warning.
-    These can be small problems now that cause big crashes later, so its best to
-    turn this on when compiling.
-  - `-c [files]` This will compile a list of .c files into .o files without
-    going through the linking stage. You'll need this in the future for
-    Makefiles.
-  - `-o [file]` specifies what gcc's output should be. If none is specified this
-    will default to either foo.o or a.out. foo.o will be the case if you're only
-    compiling without linking. If you're creating an executable file, a.out is
-    the default executable filename.
-
-Now let's try to compile myadd. First we'll build object files for both myadd.c
-and main.c. Notice the compiler directive `#include`. This tells the compiler to
-just copy paste the specified file into the current file at that location. The
-reason we include this line in main.c and myadd.c is so that if we reference a
-function in either of these files before it is defined, the compiler can know
-its header. 
-
-As an example, in main.c we have `add(2, 4);`. The compiler wants to make sure
-that this is a valid function call but knows nothing of the function "add", what
-type it will return, or what its explicit parameters are. Including myadd.h will
-tell the compiler that "add" returns type int, and accepts two integer
-parameters.
-
-Let's compile these two files:
-
-    gcc -c myadd.c
-    gcc -c main.c
+    gcc -g -Wall -c myadd.c
     ls
 
-You should see that you now have a myadd.o and main.o in your directory. There 
-was one other set of directives that we've used now. The `#ifndef` `#define` 
-and `#endif` directives. The first and the last define a block of code that 
-should only be executed if a pre-processor variable is *not* defined. This will
-prevent multiple header files from conflicting. If myadd.h is included more 
-than once, the first time the pre-processor will define \__MYADD_H_ and each 
-time thereafter will skip over the entire file. Now let's link these two files.
+And then finally link our two object files into the executable `main`.
 
-    gcc myadd.o main.o -o main
+    gcc -g myadd.o main.o -o main
     ls
+
 
 You should now have an executable file in your directory `main`. Calling
 `./main` will run your program. In this scenario, you *must* use `./` to note to
 the shell that you want to execute the program main in the current directory.
-Otherwise it will go looking in all the places it searches for commands like
-`ls` and `touch` to find `main`.
+Otherwise it will go looking in all the places it searches for system programs
+like `ls` and `touch` to find `main`.
 
 For more on compiling, linking, and debugging, see 
 [this article](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf).
+
+In this class you'll be automating compilation and linking with Make, which is
+described in the next recitation.

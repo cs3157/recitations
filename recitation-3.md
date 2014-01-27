@@ -12,7 +12,9 @@ Configuration:
     git config --global user.email your_uni@columbia.edu
     git config --global --add color.ui true
 
-And set your editor globally (here vim, if you prefer emacs use that)
+And set your editor globally (here vim, if you prefer emacs use that). Note that
+using the graphical version, `gvim`, is trickier, so we recommend you stick
+to the command line version.
 
     echo "EDITOR=vim" >> ~/.bashrc
 
