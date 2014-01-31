@@ -131,106 +131,6 @@ all: clean main
 ```
 
 
-## Bits, Bytes and Binary ##
-
-Let's just refresh our memory about memory:
-
-  - A **bit** is a single digit in binary; on or off; 1 or 0
-  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
-  - **Hexadecimal** is another notation to count even higher in fewer places
-    - Two hexadecimal places express 1 byte
-    - FF in Hexadecimal is 255
-  - **Two's complement**
-    - Most modern computers use this notation for signed integers
-    - **Most significant bit**: Usually the leftmost, but generally the bit 
-    with the highest value: If 1000 = 8, then 1 is the most significant bit. 
-    If we were using a different notation such as 1010 = 5, then the rightmost 
-    0 is the most significant bit. 
-    - If the most significant bit is 1, then in two's complement, you're 
-    looking at a negative number
-    - To convert: 1010 (read as ten if unsigned), first note that it is
-      negative. Then find its magnitude by flipping all the bits (0101, 5) and
-      then adding 1 (0110) meaning the value is -6.
-    - Consult the following table to see something interesting: (note the
-      wraparound effect
-      
-Binary | usigned decimal | two's complement decimal
------- | --------------- | ----------------------- 
-000    | 0               | 0
-001    | 1               | 1
-010    | 2               | 2
-011    | 3               | 3
-100    | 4               | -4
-101    | 5               | -3
-110    | 6               | -2
-111    | 7               | -1
-
-Be aware of some important boundaries as well:
-
-  - 0x00000000 = 0
-  - 0x7FFFFFFF = 2147483647
-  - 0x80000000 = -2147483648
-  - 0xFFFFFFFF = -1
-
-### Bitwise Operators ###
-
-While we're on the subject of binary representation, let's take a moment to 
-examine C's bitwise operators. Although they're a bit tricky, each one 
-performs relatively simple logical checks on its operands:
-
-#### Bitwise AND ###
-
-The bitwise AND operator, `&`, takes two integers as operands and returns a 
-new integer with a bit pattern consisting of ones only in the positions that 
-both operands contain bits set to 1.
-
-```
-int x = 5;  // 0101 in binary
-int y = 12; // 1100 in binary
-x & y;      // 0100 (4)
-```
-
-Note: `x & y == 4`, but `x && y == 1`. Can you explain why?
-
-This provides a handy way of checking the bit value at a given position in a 
-number:
-
-```
-int mask = 8; // 1000 in binary, for checking the 4th bit
-x & mask;     // 0, since 5 doesn't contain a 1 in the 4th bit
-y & mask;     // 1000 == 8 > 0, since 12 contains a 1 in the 4th bit
-```
-
-#### Bitwise OR ####
-
-The bitwise OR, `|`, behaves like the bitwise AND but the returned integer's 
-bit pattern consists of ones where either operand has a 1.
-
-```
-int x = 5;  // 0101 in binary
-int y = 12; // 1100 in binary
-x | y;      // 1101 (13)
-```
-
-#### Bitwise XOR and Complement ####
-
-The bitwise XOR, `^`, sets 1 in each bit where its operands differ and 0 
-where they are the same. The bitwise complement, `~`, performs the one's 
-complement on its operatand by flipping each bit.
-
-#### Bit Shifting ####
-
-The bitwise shift operators, `<<` and `>>`, shift their left operand by the 
-number of digits specified by the right operand. Left shifting always fills 
-vacated bits by zero. Right shifting varies from machine to machine and whether 
-or not we're talking unsigned or signed.
-
-```
-int x = 2;  // 000010 in binary
-x << 2;     // 001000 (8)
-8 >> 1;     // 000100 (4)
-```
-
 ## Git ##
 
 For this part of the recitation, we will follow Jae's "git-tutorial" which can
@@ -351,7 +251,7 @@ tutorital](https://help.github.com/articles/generating-ssh-keys) to help out.
 All you should need to do is Step 4 - adding ssh keys.
 
 3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
-repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
+repository](https://github.com/cs3157/recitations). Pull your fork to
 your local machine.
 
     **Digression**: One of the reasons git is so great for working
@@ -392,3 +292,104 @@ Other useful tutorials:
 - [Be Social](https://help.github.com/articles/be-social)
 - [Create a Repository](https://help.github.com/articles/create-a-repo)
 
+
+## Bits, Bytes and Binary ##
+
+Let's just refresh our memory about memory:
+
+  - A **bit** is a single digit in binary; on or off; 1 or 0
+  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
+  - **Hexadecimal** is another notation to count even higher in fewer places
+    - Two hexadecimal places express 1 byte
+    - FF in Hexadecimal is 255
+  - **Two's complement**
+    - Most modern computers use this notation for signed integers
+    - **Most significant bit**: Usually the leftmost, but generally the bit 
+    with the highest value: If 1000 = 8, then 1 is the most significant bit. 
+    If we were using a different notation such as 1010 = 5, then the rightmost 
+    0 is the most significant bit. 
+    - If the most significant bit is 1, then in two's complement, you're 
+    looking at a negative number
+    - To convert: 1010 (read as ten if unsigned), first note that it is
+      negative. Then find its magnitude by flipping all the bits (0101, 5) and
+      then adding 1 (0110) meaning the value is -6.
+    - Consult the following table to see something interesting: (note the
+      wraparound effect
+      
+Binary | usigned decimal | two's complement decimal
+------ | --------------- | ----------------------- 
+000    | 0               | 0
+001    | 1               | 1
+010    | 2               | 2
+011    | 3               | 3
+100    | 4               | -4
+101    | 5               | -3
+110    | 6               | -2
+111    | 7               | -1
+
+Be aware of some important boundaries as well:
+
+  - 0x00000000 = 0
+  - 0x7FFFFFFF = 2147483647
+  - 0x80000000 = -2147483648
+  - 0xFFFFFFFF = -1
+
+### Bitwise Operators ###
+
+While we're on the subject of binary representation, let's take a moment to 
+examine C's bitwise operators. They're a bit tricky, but perform extremely fast 
+low level operations and learning them well now will help you with more 
+complex concepts later on.
+
+#### Bitwise AND ###
+
+The bitwise AND operator, `&`, takes two integers as operands and returns a 
+new integer with a bit pattern consisting of ones only in the positions that 
+both operands contain bits set to 1.
+
+```
+int x = 5;  // 0101 in binary
+int y = 12; // 1100 in binary
+x & y;      // 0100 (4)
+```
+
+Note: `x & y == 4`, but `x && y == 1`. Can you explain why?
+
+This provides a handy way of checking the bit value at a given position in a 
+number:
+
+```
+int mask = 8; // 1000 in binary, for checking the 4th bit
+x & mask;     // 0, since 5 doesn't contain a 1 in the 4th bit
+y & mask;     // 1000 == 8 > 0, since 12 contains a 1 in the 4th bit
+```
+
+#### Bitwise OR ####
+
+The bitwise OR, `|`, behaves like the bitwise AND but the returned integer's 
+bit pattern consists of ones where either operand has a 1.
+
+```
+int x = 5;  // 0101 in binary
+int y = 12; // 1100 in binary
+x | y;      // 1101 (13)
+```
+
+#### Bitwise XOR and Complement ####
+
+The bitwise XOR, `^`, sets 1 in each bit where its operands differ and 0 
+where they are the same. The bitwise complement, `~`, performs the one's 
+complement on its operatand by flipping each bit.
+
+#### Bit Shifting ####
+
+The bitwise shift operators, `<<` and `>>`, shift their left operand by the 
+number of digits specified by the right operand. Left shifting always fills 
+vacated bits by zero. Right shifting varies from machine to machine and whether 
+or not we're talking unsigned or signed.
+
+```
+int x = 2;  // 000010 in binary
+x << 2;     // 001000 (8)
+8 >> 1;     // 000100 (4)
+```
