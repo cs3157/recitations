@@ -125,39 +125,9 @@ binding than the equality and inequality operators (==/!==).
 The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
 and "and" operators short-circuit.
 
-Bit-wise operators are tricky and can be used for a variety of purposes:
-
-  - `&` can be used to "mask" or turn off all bits except certain ones. For
-    example:
-        
-        n = n & 0177; // n and 00000001111111
-
-  - `|` can be used to set on all bits:
-
-        n = n | 0177; // n or 00001111111
-
-  - Note:
-
-        int x = 1;
-        int y = 2;
-        x & y; // 0
-        x && y; // 1
-
-  - `^` Sets 1 in each bit where its operators differ and 0 where they are the
-    same.
-  - `<<` and `>>` shift their left operator by the number of digits specified by
-    the right operator. Left shifting always fills vacated bits by zero. Right
-    shifting varies from machine to machine and whether or not we're talking
-    unsigned or signed.
-
-        int x = 2;  // in binary 00000010
-        x = x << 2; // x == 8
-                    // in binary 00001000
-        x = x >> 1; // x == 4
-                    // in binary 00000100
-
-  - `~` just does the one's complement, ie. flipping all the bits.
-  - `~0` flips all the bits in 0, getting all 1s
+[Bitwise operators](recitation-2.md#bitwise-operators) are tricky and can be 
+used for a variety of purposes. See the examples in the recitation 2 notes for 
+a refresher.
 
 Ternary operator:
 

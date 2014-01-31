@@ -182,7 +182,7 @@ performs relatively simple logical checks on its operands:
 
 The bitwise AND operator, `&`, takes two integers as operands and returns a 
 new integer with a bit pattern consisting of ones only in the positions that 
-both operand contain bits set to 1.
+both operands contain bits set to 1.
 
 ```
 int x = 5;  // 0101 in binary
@@ -198,10 +198,10 @@ number:
 ```
 int mask = 8; // 1000 in binary, for checking the 4th bit
 x & mask;     // 0, since 5 doesn't contain a 1 in the 4th bit
-y & mask;     // 1000 = 8 > 0, since 12 contains a 1 in the 4th bit
+y & mask;     // 1000 == 8 > 0, since 12 contains a 1 in the 4th bit
 ```
 
-### Bitwise OR ###
+#### Bitwise OR ####
 
 The bitwise OR, `|`, behaves like the bitwise AND but the returned integer's 
 bit pattern consists of ones where either operand has a 1.
@@ -212,7 +212,7 @@ int y = 12; // 1100 in binary
 x | y;      // 1101 (13)
 ```
 
-### Bitwise XOR and Complement ###
+#### Bitwise XOR and Complement ####
 
 The bitwise XOR, `^`, sets 1 in each bit where its operands differ and 0 
 where they are the same. The bitwise complement, `~`, performs the one's 
@@ -222,7 +222,7 @@ complement on its operatand by flipping each bit.
 
 The bitwise shift operators, `<<` and `>>`, shift their left operand by the 
 number of digits specified by the right operand. Left shifting always fills 
-vacated bits by zero. Rightshifting varies from machine to machine and whether 
+vacated bits by zero. Right shifting varies from machine to machine and whether 
 or not we're talking unsigned or signed.
 
 ```
@@ -230,10 +230,6 @@ int x = 2;  // 000010 in binary
 x << 2;     // 001000 (8)
 8 >> 1;     // 000100 (4)
 ```
-
-### Bitwise Complement ###
-
-The bitwis
 
 ## Git ##
 
