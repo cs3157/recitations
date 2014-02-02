@@ -1,162 +1,195 @@
-# Recitation 3: Git #
+# Recitation 3 #
 
-## Git ##
+## Data Types: Numbers ##
 
-For this part of the recitation, we will follow Jae's "git-tutorial" which can
-be found on the mailing list and CourseWorks. Here's a quick run through of the
-operations reviewed in the tutorial, along with some bonus operations:
+Integer Types:
 
-Configuration:
+  - char
+  - int
 
-    git config --global user.name "Your Full Name"
-    git config --global user.email your_uni@columbia.edu
-    git config --global --add color.ui true
+Modifiers (and sugar):
 
-And set your editor globally (here vim, if you prefer emacs use that). Note that
-using the graphical version, `gvim`, is trickier, so we recommend you stick
-to the command line version.
+  - short
+  - long
 
-    echo "EDITOR=vim" >> ~/.bashrc
+Memory size for each type depends on system, and only restrictions are that
 
-Getting Started
+    char <= short <= int <= long <= long long
 
-    git init
-    git clone remote
+Clic machines follow
 
-Working with repositories
+  - char = 1 byte
+  - short = 2 bytes
+  - int = 4 bytes
+  - long = 8 (these last two vary from system to system a lot)
+  - long long = 8 
 
-    git status
-    git add file1 file2
-    git add -p    #individually pick for each set of changes whether to stage it
-    git commit
-    git commit -m "some message"
+Test it out for yourself:
 
-Checking up on your changes
+```c
+#include <stdio.h>
+ 
+ int main(int argc, char** argv) {
+   printf("char: %d\n
+     short: %d\n
+     int: %d\n
+     long: %d\n
+     longlong: %d\n",
+     sizeof(char), sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
+   return 0;
+}
+```
 
-    git status
-    git diff
-    git diff file1
-    git diff --cached
-    git log
-    git log --stat --summary
-    git log -p
+Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
+[The Ascii Table](http://www.asciitable.com) and understand the relationships 
+in theorder of the first 128 ascii characters. The C language is built on a 
+subset of 7-bit ascii (0-127) so its important to know what the table is like, 
+not to memorize it. Also note that in C, single quotes means a character.
 
-Removing and renaming
+Declaration     | x (dec) | y (dec)
+--------------- | ------- | -------
+int x;          | NULL    | -
+int x, y;       | NULL    | NULL
+int x = 0, y;   | 0       | NULL
+char x = 'x';   | 120     | -
+char x = '\n';  | 10      | -
+char x = '\13'; | 11      | -
+char x = '0';   | 48      | -
+char x = '\0';  | 0       | -
+char x = 0;     | 0       | -
+long x = 0L;    | 0       | -
 
-    git rm file1
-    git mv oldfilename newfilename
+Preceding a constant with 0x denotes hexadecimal notation:
 
-Undoing
+    (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
+    (037777777777 == -1); //returns 1 (true)
+    sizeof(1234L); //returns 8
+    sizeof(1234); //returns 4
+    0xFFFFU; //returns 65535
+    0177777U; //returns 65535
 
-    git checkout -- [filename]
-    git reset HEAD [filename]
+Also not that converting a signed value to an unsigned value or vice verse
+preserves the bit pattern:
 
-Going back in time
+```c
+  char c = -1; //0xFF
+  unsigned char uc = c; //0xFF
+  int i = uc; //i == 255
+```
 
-    git checkout <commit hash>
+Float and double are the two floating point types (decimal) and can be 
+expressedwith a decimal point or as scientific notation:
 
-Tools
+    float miles = 1.8;
+    double big = 1e10;
 
-    git grep [pattern]
-    git help
-    git help commit
-    man git
-    man gittutorial
+The only implementation constraint is that
 
-Patches are rarely necessary, but this is how the submit script works
+    float <= double <= long double
 
-    git format-patch --stdout origin > mywork.mbox
-    git am path/to/mywork.mbox
+so they could all be one size, or be three distinct sizes.
 
-Remotes
-
-    git remote add
-    git pull
-    git fetch && git merge
-    git push
-
-*Important*: statuses of files
-
-1. Untracked
-2. Tracked, unmodified
-3. Tracked, modified, unstaged
-4. Tracked, modified, staged
-
-
-### gitignore ###
-Git wants to track everything, but you don't want it to track everything. In
-particular you want to ignore all your object `.o` files, and your compiled
-executables. You can tell git to ignore certain files by using a gitignore file.
-It's a list of file names (including wildcards) for git to ignore when running
-commands like status.
-
-In your repository create a file named `.gitignore`, where each line is a
-pattern of filenames git should ignore.
-
-    a.out
-    *.o
-    *.a
-    main
-    *.mbox
-    /labN-2013*
-
-You can add the `.gitignore` file itself to the `.gitignore`, or you can add it
-to the repository. You may also create a global ignore file so you don't have to
-copy it to each repository. More details about that are in Github's help on
-[ignoring files](https://help.github.com/articles/ignoring-files).
+In C there is no such thing as a string, just an array and pointers.
+Essentially, a bunch of single characters located consecutively in memory will
+make up a string, but more on this later.
 
 
-### Bonus ###
+## Expressions ##
 
-All of these recitation notes are tracked using git and hosted on github. If we
-have time we'll come back to this during recitation, but here's some github 101.
+    char *myString = "Here's a string!" //string literal
+    int x = 10; //variable declaration and assignment
+    int x; //variable declaration
+    x = 30; //variable assignment: lvalue = rvalue
 
-1. Create an account by going to [github.com](http://github.com) and signing up.
-Then, [configure git for use with remote
-servers](https://help.github.com/articles/set-up-git).
+The order of the increment/decrement operators in C matters:
 
-2. Add your SSH keys to github. They have [a handy
-tutorital](https://help.github.com/articles/generating-ssh-keys) to help out.
-All you should need to do is Step 4 - adding ssh keys.
+    int x = 1;
+    int y = x++; // y==1
+    y = ++x; // y==3
 
-3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
-repository](https://github.com/jrbalsano/cs3157-recitations). Pull your fork to
-your local machine.
+Valid binary operators in order of increasing precedence:
 
-    **Digression**: One of the reasons git is so great for working
-in distributed teams is a feature called branching. Branches are subsections of git
-commits that don't affect other branches. For example "master" is the branch
-that you'll do all your work on for this class. Let's say though you want to
-add more unix commands to recitation-1.md. You could create a branch called
-`improve_recitation1_unix` like so:
+  - + -
+  - * / %
 
-        git checkout -b improve_recitation1_unix
+The positive and negative operators are more tightly binding than any of the
+above operators (+/-).
 
-    This would create a new branch, and switch to it. On this branch you would make
-and commit your changes. When finished, you could switch back to the master
-branch and merge your changes from the feature branch as follows:
+Comparison operators:
 
-        git checkout master
-        git merge improve_recitation1_unix
+  - < > <= >=
 
-    The reason branching is so useful is that it allows for multiple people to work
-on their own issues, and then merge their changes in only *after* they are
-certain their changes will not cause problems to the master branch. In this way,
-the master branch always represents a completely functioning project, while the
-branches may have broken code.
+All of these comparison operators have the same precedence, and are more tightly
+binding than the equality and inequality operators (==/!==).
 
-    Anyway, all this was a bit of a digression to discuss branching, but now that
-you have a fork of my respository, you can make changes on the master branch.
-When you're done, use `git push origin master` to push your changes back up to
-your fork, and then go to github.com to pull-request your changes. If I like
-what you've done, I'll definitely accept your pull request.
+The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
+and "and" operators short-circuit.
 
-And that's about it for github. Forking and branching are crucial to working on
-teams, both private and open-source. Github and git are great tools for managing
-all sorts of things, even notes, so make sure you're familiar with them.
-Proficiency in git and github is a desirable trait to have when job-hunting.
+[Bitwise operators](recitation-2.md#bitwise-operators) are tricky and can be 
+used for a variety of purposes. See the examples in the recitation 2 notes for 
+a refresher.
 
-Other useful tutorials:
+Ternary operator:
 
-- [Be Social](https://help.github.com/articles/be-social)
-- [Create a Repository](https://help.github.com/articles/create-a-repo)
+```c
+x = a ? b : c;
+//or
+if(x)
+  b;
+else
+  c;
+```
+
+Note that any integer is also a boolean!! 0 is false, any other number is true!
+
+
+## Statements ##
+
+### If-Else Statements ###
+
+```c
+if(condition)
+  if(condition2) {
+    printf("conditions met");
+    return 0;
+  }
+  else
+    printf("no conditions met");
+```
+
+### Switch Statements ###
+
+```c
+switch(v)
+  case 1: // v == 1
+    printf("v is 1");
+    break;
+  case 2:
+    printf("v is 2");
+    break;
+  default:
+    printf("v is neither 1 nor 2");
+end
+```
+
+### Loops ###
+
+```c
+int i;
+for(i = 0; 1 < 10; i++) {
+    // do things here
+}
+while(i) { //condition checked at the beginning
+    //other things
+    i--;
+}
+
+do {
+    //more things
+} while(i < 5); //condition is checked at the end
+```
+
+Using `break;` inside a loop will break out of the innermost loop. Using
+`continue;` will stop executing the current iteration of the loop and skip to
+the next iteration. `for(;;)` is an idiom for an infinite loop. `goto label`
+will jump to a line beginning with `label: `. Be careful with gotos.
