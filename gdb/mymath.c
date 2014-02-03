@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-int add(int a, int b);
-int multiply(int a, int b);
-int exponentiate(int a, int b);
+#include "mymath.h"
 
 int exponentiate(int x, int y) {
+    return exponentiate_p(&x, &y);
+}
+int exponentiate_p(int *x, int *y) {
     int result = 1;
-    while (y--) {
-        result = multiply(result, x);
+    while ((*y)--) {
+        result = multiply(result, *x);
     }
     return result;
 }
