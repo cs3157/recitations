@@ -2,6 +2,11 @@
 
 There are three commonly used debugging methods in this class. 
 
+1. `printf`
+2. valgrind
+3. gdb
+
+
 ## printf ##
 
 First, `printf`, which you probably use all the time. One word of caution: you
@@ -19,17 +24,22 @@ We added the printf line to the program to determine if the program was crashing
 during `foo()` or during `bar()`. If we see "foo complete", we can determine
 that foo definitely completed.
 
-However, if we do not see "foo complete" we cannot determine anything! The OS
+However, if we **do not** see "foo complete" we cannot determine anything! The OS
 may have buffered our standard output for us, so we need to make the debugging
 print statement `printf("foo complete\n");`. The newline encourages the OS to
-not buffer. It would be even better to print to stderr, but that's beyond the
-scope of this lecture.
+not buffer.
+
+It would be even better to print debugging information to stderr. This is a bit
+advanced for right now, but you use a slightly different function, `fprintf`,
+which lets us specify the destination. It's fairly simple:
+`fprintf(stderr, "foo complete\n");`.
 
 
 
 ## valgrind ##
 After compiler warnings, valgrind is the first tool you should turn to whenever
-you're dealing with possibly memory problems.
+you're dealing with possibly memory problems. It analyzes your program
+**as it runs** for memory errors and leaks. 
 
 Valgrind is very easy to use. All you do is call the program normally, but
 prepend `valgrind --leak-check=yes` to the beginning. So if you were previously
@@ -61,27 +71,30 @@ Let's try it on a sample program. leaky.c:
     #include <stdlib.h>
 
     int main(int argc, char **argv) {
-        int *ptr2i = (int *)malloc(sizeof(int));
-        if (ptr2i == NULL) {
+        int *pint = (int *)malloc(sizeof(int));
+        if (pint == NULL) {
             perror("malloc returned NULL"); /* Jae often defines a die() to do this */
             exit(1);
         }
-        *ptr2i = 4;
+        *pint = 4;
 
-        printf("The value pointed to by ptr2i is %d \n", *ptr2i);
+        printf("The value pointed to by pint is %d \n", *pint);
 
         return 0;
     }
 
 
-Notice that it says you definitely lost 1 block of 4 bytes. The 1 block is a
-single call to malloc, on line 5. You can tell it's line 5 because it says
-`(leaky.c:5)`. 
+Notice that it says you definitely lost 1 block of 4 bytes. The 1 block is from
+the call to malloc on line 5. You can tell it's that file and line number
+because it says `(leaky.c:5)`. 
+
+To fix this program we need to free the memory block we malloc'd. Immediately
+before the return, add `free(pint)`
 
 If you need valgrind to give you even more debugging information, you can add
 two more flags, `--show-reachable=yes` which gives more information about memory
-leaks, and `--track-origins=yes` which gives more information about uninitialized
-values. Thus a more verbose valgrind command is:
+leaks, and `--track-origins=yes` which gives more information about
+uninitialized values. Thus a more verbose valgrind command is:
 `valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./leaky`
 
 
@@ -213,6 +226,16 @@ You can combine step and next with a number, eg, `step 4` to step 4 times at onc
 There are a few more esoteric ones, such as `finish` to wait for the return, 
 ctl-c to send sigint, and kill to end it. 
 
+#### Essential Commands ####
+These can all be referred to by their first letter.
+
+* `break` _`line` / `file:line` / `function`_
+* `run`
+* `backtrace`
+* `print` _`variable/expression`_
+* `step`
+* `next`
+* `continue`
 
 #### Protips ####
 
@@ -232,6 +255,7 @@ Protip: `-tui` shows the source code in the top half. Use the arrow keys to
 navigate.
 
 You can quit with `quit`, `q`, and Ctl-D typically. 
+
 
 
 

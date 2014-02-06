@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     int *x = &a;
     int *y = &b;
 
-    int xtoy = exponentiate_p(x, y);
+    int xtoy = ppow(x, y);
 
     printf("%d^%d = %d\n", *x, *y, xtoy);
 
