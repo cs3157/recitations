@@ -8,6 +8,8 @@ main: mymath.o
 
 main.o: mymath.h
 
+mymath.o: mymath.h
+
 
 .PHONY: clean all valgrind
 clean:
