@@ -10,11 +10,10 @@ may be buffered by the operating system.
 
 Imagine this program fragment, which is currently crashing.
 
-```
-foo();
-printf("foo complete");
-bar();
-```
+
+    foo();
+    printf("foo complete");
+    bar();
 
 We added the printf line to the program to determine if the program was crashing
 during `foo()` or during `bar()`. If we see "foo complete", we can determine
@@ -55,27 +54,25 @@ and even tell you which line of code it's happening on.
 2. **Lost Memory**. You need to know about malloc and heap memory for this to
 make sense, but suffice it to say that you don't want to leak memory.
 
-Let's try it on a sample program.
+Let's try it on a sample program. leaky.c:
 
-leaky.c:
-```
-#include <stdio.h>
-#include <stdlib.h>
 
-int main(int argc, char **argv) {
-    int *ptr2i = (int *)malloc(sizeof(int));
-    if (ptr2i == NULL) {
-        perror("malloc returned NULL"); /* Jae often defines a die() to do this */
-        exit(1);
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(int argc, char **argv) {
+        int *ptr2i = (int *)malloc(sizeof(int));
+        if (ptr2i == NULL) {
+            perror("malloc returned NULL"); /* Jae often defines a die() to do this */
+            exit(1);
+        }
+        *ptr2i = 4;
+
+        printf("The value pointed to by ptr2i is %d \n", *ptr2i);
+
+        return 0;
     }
-    *ptr2i = 4;
 
-    printf("The value pointed to by ptr2i is %d \n", *ptr2i);
-
-    return 0;
-}
-
-```
 
 Notice that it says you definitely lost 1 block of 4 bytes. The 1 block is a
 single call to malloc, on line 5. You can tell it's line 5 because it says
@@ -239,52 +236,42 @@ You can quit with `quit`, `q`, and Ctl-D typically.
 
 
 
+## Example ##
+It helps to have a concrete example in hand while doing this. Let's calculate 
+2^4, but let's do it the old fashioned way, where exponentiation is repeated
+multiplication, and multiplication is repeated addition. 
 
-# Notes #
+We're going to define our general math functions in a file called `mymath.c`,
+which of course has its associated `mymath.h`.
 
-General debugging: printf
+Then we'll start our program in main.c. To make things a little more
+interesting, we're going to use some basic pointers. First we setup two basic
+integers, `a` and `b`. Then we take the memory address of `a`, and store it in
+the pointer-to-int `x` (and likewise with b and y).
 
-Start with valgrind. Show the various levels (namely start with leak-check=yes,
-then if you're still having issues --leak-check=full and --track-origins=yes).
+Then we pass the pointers into our exponentiation function. It performs the
+appropriate number of multiplications, each of which requires an appropriate number
+of additions, and then return the value to main.
 
-What's the point of a debugger?
+Main prints out `2^-1 = 16`. What's going on? That's crazy!
 
-printf without newlines
-
-Take a very simple program, with bugs.
-
-Stack trace, perhaps with recursion?
-
-Use global/local variables!!!!
-
-Show the value of the -g flag.
-
-they will have seen pointers
-
-show: can randomly print and play with memory
-
-go line by line
-
-
-Here's our example:
-
-automated_p, calculates x^y, passing pointers. It correctly computes the answer,
-but changes y to be -1 at the end.
-
-What's going on? That's crazy!
-
-(Answer: in the exponentiation, we do (*y)--, which permanently changes y!
+Let's debug to find out!
 
 
 
-External Resources
-==================
-Handy pdf: http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf
 
-Look at Jae's "ANN: Doing lab 2" on 10/5, and "ANN: Debugging Tips" on 10/2.
+_Spoiler: in the exponentiation, we do `(*y)--`, which permanently changes y!_
 
-official guide: https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session
 
-very dense gdb reference card: http://users.ece.utexas.edu/~adnan/gdb-refcard.pdf
 
-slightly slimmer gdb cheat sheet: http://web.cecs.pdx.edu/~jrb/cs201/lectures/handouts/gdbcomm.txt
+## External Resources ##
+Dense, incredibly helpful gdb reference card: http://users.ece.utexas.edu/~adnan/gdb-refcard.pdf
+
+Slightly slimmer gdb cheat sheet: http://web.cecs.pdx.edu/~jrb/cs201/lectures/handouts/gdbcomm.txt
+
+Look at Jae's emails "ANN: Doing lab 2", and "ANN: Debugging Tips"
+
+Official GDB guide: https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session
+
+Handy walkthrough pdf that covers unix basics, gcc, gdb, make, and basic shell:
+http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf
