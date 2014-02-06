@@ -3,7 +3,6 @@
 
 int add(int a, int b);
 int multiply(int a, int b);
-int exponentiate(int a, int b);
-int exponentiate_p(int *a, int *b);
+int ppow(int *a, int *b);
 
 #endif

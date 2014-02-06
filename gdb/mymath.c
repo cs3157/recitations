@@ -2,10 +2,8 @@
 #include <stdio.h>
 #include "mymath.h"
 
-int exponentiate(int x, int y) {
-    return exponentiate_p(&x, &y);
-}
-int exponentiate_p(int *x, int *y) {
+
+int ppow(int *x, int *y) {
     int result = 1;
     while ((*y)--) {
         result = multiply(result, *x);

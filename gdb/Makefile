@@ -1,22 +1,21 @@
 CC = gcc
 CFLAGS = -Wall -g
-LDFAGS = -g
+LDFLAGS = -g
 
-default: automated interactive
+default: main leaky
 
-automated: mymath.o
+main: mymath.o
 
-automated.o: mymath.h
+main.o: mymath.h
 
-interactive: mymath.o
+mymath.o: mymath.h
 
-interactive.o: mymath.h
 
 .PHONY: clean all valgrind
 clean:
-	rm -f *.o automated a.out main interactive
+	rm -f *.o main a.out main leaky
 
 all: clean default 
 
-valgrind: automated
-	valgrind --leak-check=yes ./automated
+valgrind: main
+	valgrind --leak-check=yes ./main
