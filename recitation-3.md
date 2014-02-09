@@ -133,11 +133,15 @@ Ternary operator:
 
 ```c
 x = a ? b : c;
-//or
-if(x)
-  b;
+```
+
+is the same thing as this:
+
+```c
+if(a)
+  x = b;
 else
-  c;
+  x = c;
 ```
 
 Note that any integer is also a boolean!! 0 is false, any other number is true!
