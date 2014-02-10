@@ -16,7 +16,7 @@ Memory size for each type depends on system, and only restrictions are that
 
     char <= short <= int <= long <= long long
 
-Clic machines follow
+CLIC machines follow
 
   - char = 1 byte
   - short = 2 bytes
@@ -120,7 +120,7 @@ Comparison operators:
   - < > <= >=
 
 All of these comparison operators have the same precedence, and are more tightly
-binding than the equality and inequality operators (==/!==).
+binding than the equality and inequality operators (==/!=).
 
 The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
 and "and" operators short-circuit.
@@ -180,7 +180,7 @@ end
 
 ```c
 int i;
-for(i = 0; 1 < 10; i++) {
+for(i = 0; i < 10; i++) {
     // do things here
 }
 while(i) { //condition checked at the beginning
