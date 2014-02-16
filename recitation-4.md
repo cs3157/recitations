@@ -52,9 +52,9 @@ In one file:
 int global_static = 0;
 
 int main() {
-    int global_static;
     global_static++;
     magicPrint();
+	return 0;
 }
 ```
 
@@ -63,7 +63,7 @@ In another file:
 ```c
 void magicPrint() {
     extern int global_static;
-    printf("%d", global_static); //prints 1
+    printf("%d\n", global_static); //prints 1
 }
 ```
 
@@ -124,11 +124,12 @@ int main() {
   int x = 1;
   increment(x); // x is still 1
   actually_increment(&x); // x is now 2
+  return 0;
 }
 ```
 
 Note not only the difference in the function, but how the parameters are passed.
-**Passing a pointer is fundamentally a different type than passing a value**
+**Passing a pointer is fundamentally a different type than passing a value.**
 
 For more pointer examples, see `recitation-4-code/basicpointers.c`
 
@@ -329,6 +330,16 @@ pretty happily. The trick to memory leaks isn't just in free-ing that integer
 though. Imagine you've malloced space for an array of arrays, each of which was
 also malloc'ed. You'll have to go back through, freeing each individual array,
 and then when you're finished with that, free the higher order array.
+
+### Uninitialized values ###
+
+Valgrind will also inform you when the visible behavior of the program is affected by usage of uninitialized values. For example, let's say you want to increment a variable, but forget to initialize it:
+```c
+int *d = (int *)malloc(sizeof(int));
+++*d;
+printf("%d\n", *d);
+```
+Valgrind will inform you that the visible behavior of your program depends on an uninitialized, hence unpredictable, values. Always be sure to initialize your variables before using them! 
 
 ## Lab 2 ##
 
