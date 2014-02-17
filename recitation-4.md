@@ -159,6 +159,11 @@ magic_function(a); (passes a pointer to the first element of a)
 p+5 == a+5;
 p++; //legal
 a++; //illegal!
+size_t x = sizeof(a); //x == 40
+size_t y = sizeof(p); //y == 8
+/* NOTE: sizeof is an operator, not a function!
+   It can tell the difference between a pointer
+   and an array. */
 ```
 
 In most cases, just calling an array by its variable name without the square
