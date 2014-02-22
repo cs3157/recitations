@@ -32,9 +32,8 @@ CXXFLAGS = -g -Wall $(INCLUDES)
 
 Here we define our own variable, INCLUDES, which we can use for directories 
 thatwe wish to include at the compilation step. An example value for INCLUDES 
-couldbe `-I/home/jae/cs3157` which would tell the compiler to look in
-/home/jae/cs3157 during the compilation step for missing header files and other
-sorts of relevant files.
+could be `-I../myHeaders` which would tell the compiler to look in the myHeaders directory, located one directory above the current directory, during the compilation step for missing header files and other
+sorts of relevant files. For this class, please do NOT use absolute paths in your Makefiles; we do not have the permissions to access your /home/your_uni directory (you'll learn about permissions later on).
 
 After defining INCLUDES, we define the flags that we want each compiler to be
 run with. In this case we include the `-g` flag for debugging and `-Wall` flag
