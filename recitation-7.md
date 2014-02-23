@@ -5,7 +5,7 @@
 `size_t` shows up all over the place in memory operations. `malloc` expects its
 parameters to be of this form, and certain file operation functions will return
 the number of bytes read in this formed. What you need to know about `size_t` is
-that its an unsigned integer type. This means it works like an integer but
+that it's an unsigned integer type. This means it works like an integer but
 **cannot represent negative values**. So, while the following is okay:
 
 ```c
@@ -27,8 +27,8 @@ Other than that you can treat `size_t` as any other integer type.
 
 ## File operations ##
 
-All of the following are defined in `stdio.h` and therefore
-to use them you must `#include <stdio.h>` to use them.
+All of the following are defined in `stdio.h` and therefore you must 
+`#include <stdio.h>` to use them.
 
 ### FILE * ###
 
@@ -36,7 +36,7 @@ to use them you must `#include <stdio.h>` to use them.
 `FILE *` though because you'll always be getting a value back from/passing it to
 common file operating functions. Why a pointer? Because these functions will
 modify the internal values of the `FILE` value. So while you could copy them
-because its a struct and C would be fine with passing it by value, things like
+because it's a struct and C would be fine with passing it by value, things like
 your place in the file would not be maintained.
 
 ### fopen and fclose ###
@@ -96,7 +96,7 @@ Each of these functions accept pointers of type `void`. So if you want each item
 to be read into the right size memory space, you'll need to tell it the `size`
 of each item, and the number of items `nmemb` to read/write from/to the
 `stream`. `fwrite` promises not to modify the data that `ptr` references as
-well. The return the number of bytes read/written. If its anything less than
+well. The return the number of bytes read/written. If it's anything less than
 what you expected, you should check what happened using `ferror` or `feof`.
 
 ### fseek ###
@@ -107,8 +107,8 @@ int fseek(FILE *stream, long offset, int origin);
 
 This handy dandy function lets you hop through a file without doing anything
 other than changing the position in the `FILE` structure. You can use any
-`stream` of your choosing, but pay attention to whether or not its a binary
-stream. If its a binary stream, `offset` can be any number of bytes/characters from
+`stream` of your choosing, but pay attention to whether or not it's a binary
+stream. If it's a binary stream, `offset` can be any number of bytes/characters from
 `origin` which should be set to either `SEEK_SET` (a constant representing the
 beginning of the file), `SEEK_CUR` (a constant representing the current
 position), or `SEEK_END` (the end of the file).
