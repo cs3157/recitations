@@ -38,11 +38,11 @@ write allows for creating, deleting, and renaming files; and execute allows for
 accessing files and metainfo if their name is known, but not listing the files
 in the directory.
 
-Permissions are conventially represented as combinations of 3 binary digits.
+Permissions are conventionally represented as combinations of 3 binary digits.
 Each digit represents one of read write and execute. So for example, 100
 would represent the ability to only read and is a value of 4. 110 is the
 ability to write and read and is a value of 6. 111 would grant read, write,
-and execute and is a value of 7. Conventially, you could combine these in the
+and execute and is a value of 7. Conventionally, you could combine these in the
 order owner-group-other in a string like "644" which would mean the owner can
 write/read, and the group and others and only read. `chmod ### path` can
 be used to set permissions for a path. Note that you can view permissions 
