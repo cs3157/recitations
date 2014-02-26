@@ -81,6 +81,7 @@ int main(int argc, char **argv) {
 
   notifier(f1);
   f2(arr, "hihi");
+  printf("%s\n", arr);
 }
 ```
 
