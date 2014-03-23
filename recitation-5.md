@@ -388,3 +388,17 @@ pointer.
 - stderr is unbuffered (why?)
 - stdout is line-buffered when it's connected to terminal
 - everything else is block-buffered
+
+### Some Notes About Lab 4 ###
+If you plan on doing the pair option and would like to 
+[procure a private GitHub repo](https://github.com/edu), please request one ASAP,
+because it takes a few days to process. Additionally, if you're new to GitHub/BitBucket,
+you may find the [Git Documentation](http://git-scm.com/book), the 
+[GitHub Help page](https://help.github.com/), and the 
+[BitBucket Documentation](https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+Documentation+Home)
+handy.
+
+Whether you choose to do the pair option or the solo option, you may wish to 
+review each of the I/O functions we've learned in lecture note 9. Be sure that 
+you understand the differences between them and note that there are certain situations
+when some are more appropriate than others, and vice versa (ex., `fgets()` vs. `fread()`).
