@@ -53,16 +53,17 @@ and all that good stuff. See the `ls` man page for more information.
 
 ### Processes ###
 
-one-to-one programs-processes is not a thing! A program is a packaged set of
+One-to-one programs-processes is not a thing! A program is a packaged set of
 instructions, where as a process is an instance of a program. A program can have
 many processes associated with it. For those of you familiar with Java, program is to process as class is to class instance. Each process has a unique, non-negative numeric identifier known as the **process ID**.
 
 #### Creating New Processes with fork/exec ####
 
-We can create new processes using the `fork` system call. The caller of fork is known as the parent process and the process getting created is known as the child process.
+We can create new processes using the `fork` system call. The caller of fork is known as 
+the parent process and the process getting created is known as the child process.
 
 `fork()` will split your process into two new processes, each one executing
-forward from the point of the fork. It is called once in the parent, but returns 
+forward from the point of the fork. `fork()` is called once in the parent, but returns 
 twice: once in the parent and once in the child. The return value of `fork()` 
 depends on if it's executing within the child process or parent process. `fork()` 
 will return the process id of the child if it's executing within the parent, and 
@@ -78,17 +79,20 @@ a running process that will fork itself and, while the parent continues executin
 the original program instructions, the child will transform into another process.
 How do we transform the child?
 
-`exec(char *command)` will *turn your process into* an instance of command. This
-means it will cease executing your code and execute as the program you have
-decided to execute. The new program has no memory (ha-ha) of the previously 
+You can use the `exec()` family of functions to *turn your current process* into
+an instance of another program. The new program is specified in the arguments to
+the `exec()` call. Once the call to `exec()` has been made, the process running
+`exec()` will cease to execute the code of its original program and begin executing
+the code of the new program. Your process has no memory (ha-ha) of the previously 
 running program, i.e., its program code, data, heap, and stack are replaced with 
 those of the new program. If the program reaches its end, the process will exit 
-and will never return to your code. It will only execute code following an `exec`
-call if `exec` fails.
+and will never return to the code of your old program. This means that any code 
+following a call to `exec()` will only be executed if the call to `exec()` fails. 
 
-`exec()` is actually a whole family of functions. For lab 5, you'll be dealing 
-with the `execl()` function, which allows you to specify command-line arguments 
-for the new program. Be sure to study its man page carefully.
+For lab 5, you'll be dealing with the `execl()` function. It takes as arguments
+the path to the program you want to execute (make sure you use a relative path!)
+and the command line arguments you want to pass to the program. Be sure to study 
+`execl()`'s man page carefully.
 
 Fork and executing is how the entire operating system works. The kernel starts
 an `init` process and everything is fork/exec'ed from there.
@@ -109,6 +113,9 @@ Okay, so we know what to do when a child terminates before its parent, but how
 about when a parent process terminates before the child? In that case, the child 
 becomes an "orphaned" process. If you're interested in orphan and zombie processes, 
 you can check out the optional part 2 of lab 5. 
+
+For a fun fork/exec example, check out the `jsh` program in the 
+[recitation-6-code directory](https://github.com/cs3157/recitations/tree/master/recitation-6-code).
 
 #### Interprocess Communication: pipes, FIFOs, and sockets ####
 
@@ -145,7 +152,7 @@ is able to receive `program1`'s output. The stdout of `tee` is piped to `program
 allowing `program2` to receive `program1`'s output as well. Nifty!
 
 If you'd like to run this example, programs 1, 2, 3, and `input.txt` can be found
-in the [recitation-6-code folder](https://github.com/cs3157/recitations/tree/master/recitation-6-code).
+in the [recitation-6-code directory](https://github.com/cs3157/recitations/tree/master/recitation-6-code).
 
 Pipes and FIFOs are fine for local, one-way data flow, but oftentimes we want
 our interprocess communication to be even more flexible. A **socket** is a type 
@@ -165,7 +172,7 @@ There are five protocol layers of TCP/IP:
 5. Application
 
 The sockets API sits between the Transport and Application layers. In this class,
-we're mostly concerned with the application layer.
+we're mostly concerned with the Application layer.
 
 In order to send data via a socket connection, we need a few means of
 identification to figure out where the data needs to go: an IP address and a port 
@@ -208,7 +215,7 @@ is connected to it and outputs it to stdout. So, effectively, the stdin of the
 client is sent to the stdout of the server, and the stdin of the server is sent
 to the stdout of the client. 
 
-Now that we've learned about netcat and FIFOs, we have all the tools we need to turn `mdb-lookup-cs3157` 
+Now that we've learned about `netcat` and FIFOs, we have all the tools we need to turn `mdb-lookup-cs3157` 
 into a network server. Yippee!
 
 ### Signals ###
