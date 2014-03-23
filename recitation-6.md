@@ -107,15 +107,16 @@ as well as other categories of processes. Check out its man page for more info.
 
 Okay, so we know what to do when a child terminates before its parent, but how
 about when a parent process terminates before the child? In that case, the child 
-becomes an "orphaned" process. If you're interested in orphan and zombie processes, you can check out the optional part 2 of lab 5. 
+becomes an "orphaned" process. If you're interested in orphan and zombie processes, 
+you can check out the optional part 2 of lab 5. 
 
 #### Interprocess Communication: pipes, FIFOs, and sockets ####
 
 Sometimes, we want two or more processes to be able to communicate with each 
 other. The most commonly used means of interprocess communication are pipes. 
 **Pipes** allow one-way data flow and can connect processes having a common 
-ancestor. A pipe connects the stdout of one process to the stdin of another.
-For example, we can "pipe" the output of `program1` to `program2` like this:
+ancestor. We can use a pipe to connect the stdout of one process to the stdin of 
+another. For example, we can "pipe" the output of `program1` to `program2` like this:
 
 ```bash
 ./program1 | ./program2
@@ -125,8 +126,9 @@ What if we wanted a more flexible means of interprocess communication? Let's say
 we want to transmit the output of `program1` to two programs: `program2` and 
 `program3`. We can accomplish this using a **named pipe** or a **FIFO (First In
 First Out)**. A FIFO is a type of file used for interprocess communication.
-Since we can refer to a FIFO by name, we can get a bit more creative with how we use them. This example from *Advanced Programming in the Unix Environment* by W.
-Richard Stevens and Steven A. Rago illustrates how we can achieve our above goal:
+Since we can refer to FIFOs by name, we can get a bit more creative with how we use them. 
+This example from *Advanced Programming in the Unix Environment* by W. Richard Stevens 
+and Steven A. Rago illustrates how we can achieve our above goal:
 ```bash
 mkfifo myfifo
 ./program3 < myfifo &
@@ -139,14 +141,16 @@ for writing and vice versa. `input.txt` is passed as input to `program1`, and
 `program1`'s output is piped to the `tee` command. The `tee` command transmits
 its stdin both to stdout and to the file(s) specified in the argument, in this
 case, `myfifo`. Since we pass `myfifo` as an input to `program3`, `program3` 
-is able to receive `program1`'s output. The stdout of `tee` is piped to `program2`, allowing `program2` to receive `program1`'s output as well. Nifty!
+is able to receive `program1`'s output. The stdout of `tee` is piped to `program2`, 
+allowing `program2` to receive `program1`'s output as well. Nifty!
+
 If you'd like to run this example, programs 1, 2, 3, and `input.txt` can be found
 in the [recitation-6-code folder](https://github.com/cs3157/recitations/tree/master/recitation-6-code).
 
 Pipes and FIFOs are fine for local, one-way data flow, but oftentimes we want
 our interprocess communication to be even more flexible. A **socket** is a type 
 of file used for network communication between processes. Sockets are 
-generalizations of pipes: we can achieve both intramachine communication, as
+generalizations of pipes: with sockets, we can achieve both intramachine communication, as
 with our above examples, and intermachine communication. Additionally, sockets
 allow for two-way interprocess communication, unlike pipes. We'll be discussing 
 sockets in conjunction with the TCP/IP protocol: the standard for communication 
@@ -187,9 +191,13 @@ the host on which the server is running, using that host's IP address, on the
 port on which the server is listening.
 
 We can achieve this using the following shell commands:
+
 Server:
+
 ```nc -l <port>```
+
 Client:
+
 ```nc <hostname or IP address> <port>```
 
 Note that `<port>` and `<hostname or IP address>` need to be replaced with the appropriate values. 
@@ -200,7 +208,8 @@ is connected to it and outputs it to stdout. So, effectively, the stdin of the
 client is sent to the stdout of the server, and the stdin of the server is sent
 to the stdout of the client. 
 
-Now that we've learned about netcat and FIFOs, we have all the tools we need to turn mdb-lookup-cs3157 into a network server. Yippee!
+Now that we've learned about netcat and FIFOs, we have all the tools we need to turn `mdb-lookup-cs3157` 
+into a network server. Yippee!
 
 ### Signals ###
 
