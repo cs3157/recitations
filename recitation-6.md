@@ -54,8 +54,13 @@ and all that good stuff. See the `ls` man page for more information.
 ### Processes ###
 
 One-to-one programs-processes is not a thing! A program is a packaged set of
-instructions, where as a process is an instance of a program. A program can have
-many processes associated with it. For those of you familiar with Java, program is to process as class is to class instance. Each process has a unique, non-negative numeric identifier known as the **process ID**.
+instructions, whereas a process is an instance of a program. A program can have
+many processes associated with it. For example, we can run multiple instances of
+an executable independently, thereby initiating multiple processes that run that 
+program. We can create more processes associated with the executable by splitting
+a process with the `fork` system call, as we'll soon see.
+
+Each process has a unique, non-negative numeric identifier known as the **process ID**.
 
 #### Creating New Processes with fork/exec ####
 
