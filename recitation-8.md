@@ -195,7 +195,8 @@ int main(int argc, char **argv)
 {
   int a = 3;
   int b[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-  struct Node arr[5] = {&a, arr+1, b, arr+2, "hello", arr+3};
+  struct Node arr[5] = {{&a, arr+1}, {b, arr+2}, {"hello", arr+3}};
+}
 ```
 
 Some tricky (maybe not) questions now:
