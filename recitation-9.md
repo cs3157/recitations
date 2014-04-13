@@ -207,8 +207,8 @@ The reference construct allows us to pass an argument by reference, without the 
 
 ```cpp
 //note that to use iostreams this way, we need to have:
-using namespace std;
 #include <iostream>
+using namespace std;
 
 void increment(int& x)
 {
