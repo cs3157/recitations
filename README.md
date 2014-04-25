@@ -27,8 +27,9 @@ Contents:
   attributes. Processes, forking, and signals.
     * See also `jsh`, the Jae shell, in the [recitation-6-code](recitation-6-code/)
       directory for a fun example of forking.
-* [Recitation 7](recitation-7.md): size_t. File IO, including reading, writing,
+* [Recitation 7](recitation-7.md): `size_t`. File IO, including reading, writing,
   and seeking in files.
 * [Recitation 8](recitation-8.md): Midterm(s) review.
-* [Recitation 9](recitation-9.md): C++. Classes/Structs. Stack vs heap allocation
+* [Recitation 10](recitation-10.md): C++. Classes/Structs. Stack vs heap allocation
   in C++. The basic 4. Implicit conversion and operator overloading.
+* [Recitation 10](recitation-10.md): C++ generics, templates, containers, metaprogramming
