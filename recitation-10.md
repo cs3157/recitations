@@ -136,6 +136,26 @@ int compare(const T &v1, const T &v2)
 ```
 
 
+#### What's with that weird double template stuff for ostream? ####
+
+http://publib.boulder.ibm.com/infocenter/comphelp/v8v101/index.jsp?topic=%2Fcom.ibm.xlcpp8a.doc%2Flanguage%2Fref%2Ffriends_and_templates.htm
+
+Sometimes you need to define FUNCTION templates in association with a CLASS
+template. This is a friend function that depends on the specific type of the
+class. If we look at Jae's stack example from lecture note 22, he declares 
+
+```cpp
+template <typename T>
+ostream& operator<<(ostream& os, const Stack<T>& rhs)
+```
+
+There's one function for each type used, ie there's a
+operator<<_for_stack_of_int, and operator<<_for_stack_of_strings. Those are
+different functions, and each needs to be created as separate function
+templates. However they're friends, they aren't member functions, hence they
+need to be declared as separate templates.
+
+
 ## Containers ##
 
 The C standard library, STL, provides containers. Containers are a standard set
@@ -174,9 +194,57 @@ access, and it must do some pretty fancy stuff in its iterator.
 
 #### Dequeue ####
 
+A doubly ended queue, it's like a vector with space on both the left and the right.
+
+(In fact they're implemented differently, but that's not important). 
+
 #### Set ####
 
+Sets provide very efficient lookup to see if an element is in the set, at the
+cost of losing the ordering. If you've taken data structures you should be
+familiar with the hashing function ideas they're using, but if not, it's not
+important.
+
 #### Pair and Map ####
+
+We discuss pair and map because it's useful to understand the flexibility and
+total genericness of the STL containers. Absolute understanding of how they work
+isn't important for 3157.
+
+A pair is a class that lets you group two objects together, potentially of different types. A simple implementation is just:
+
+```cpp
+    template <class T1, class T2>
+    struct pair {
+        T1 first;
+        T2 second;
+    };
+
+    pair<string,int>  prez("obama", 1961);
+    pair<string,int>  veep("biden", 1942);
+```
+
+Pairs are useful because they're often a natural extension of generic containers,
+we don't want to store an int, we want to store an int plus some value. Pairs
+provide a convenient way to do that. 
+
+One use is in map, which maps keys to values. It will return pairs when it wants
+to return (key, value) tuples.
+
+
+```cpp
+  map<string,int>  word_count;
+  string word;
+  while (cin >> word)
+      word_count[word]++;
+
+  map<string,int>::iterator it;
+  for (it = word_count.begin(); it != word_count.end(); ++it) {
+      cout << it->first << " occurs ";          //recall that it->first is (*it).first
+      cout << it->second << " times." << endl;
+  }
+```
+
 
 
 ## Iterators ##
@@ -196,10 +264,31 @@ for (dequeue<string>::iterator it = v.begin(); it != v.end(); ++it)
 
 iterator is a type member, which is a typedef defined INSIDE a class.
 
-iterators act like pointers, they must provide the basics that pointers provide (some do provide other features). In particular you must be able to get the beginning, `v.begin()` and ONE PAST THE END with `v.end()`. Then to use it we 
+iterators act like pointers, they must provide the basics that pointers provide
+(some do provide other features). In particular you must be able to get the
+beginning, `v.begin()` and ONE PAST THE END with `v.end()`. Both of these
+functions return iterators! However it's only valid to dereference the returned
+value of `begin()`, because `end()` points past the end of the container.
+
+Then to use it the iterator has to define three functions: `*`, `++` and `!=`.
+With only those three we can do our entire iteration with any container, even
+ones like trees that aren't strictly sequential.
+
+`operator*` returns a reference to the object the iterator is currently pointing
+at. In a vector the iterator is actually a pointer, so it works without any
+code. In another class, say a linked list, the code has to do more work to
+figure out what the object being stored is, and return that.
+
+`operator++` advances the iterator to the next element. Again, how it actually
+happens depends entirely on what the.
+
+`operator!=` is important, because for some container types the idea of
+`operator<` doesn't really make sense. Hashmaps, for example, are entirely
+unordered, so we can only really test whether two iterators are not equal, not
+whether one is less than the other.
 
 There is also a const_iterator, which gives you const references, and behaves
-exactly the same way.
+exactly the same way conceptually.
 
 
 
