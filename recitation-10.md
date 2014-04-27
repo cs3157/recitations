@@ -92,8 +92,89 @@ called `vector_mystring`.
 
 It helps to think about how the implementation is written. 
 
+```cpp
+template <typename T>
+class vector {
+  public:
+    //......
+    void push_back(const T& x);
+        //......
+
+  private:
+    T *a;
+    size_t size;
+    size_t capacity;
+    void grow();
+};
+```
 
 
+#### Templates: under the hood ####
+
+So we recalled above how compiling worked in C. We create a struct, like `struct
+List list` and call a function like `initList(&list)`. The compiler looks at our
+source code and our included headers to see if the type `struct List` and the
+function `initList(struct list *)` are defined anywhere. It doesn't care about
+the implementation at this point, only whether they're defined as valid, legal
+types. If so, it creates an object file. Later the linker goes through and links
+the separately compiled objects together into a single executable.
+
+This all breaks down with templates. As we discussed previously, there is no
+type `vector`. It's code that can work with ANY type. So whenever you use a
+vector, the compiler needs to see the entire definition because it has two jobs
+to do: first, check that you're using it validly, and secondly, ACTUALLY
+GENERATE THE CODE. When you use the template with a type, the compiler is
+actually created entirely new types, functions, etc. To do that it needs to have
+the full code available. **This is why we put templates entirely in the .h
+files.**
+
+A comment from Jae about this: 
+
+> Template compilation is very tricky.  The crux of the problem is that when a
+piece of code *uses* a template, the compiler needs to see the whole definition
+of the template because it needs to generate a typed instance.  This is
+different from C, where the compiler does not need to see the body of a function
+when it's compiling a piece of code that calls it.  Basically, the C model of
+separating interface (.h) and implementation (.c) doesn't really work in C++.
+This is one of the things in C++ that is fundamentally incompatible with C, and
+no matter what you do you'll end up with a kludge.
+
+> We take the easiest way (as most people do): each compilation unit (i.e. each
+cpp file that *uses* a template function or a template class) will include the
+generated typed instances of a template.  That is, if foo.cpp and bar.cpp both
+use Stack<int>, foo.o and bar.o will each have the generated Stack<int> machine
+code in there.  The linker will throw away the duplicates at link time.
+Wasteful, but simple.  This is known as the "Borland" model.  (Borland is a
+compiler vendor that most of you are too young to know. I actually remember
+installing Borland C++ compiler on my PC from 3.5-inch floppy disks, 22 of
+them.)
+
+> This gcc manual page explains the Borland model and other more fancier
+alternatives: http://gcc.gnu.org/onlinedocs/gcc/Template-Instantiation.html
+
+
+See the end of Lippman 5th ed 16.1.1, "Template Compilation" for a more thorough explanation.
+
+
+#### Anecdote: Template metaprogramming to an extreme ####
+
+One really nice feature about templates is that, although they take a long time
+to compile, they're incredibly fast running. There's literally no overhead
+during execution for a templated class, because they're just turned into the
+code that you would have written yourself anyways.
+
+There's a really cool Bayesian statistics project at Columbia run by
+Andrew Gelman's group called Stan http://mc-stan.org/. It's very fast to run
+complicated statistical models (under a second for moderate sizes, where
+competitors would be several minutes), in part because the whole thing very
+extensively uses C++ templates. However it comes at the cost of 30-60 second
+compilations every time you want to create a new model (even just a tiny tweak).
+This is also because of the C++ templates, which mean it has to recompile a huge
+amount of code every time. By using templates the code is a little trickier to
+write, longer to compile, but the end result is execution times that are as fast
+as hand written code, with significantly more flexibility for the end user. This
+lets them have end users write whatever models they want, at basically no cost
+in slowness.
 
 #### Alternate Template Motivation ####
 If you'd like another reason for templates, the canonical example is writing these
