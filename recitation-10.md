@@ -106,6 +106,10 @@ class vector {
 };
 ```
 
+Note that `push_back` takes a constant reference to type T (`const T&`). If you've done lab 9, you'll know that it's generally better to take constant references for a couple of reasons:
+
+1. By taking `const`, you increase the range of things you can take (both `const` and non-`const`)
+2. By taking a reference, you avoid the overhead associated with copy constructors, temporaries, etc.
 
 #### Templates: under the hood ####
 
@@ -346,14 +350,14 @@ The iterator has to define three functions to be useful: `*`, `++` and `!=`.
 With only those three we can do our entire iteration with any container, even
 ones like trees that aren't strictly sequential.
 
-`operator*` returns a reference to the object to which the iterator is currently pointing. In a `vector` the iterator is actually a pointer, so it works without any
+- `operator*` returns a reference to the object to which the iterator is currently pointing. In a `vector` the iterator is actually a pointer, so it works without any
 code. In another class, say a linked list, the code has to do more work to
 figure out what the object being stored is, and return that.
 
-`operator++` advances the iterator to the next element. Again, how it actually
-happens depends entirely on what the.
+- `operator++` advances the iterator to the next element. Again, how it actually
+happens depends entirely on what the container holds.
 
-`operator!=` is important, because for some container types the idea of
+- `operator!=` is important, because for some container types the idea of
 `operator<` doesn't really make sense. Hashmaps, for example, are entirely
 unordered, so we can only really test whether two iterators are not equal, not
 whether one is less than the other.
