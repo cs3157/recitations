@@ -7,8 +7,8 @@ our experience with MyString. At this point we can move in one of two
 directions. First, we could take a more typical Object Oriented track and
 discuss inheritance, polymorphism, and those sorts of things that companies love
 to ask about during tech interviews. However if you've used Java at length
-you're probably already somewhat comfortable with this, even though it's incredibly complex and confusing
-(multiple inheritance = head asplode).
+you're probably already somewhat comfortable with this, even though it's
+incredibly complex and confusing (multiple inheritance = head asplode).
 
 Instead, in 3157, we're going to discuss templates and generics. The interaction
 between generics and C++ is very interesting, and they work differently than in
@@ -38,11 +38,11 @@ handling unknown types is fairly natural. This is what we did in our linked
 list in lab 3.
 
 However it has some problems: it doesn't provide any type safety, so you have to
-constantly cast your void pointers to whatever type they really should be. This means
-that the compiler is essentially helpless - it can't provide the static checking
-that catches errors at compile time. Additionally, the list can't provide any
-guarantees about the lifetime of things to which it points. As you may have
-seen, it's very easy to end up with invalid pointers.
+constantly cast your void pointers to whatever type they really should be. This
+means that the compiler is essentially helpless - it can't provide the static
+checking that catches errors at compile time. Additionally, the list can't
+provide any guarantees about the lifetime of things to which it points. As you
+may have seen, it's very easy to end up with invalid pointers.
 
 ### Templates ###
 
@@ -55,13 +55,15 @@ Before we proceed into talking about templates, a word of warning. Templates
 break, or at least abuse, the standard mental model of compiling and linking
 that we've established so far. They do things that "feel" like linking, but it's
 actually happening during compiling. So just be aware that you'll need a new
-mental bucket for thinking about templates. (We'll [discuss](#templates-under-the-hood) that more soon.)
+mental bucket for thinking about templates. (We'll
+[discuss](#templates-under-the-hood) that more soon.)
 
 Templates are kind of like madlibs. They contain almost the whole story, but
 leave certain things blank. Whatever you put in the blank will complete the
 story. Using templates is generally quite easy. Say we want a vector (discussed
 more below): we just define a vector and specify the type of object it holds.
-Let's say we want to store a bunch of ints and then a bunch of MdbRecs. That's easy:
+Let's say we want to store a bunch of ints and then a bunch of MdbRecs. That's
+easy:
 
 ```cpp
 
@@ -72,7 +74,8 @@ vector<int> ivec;
 vector<MdbRec> mdbvec;
 ```
 
-But there's no need to stop there! What if we want a vector of vectors of MyStrings?
+But there's no need to stop there! What if we want a vector of vectors of
+MyStrings?
 
 ```cpp
 vector<vector<MyString> > msvecvec;
@@ -106,10 +109,14 @@ class vector {
 };
 ```
 
-Note that `push_back` takes a constant reference to type T (`const T&`). If you've done lab 9, you'll know that it's generally better to take constant references for a couple of reasons:
+Note that `push_back` takes a constant reference to type T (`const T&`). If
+you've done lab 9, you'll know that it's generally better to take constant
+references for a couple of reasons:
 
-1. By taking `const`, you increase the range of things you can take (both `const` and non-`const`)
-2. By taking a reference, you avoid the overhead associated with copy constructors, temporaries, etc.
+1. By taking `const`, you increase the range of things you can take (both
+`const` and non-`const`)
+2. By taking a reference, you avoid the overhead associated with copy
+constructors, temporaries, etc.
 
 #### Templates: under the hood ####
 
@@ -123,8 +130,11 @@ the separately compiled objects together into a single executable.
 
 This all breaks down with templates. As we discussed previously, there is no
 type `vector`. It's code that can work with *any* type. So whenever you use a
-`vector`, the compiler needs to see the entire definition because it has two jobs
-to do: 1) check that you're using it validly, and 2) *actually generate the code*. When you use the template with a type, the compiler is actually creating entirely new types, functions, etc. To do that it needs to have the full code available. **This is why we put templates entirely in the .hfiles.**
+`vector`, the compiler needs to see the entire definition because it has two
+jobs to do: 1) check that you're using it validly, and 2) *actually generate the
+code*. When you use the template with a type, the compiler is actually creating
+entirely new types, functions, etc. To do that it needs to have the full code
+available. **This is why we put templates entirely in the .hfiles.**
 
 A comment from Jae about this: 
 
@@ -151,7 +161,8 @@ them.)
 alternatives: http://gcc.gnu.org/onlinedocs/gcc/Template-Instantiation.html
 
 
-See the end of Lippman 5th ed 16.1.1, "Template Compilation" for a more thorough explanation.
+See the end of Lippman 5th ed 16.1.1, "Template Compilation" for a more thorough
+explanation.
 
 
 #### Anecdote: Template metaprogramming to an extreme ####
@@ -174,9 +185,11 @@ as hand written code, with significantly more flexibility for the end user. This
 lets them have end users write whatever models they want, at basically no cost
 in slowness.
 
+
 #### Alternate Template Motivation ####
-If you'd like another reason for templates, the canonical example is writing these
-two functions:
+
+If you'd like another reason for templates, the canonical example is writing
+these two functions:
 
 ```cpp
 // returns 0 if the values are equal, -1 if v1 is smaller, 1 if v2 is smaller
@@ -198,7 +211,12 @@ int compare(const double &v1, const double &v2)
 }
 ```
 
-You might realize that functions are nearly identical, but still have two implementations: one for strings and one for doubles. And all of this doesn't help you at all if you want to write a `compare` for ints! If only there was a way to do the same logic, and use the already existing operator overloading to just call whatever the appropriate `operator<` function...luckily ,templates do this!
+You might realize that functions are nearly identical, but still have two
+implementations: one for strings and one for doubles. And all of this doesn't
+help you at all if you want to write a `compare` for ints! If only there was a
+way to do the same logic, and use the already existing operator overloading to
+just call whatever the appropriate `operator<` function...luckily ,templates do
+this!
 
 The template'd version of this is:
 
@@ -237,8 +255,9 @@ need to be declared as separate templates.
 
 ## Containers ##
 
-The C standard library, STL, provides containers. Containers are a standard set
-of library classes for containing a bunch of objects of some type. They're
+The C standard library, STL, provides
+[containers](http://www.cplusplus.com/reference/stl/). Containers are a standard
+set of library classes for containing a bunch of objects of some type. They're
 implemented with templates, and are pretty much the canonical example of
 templates in the language.
 
@@ -248,8 +267,17 @@ manage the lifetime of those copies. They guarantee that even if you destruct
 the original, the copy it stored is safe. And once you destruct the vector, the
 copies it made are destructed as well.
 
+Understanding value semantics is key for lab 10, and helps explain why they're
+so handy. Something about STL containers could easily be a final question. 
+
 Note that Jae's lecture note 22 does a good job of explaining containers and
 iterators.
+
+#### What can you do with containers? ####
+
+Iterators, of course, but also: things like sorting, inserting, swapping,
+splicing, merging, etc, etc. You can pass them into functions that will sort, or
+print, or whatever you could want.
 
 
 #### Vector ####
@@ -258,7 +286,8 @@ Vector is the prototypical container in this class. It's a sequential container,
 supporting O(1) random access to elements, and O(1) amortized appends
 (`push_back()`). Under the hood it's an array with some blank spaces on the
 right;  whenever it runs out of blanks it creates a new (larger) array, and
-copies the data from the old to new. It manages that underlying array internally.
+copies the data from the old to new. It manages that underlying array
+internally.
 
 
 #### List ####
@@ -268,18 +297,29 @@ class is doubly linked, so every node points not just to next, but also to
 previous (i.e., the node that points to it). It also maintains a tail pointer in
 addition to head, so it can append in O(1) constant time.
 
-This means that list does NOT define `operator[]` or anything similar - it has no random
-access, and it must do some pretty fancy stuff in its iterator. 
+This means that list does NOT define `operator[]` or anything similar - it has
+no random access, and it must do some pretty fancy stuff in its iterator.
 
-#### Dequeue ####
+#### Deque ####
 
-Also known as deque, and pronounced "deck", it's a doubly ended queue: like a vector with space on both the left and the right. (Dequeue and vector are in fact implemented differently, but it's a good mental model. Don't worry too much for 3157.)
+Also known as deque, and pronounced "deck", it's a doubly ended queue: like a
+vector with space on both the left and the right. (Deque is actually implemented
+differently, but it's a good mental model.)
+
+#### Derived Containers ####
+
+Based on vector, list, and deque, there are several derived containers that use
+one of those as the underlying container. They include queue (uses either list
+or deque), priority queue (using vector or deque), and stack (using any).
 
 #### Set ####
 
-Sets provide very efficient lookup to see if an element is in the set, at the
-cost of losing the ordering. If you've taken data structures, you should be
-familiar with the hashing function ideas they're using. (If not, again, don't stress over it for 3157.)
+Sets provide very efficient lookup to see if an element is in the set, along
+with mathematical set operations like union, intersection, etc. They keep the
+elements sorted using the operator< function. (Unimportant detail: internally
+they use some type of self balancing binary search tree.)
+
+There's also an unordered set (unimportant detail: that uses a hash table). 
 
 #### Pair and Map ####
 
@@ -287,7 +327,8 @@ We discuss pair and map because it's useful to understand the flexibility and
 total genericness of the STL containers. Absolute understanding of how they work
 isn't important for 3157.
 
-A pair is a class that lets you group two objects together, potentially of different types. A simple implementation is just:
+A pair is a class that lets you group two objects together, potentially of
+different types. A simple implementation is just:
 
 ```cpp
     template <class T1, class T2>
@@ -323,6 +364,8 @@ to return (key, value) tuples.
 
 
 
+
+
 ## Iterators ##
 
 Iterators are the key feature that makes containers so useful as a group. Every
@@ -340,19 +383,21 @@ for (dequeue<string>::iterator it = v.begin(); it != v.end(); ++it)
 
 `iterator` is a type member, which is a typedef defined *inside* a class.
 
-`iterator`s act like pointers: they must provide the basics that pointers provide
-(some do provide other features). In particular you must be able to get the
-beginning, `v.begin()` and *one past the end* with `v.end()`. Both of these
-functions return `iterator`s. However it's only valid to dereference the returned
-value of `begin()`, because `end()` points past the end of the container.
+`iterator`s act like pointers: they must provide the basics that pointers
+provide (some do provide other features). In particular you must be able to get
+the beginning, `v.begin()` and *one past the end* with `v.end()`. Both of these
+functions return `iterator`s. However it's only valid to dereference the
+returned value of `begin()`, because `end()` points past the end of the
+container.
 
 The iterator has to define three functions to be useful: `*`, `++` and `!=`.
 With only those three we can do our entire iteration with any container, even
 ones like trees that aren't strictly sequential.
 
-- `operator*` returns a reference to the object to which the iterator is currently pointing. In a `vector` the iterator is actually a pointer, so it works without any
-code. In another class, say a linked list, the code has to do more work to
-figure out what the object being stored is, and return that.
+- `operator*` returns a reference to the object to which the iterator is
+currently pointing. In a `vector` the iterator is actually a pointer, so it
+works without any code. In another class, say a linked list, the code has to do
+more work to figure out what the object being stored is, and return that.
 
 - `operator++` advances the iterator to the next element. Again, how it actually
 happens depends entirely on what the container holds.
