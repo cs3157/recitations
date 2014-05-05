@@ -261,6 +261,8 @@ set of library classes for containing a bunch of objects of some type. They're
 implemented with templates, and are pretty much the canonical example of
 templates in the language.
 
+#### Value Semantics ####
+
 One key feature of containers is that they provide **value semantics**. That is,
 containers at least appear to make copies of the things you store into them, and
 manage the lifetime of those copies. They guarantee that even if you destruct

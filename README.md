@@ -33,3 +33,4 @@ Contents:
 * [Recitation 9](recitation-9.md): C++. Classes/Structs. Stack vs heap allocation
   in C++. The basic 4. Implicit conversion and operator overloading.
 * [Recitation 10](recitation-10.md): C++ generics, templates, containers, metaprogramming
+* [Recitation 11](recitation-11.md): Smart Pointer
