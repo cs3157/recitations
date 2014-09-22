@@ -76,39 +76,6 @@ int main(int argc, char **argv) {
     }
     printf("\n");
 
-    /* Commenting out the below, since it's pretty redundant */
-    /*
-    printf("one last thing, carr is an int array of size 5. Let's do what we did with c again with carr...\n");
-    int carr[5];
-    carr[0] = 9;
-    *(carr+1) = 10;
-    carr[2] = 11;
-    3[carr] = 12;
-    *(carr+4) = 0;
-    printf("Now looping through carr+0...carr+4:\n");
-    for (i = 0; i < 5; i++) {
-        printf("    *(carr+%d) == %2d", i, *(carr+i));
-        printf("    carr[%d] == %2d", i, carr[i]);
-        printf("    %d[carr] == %2d \n", i, i[carr]);
-    }
-    printf("\n");
-    */
-
-
-    /* This is a pretty unncessary aside about ASCII */
-    /*
-    printf("\nnull CHARACTERS are the number 0. 0 == '\\0'\n");
-    char f;
-    f = '0';
-    printf("char f = '0'. It's the number %2d. But interpretted as an ASCII char contains '%c'\n", f, f);
-    f = 0;
-    printf("     f =  0 . It's the number %2d. But interpretted as an ASCII char contains '%c'\n", f, f);
-    f = '\0';
-    printf("     f ='\\0'. It's the number %2d. But interpretted as an ASCII char contains '%c'\n", f, f);
-    f = 'a';
-    printf("     f = 'a'. It's the number %2d. But interpretted as an ASCII char contains '%c'\n", f, f);
-    printf("\n");
-    */
 
     static double staticvar = 0.0;
     printf("The memory address of global variable globalvar is %p\n", &globalvar);
@@ -118,10 +85,8 @@ int main(int argc, char **argv) {
     char *sl = "This is a string literal!";
     printf("\"%s\" is acessed via char *sl at %p\n", sl, sl);
 
-    /*
     char *lastChar = sl+strlen(sl)-1;
-    printf("The last character of ^ is '%c', stored at %p\n", *lastChar, lastChar);
-    */
+    printf("\tThe last character of ^ is '%c', stored at %p\n", *lastChar, lastChar);
 
     printf("\n\nNow let's play with functions!\n");
     printf("The memory address of the function add is %p\n", &add);
@@ -134,12 +99,6 @@ int main(int argc, char **argv) {
     printf("The contents of malloc'd space %p, d, is %d\n", d, *d);
     printf("\n");
 
-    /*
-    printf("Ok, now let's try to multiply, by asking the operate function to use the multiply function...\n");
-    printf("We'll multiply a * b and store into globalvar, but use *ptr_to_ptr_to_a, rather than &a\n");
-    operate(*ptr_to_ptr_to_a, &b, &globalvar, &multiply);
-    printf("The contents of global variable %p, globalvar, is %d\n", &globalvar, globalvar);
-    */
 
 
     printf("\n\n-----SUMMARY-----\n");
