@@ -161,7 +161,7 @@ int main(int argc, const char * argv[])
     printf("%24s ", "char as unsigned hex");
     
     for (i = 0; i < size / sizeof(char); i++) {
-        printf("|%5hhx", charp[i]);
+        printf("| 0x%02hhx", charp[i]);
     }
 
     printf("\n%24s ", "unsigned dec");
@@ -181,7 +181,6 @@ int main(int argc, const char * argv[])
     }
     printf("\n");
     
-    printhr(25, size / sizeof(char), 5);
     
     
     /* SHORT */
@@ -190,7 +189,7 @@ int main(int argc, const char * argv[])
     
     printf("%24s ", "short as unsigned hex");
     for (i = 0; i < size / sizeof(short); i++) {
-        printf("|%11hx", shortp[i]);
+        printf("|     0x%04hx", shortp[i]);
     }
     
     printf("\n%24s ", "unsigned dec");
@@ -204,7 +203,6 @@ int main(int argc, const char * argv[])
     }
     printf("\n");
     
-    printhr(25, size / sizeof(short), 11);
     
     
     /* INT */
@@ -214,7 +212,7 @@ int main(int argc, const char * argv[])
     
     printf("%24s ", "int as unsigned hex");
     for (i = 0; i < size / sizeof(int); i++) {
-        printf("|%23x", intp[i]);
+        printf("|             0x%08x", intp[i]);
     }
     
     printf("\n%24s ", "unsigned dec");
@@ -233,7 +231,6 @@ int main(int argc, const char * argv[])
     }
     printf("\n");
     
-    printhr(25, size / sizeof(int), 23);
     
     
     
@@ -245,7 +242,7 @@ int main(int argc, const char * argv[])
     
     printf("%24s ", "long as unsigned hex");
     for (i = 0; i < size / sizeof(long); i++) {
-        printf("|%47lx", longp[i]);
+        printf("|                             0x%016lx", longp[i]);
     }
     
     printf("\n%24s ", "unsigned dec");

@@ -6,6 +6,9 @@ default: pointerfun converter
 
 converter:
 
+converter_output: converter converter_input
+	./converter < converter_input > converter_output
+
 pointerfun: 
 
 pointerfun_clang: pointerfun.c
