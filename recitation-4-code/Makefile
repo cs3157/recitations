@@ -2,6 +2,10 @@ CC = gcc
 CFLAGS = -Wall -g
 LDFAGS = -g
 
+default: pointerfun converter
+
+converter:
+
 pointerfun: 
 
 pointerfun_clang: pointerfun.c
@@ -13,9 +17,9 @@ pointerfun-output: pointerfun
 
 .PHONY: clean all valgrind
 clean:
-	rm -f *.o pointerfun pointerfun_clang
+	rm -f *.o pointerfun pointerfun_* converter
 
-all: clean pointerfun pointerfun_clang
+all: clean default pointerfun_clang
 
 valgrind: pointerfun
 	valgrind --leak-check=yes ./pointerfun

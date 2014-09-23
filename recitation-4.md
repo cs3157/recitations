@@ -162,8 +162,12 @@ a++; //illegal!
 size_t x = sizeof(a); //x == 40
 size_t y = sizeof(p); //y == 8
 /* NOTE: sizeof is an operator, not a function!
-   It can tell the difference between a pointer
-   and an array. */
+    sizeof is evaluated at COMPILE TIME, so the
+    size must be known based on only the source,
+    not any runtime parameters.
+    It can tell the difference between a pointer and
+    an array in the scope in which it was declared.
+    */
 ```
 
 In most cases, just calling an array by its variable name without the square
@@ -172,6 +176,10 @@ Incrementing a pointer will always move it ahead not one byte, but the size of
 the type to which it's pointing. In this case we're dealing with an int so it will likely move it
 ahead 4 bytes to the next int. Unlike a pointer, though, an array is a constant
 variable.
+
+Note that as discussed above, `sizeof` is an operator, not a function. 
+sizeof is evaluated at *compile time*. This means that the value of the
+operator cannot be anything that depends on user input.
 
 ### Strings in C ###
 
