@@ -1,4 +1,5 @@
 Enter a number of bytes plz: Ok, please enter UNSIGNED DECIMAL value for each byte: 
+Ok, wrote those 16 bytes into malloc'd memory at 0x125a010
 =====================+====+====+====+====+====+====+====+====+====+====+====+====+====+====+====+====
  char as unsigned hex|0x00|0xff|0x61|0xbc|0xf9|0x30|0x5d|0x37|0x18|0x2d|0x44|0x54|0xfb|0x21|0x09|0x40
          unsigned dec|   0| 255|  97| 188| 249|  48|  93|  55|  24|  45|  68|  84| 251|  33|   9|  64

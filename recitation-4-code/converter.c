@@ -141,6 +141,7 @@ int main(int argc, const char * argv[])
         printf("shit the bed");
         exit(1);
     }
+
     
     int i;
     printf("Ok, please enter UNSIGNED DECIMAL value for each byte: \n");
@@ -153,6 +154,7 @@ int main(int argc, const char * argv[])
     
     
 
+    printf("Ok, wrote those %d bytes into malloc'd memory at %p\n", size, p);
 
     
     /* CHAR */
