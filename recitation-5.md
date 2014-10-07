@@ -280,8 +280,8 @@ on either side of most of these operators.
      [7] $ valgrind ./myprogram > myoutput
      [8] $ valgrind ./anotherprogram 2>> myerrors
      [9] $ valgrind ./anotherprogram >> myoutput
-    [10] $ valgrind ./myprogram 2>&1 > ALLthethings
-    [11] $ valgrind ./anotherprogram 2>&1 >> ALLthethings
+    [10] $ valgrind ./myprogram > ALLthethings 2>&1
+    [11] $ valgrind ./anotherprogram >> ALLthethings 2>&1
 
 Each of the above expressions build on each other. If you can tell what the
 effect of each expression above is, then you're set. If not, try them out and
