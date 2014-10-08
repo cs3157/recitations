@@ -210,7 +210,7 @@ Given what we know about compilation, where might we want to use these flags and
 for what purposes? The order we use these flags and the variables we insert them
 in is **very** important.
 
-## Important Things to Review ##
+## Important Things to Review for the Midterm ##
 
 - Arrays, pointers, and the structure of argv. Understanding how these data
   types and structures work will be crucial to your understanding of C as this
@@ -223,8 +223,10 @@ in is **very** important.
   therefore fair game.
 - Stack and Heap allocation. Make sure you know how to use malloc and free. Try
   to determine if there are memory leaks in some sample code. 
-- libmylist.a. Make sure you understand how the linked list is supposed to
+- mylist / libmylist.a. Make sure you understand how the linked list is supposed to
   function
+- MdbRec. Make sure you understand how an MdbRec is laid out in memory, and how the
+  Mdb program structures a linked list of MdbRecs.
 - Makefiles and git. These questions are always fair game as well. You've been
   using makefiles and git long enough that you should know what tracked,
   untracked, staged, and modified mean in the context of git. You should also
