@@ -45,9 +45,11 @@ That last one is the key that drives the definition.
 It means that a group of smart pointers all pointing to the same object need to
 coordinate their efforts. 
 
-As a result, let's think about the private data members that a SmartPtr must have. Obviously first is the underlying pointer we're wrapping - `T *ptr;`. 
+As a result, let's think about the private data members that a SmartPtr must have.
+Obviously first is the underlying pointer we're wrapping - `T *ptr;`. 
 
-But there's a second component to a SmartPtr, the count of 
+But there's a second component to a SmartPtr, the current count of references to
+that pointer. We need to keep this in sync across our entire program. 
 
 Note: See ***24-smartptr.pdf*** for the actual definition. 
 
