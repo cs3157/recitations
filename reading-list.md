@@ -23,9 +23,6 @@ how standard input and output work for processes in UNIX.
 ### [Learn C the Hardway](http://c.learncodethehardway.org/book/) ###
 
 
-### [
-
-
 ### [*Why Mobile Web Apps are Slow*](http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/) ###
 by Drew Crawford
 
@@ -95,9 +92,15 @@ The original (ok, a very early version, 0.1) HTTP web server by Tim Berner's Lee
 Stanford's intro C++ class has a lab section, 106L. They've written a ~600 page textbook, but it's an incredibly good resource for learning all about everything we've done. For example, they have pages and pages on how linking works. Highly recommended, but be aware it's focused only on C++, so most of the stuff applies to C, but not all.
 
 
+# To Add #
+* Heartbleed and goto fail writeups
+* The Unreasonable Effectiveness of C
 
 # To Vet #
 * C++ Value Semantics: http://akrzemi1.wordpress.com/2012/02/03/value-semantics/
 * Integer Represenations: http://pages.cs.wisc.edu/~smoler/x86text/lect.notes/represent.html
 * Why should I use a pointer, rather than an object?: http://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself
 * How to debug small programs: http://ericlippert.com/2014/03/05/how-to-debug-small-programs/#
+* C structure packing http://www.catb.org/esr/structure-packing/
+* * Implementing malloc: http://danluu.com/malloc-tutorial/
+* 21st Century C: O'Reilly book about how we're all dinosaurs for returning 0 from main http://clio.columbia.edu/catalog/10816384?counter=1
