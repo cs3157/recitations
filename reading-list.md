@@ -91,6 +91,8 @@ The original (ok, a very early version, 0.1) HTTP web server by Tim Berner's Lee
 ### [Stanford CS106L Course Reader](http://web.stanford.edu/class/cs106l/course_reader.html) ###
 Stanford's intro C++ class has a lab section, 106L. They've written a ~600 page textbook, but it's an incredibly good resource for learning all about everything we've done. For example, they have pages and pages on how linking works. Highly recommended, but be aware it's focused only on C++, so most of the stuff applies to C, but not all.
 
+### [You Can't Dig Upwards](http://www.evanmiller.org/you-cant-dig-upwards.html) ###
+An article about why only knowing Python is like only knowing how to drive an automatic transmission car. Basically, python is too easy, and you don't understand how a computer actually works.
 
 # To Add #
 * Heartbleed and goto fail writeups
