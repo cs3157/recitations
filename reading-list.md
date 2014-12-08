@@ -94,6 +94,9 @@ Stanford's intro C++ class has a lab section, 106L. They've written a ~600 page 
 ### [You Can't Dig Upwards](http://www.evanmiller.org/you-cant-dig-upwards.html) ###
 An article about why only knowing Python is like only knowing how to drive an automatic transmission car. Basically, python is too easy, and you don't understand how a computer actually works.
 
+### [Valgrind is NOT a leak checker](http://maintainablecode.logdown.com/posts/245425-valgrind-is-not-a-leak-checker) ###
+An article about why leak checking is one of the less useful features Valgrind offers. 
+
 # To Add #
 * Heartbleed and goto fail writeups
 * The Unreasonable Effectiveness of C
