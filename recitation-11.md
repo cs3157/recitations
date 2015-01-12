@@ -55,6 +55,16 @@ Note: See ***24-smartptr.pdf*** for the actual definition.
 
 
 ### Diagram SmartPtr ###
+Let's [first attempt] (/recitation-11-rsrc/stack.gif) to keep track of count 
+in the simplest way possible: an `int` inside the class.
+
+As we can see, this will not properly synchronize the value and can even lead to
+deleting the object too soon!
+
+Let's [try again] (/recitation-11/rsrc/heap.gif) while holding a *pointer* to an `int` inside the class.
+
+It works!  We're properly keeping track of the count!  This means we can delete the
+object properly.
 
 SmartPtr definition
 --------------------
