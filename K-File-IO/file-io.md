@@ -1,5 +1,3 @@
-# Recitation 7 #
-
 ## size_t ##
 
 `size_t` shows up all over the place in memory operations. `malloc` expects its

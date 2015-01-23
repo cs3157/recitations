@@ -1,5 +1,3 @@
-# Recitation 10 #
-
 # C++ templates and containers #
 
 At this point hopefully you've gotten used to writing basic classes in C++ from

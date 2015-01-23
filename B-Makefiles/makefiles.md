@@ -1,5 +1,3 @@
-# Recitation 2 #
-
 ## Makefiles ##
 
 Make is a UNIX utility that follows a blueprint you create for compiling

@@ -1,5 +1,3 @@
-# Recitation 11 #
-
 # Smart Pointers #
 
 ## Or, If C++ is so smart, why do I have to remember to delete? ##

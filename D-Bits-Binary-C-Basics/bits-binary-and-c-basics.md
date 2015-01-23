@@ -1,6 +1,3 @@
-# Recitation 3 #
-
-
 ## Bits, Bytes and Binary ##
 
 Let's just refresh our memory about memory:

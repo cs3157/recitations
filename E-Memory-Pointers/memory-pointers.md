@@ -1,5 +1,3 @@
-# Recitation 4 #
-
 ## Variables ##
 
 ### Stack Variables ###
