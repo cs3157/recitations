@@ -61,7 +61,7 @@ in the simplest way possible: an `int` inside the class.
 As we can see, this will not properly synchronize the value and can even lead to
 deleting the object too soon!
 
-Let's [try again] (/recitation-11/rsrc/heap.gif) while holding a *pointer* to an `int` inside the class.
+Let's [try again] (/recitation-11-rsrc/heap.gif) while holding a *pointer* to an `int` inside the class.
 
 It works!  We're properly keeping track of the count!  This means we can delete the
 object properly.
