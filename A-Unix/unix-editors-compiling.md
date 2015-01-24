@@ -1,7 +1,7 @@
-# First Recitation #
-
 ## Logging in ##
- 
+
+(Remember: If you don't have a CS/clic account, you'll need to request one from 
+the CS department first.)
 
 Logging in is fairly simple if you're in the clic lab. Just use your UNI and 
 password on any of the machines when prompted. You may have to back out once 
