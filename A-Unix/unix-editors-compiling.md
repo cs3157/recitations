@@ -10,7 +10,7 @@ to be able to enter your UNI.
 Remember that your password isn't necessarily the same as your UNI password, 
 its the one you used when creating your clic account.
 
-If you're on a mac:
+If you're on a Mac:
 
 - Open up Terminal
 - type `ssh your_uni@clic-lab.cs.columbia.edu` You will be prompted for your 
@@ -22,7 +22,7 @@ graphical programs as well as the shell with the remote machine) append the X
 - You will now be in a remote shell session on a random machine in the clic 
 cluster.
 
-If you're on Windows
+If you're on Windows:
 
 - Download and install either [Putty](http://cuit.columbia.edu/putty-software) 
 or [MobaXterm](http://mobaxterm.mobatek.net/)
@@ -66,8 +66,12 @@ When you log into clic, your current (working) directory will be
 
 This is what's known as your home directory. You can do pretty
 much whatever you want to the files in this directory. You own the place. Let's
-make a new directory here for your work in this class. Use the `mkdir` command
-to make a new directory:
+view all the files in the current directory:
+
+    ls
+
+Let's make a new directory here for your work in this class. Use the `mkdir` 
+command to make a new directory:
 
     mkdir cs3157 
     mkdir cs3157/learning
@@ -87,8 +91,8 @@ file exists.
     touch testing.txt
     touch .hidden.txt
 
-Let's see if it worked. The `ls` command lists all files in the current
-directory. Some commands in UNIX take flags. These are special arguments
+Let's see if this worked. Try the `ls` command again. 
+Some commands in UNIX take flags. These are special arguments
 preceded by a dash. Usually it will make the most sense to attach the `-l` and
 the `-a` flags to our ls calls. `-l` will include the permissions of each file
 (more on this later) and `-a` will include files that are hidden (in UNIX, these
