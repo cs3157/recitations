@@ -1,5 +1,3 @@
-# Recitation 9 #
-
 ## Introducing C++ ##
 
 ### Strings in C ###

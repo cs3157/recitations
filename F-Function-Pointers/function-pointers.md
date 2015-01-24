@@ -1,6 +1,5 @@
-# Recitation 5 #
-The main topics for these notes will be those useful for lab 3, material from
-lecture note 9, and useful information for the practice midterm.
+_The main topics for these notes will be those useful for lab 3, material from
+lecture note 9, and useful information for the practice midterm._
 
 ## Function Pointers (K&R 5.11) ##
 It is often the case in programming that you'll want your program to change its

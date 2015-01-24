@@ -1,4 +1,4 @@
-# GDB, Valgrind, and Debugging Lecture #
+# GDB, Valgrind, and Debugging #
 
 There are three commonly used debugging methods in this class. 
 

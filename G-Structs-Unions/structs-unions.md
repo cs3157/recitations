@@ -1,4 +1,3 @@
-# Supplementary Information for Recitation 5 #
 ## Structs (K&R 6) ##
 
 Structs are kind of like Java's objects but for C. Fundamentally, they allow you

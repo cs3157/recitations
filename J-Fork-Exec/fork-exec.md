@@ -1,5 +1,3 @@
-# Recitation 6 #
-
 ## *nix Systems ##
 
 ### The Stack ###
