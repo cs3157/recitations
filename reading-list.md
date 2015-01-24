@@ -7,7 +7,7 @@ for some things). Probably most useful around lab 2, once you've actually
 writen some C code. May also be useful as a review for midterm #1.
 
 
-### [Reading C type declarations](http://unixwiz.net/techtips/reading-cdecl.html) ###
+### [Reading C Type Declarations](http://unixwiz.net/techtips/reading-cdecl.html) ###
 Strategy for dissecting complex C declarations.
 
 ### [*The Perils of Java Schools*](http://www.joelonsoftware.com/articles/ThePerilsofJavaSchools.html) ###
@@ -20,7 +20,7 @@ Totally confused by UNIX stdin, stdout, etc? This short article may help clarify
 how standard input and output work for processes in UNIX.
 
 
-### [Learn C the Hardway](http://c.learncodethehardway.org/book/) ###
+### [Learn C the Hard Way](http://c.learncodethehardway.org/book/) ###
 
 
 ### [*Why Mobile Web Apps are Slow*](http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/) ###
@@ -52,6 +52,7 @@ to the OS underneath its impossible to learn pointers and arrays without
 understanding some essential OS concepts (like memory).
 
 What?
+
 A lot of things, but the last part about memory management is most applicable
 to what we've learned in this class.
 
@@ -94,7 +95,7 @@ Stanford's intro C++ class has a lab section, 106L. They've written a ~600 page 
 ### [You Can't Dig Upwards](http://www.evanmiller.org/you-cant-dig-upwards.html) ###
 An article about why only knowing Python is like only knowing how to drive an automatic transmission car. Basically, python is too easy, and you don't understand how a computer actually works.
 
-### [Valgrind is NOT a leak checker](http://maintainablecode.logdown.com/posts/245425-valgrind-is-not-a-leak-checker) ###
+### [Valgrind is NOT a Leak Checker](http://maintainablecode.logdown.com/posts/245425-valgrind-is-not-a-leak-checker) ###
 An article about why leak checking is one of the less useful features Valgrind offers. 
 
 # To Add #
