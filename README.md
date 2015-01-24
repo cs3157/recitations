@@ -1,5 +1,5 @@
 This repository contains the recitation notes for Columbia's Advanced
-Programming Class, COMSW3157, as taught by Jae Woo Lee. For more information
+Programming class, COMSW3157, as taught by Jae Woo Lee. For more information
 about the class, visit the [course homepage](http://www.cs.columbia.edu/~jae/3157).
 
 These recitations are held weekly by the various TAs, generally using these
@@ -20,8 +20,8 @@ Contents:
       especially `pointerfun.c` and its output `pointerfun-output` for some
       interesting experiments with pointers and memory addresses.
 * [Recitation Note F](F-Function-Pointers/function-pointers.md): Function pointers. Basic File input/output.
-* [Recitation Note G](G-Structs-Unions/structs-unions.md): Strucuts, Unions, Const, C strings.
-* [Recitation Note H](H-Linked-Lists/linked-lists.md): Linked Lists and similar data structures.
+* [Recitation Note G](G-Structs-Unions/structs-unions.md): Structs, Unions, Const, C strings.
+* [Recitation Note H](H-Linked-Lists/linked-lists.md): Linked lists and similar data structures.
 * [Recitation Note I](I-Debugging-GDB/gdb.md) Using GDB and valgrind for debugging.
 * [Recitation Note J](J-Fork-Exec/fork-exec.md): The UNIX stack. Users, permissions, file
   attributes. Processes, forking, and signals. TCP/IP and netcat basics.
@@ -30,11 +30,11 @@ Contents:
 * [Recitation Note K](K-File-IO/file-io.md): `size_t`. File IO, including reading, writing,
   and seeking in files.
 * [Recitation Note L](L-TCP-IP/tcp-ip.md): TCP/IP stack information. 
-* [Recitation Note M](M-cpp/cpp.md): C++. Classes/Structs. Stack vs heap allocation
+* [Recitation Note M](M-cpp/cpp.md): C++ intro. Classes and structs. Stack vs heap allocation
   in C++. The basic 4. Implicit conversion and operator overloading.
 * [Recitation Note N](N-Templates-Containers/templates-containers.md): C++ generics, templates,
   containers, metaprogramming.
-* [Recitation Note O](O-Smart-Pointer/smart-pointers.md): Smart Pointer
+* [Recitation Note O](O-Smart-Pointer/smart-pointers.md): Smart pointer explanation.
 
 Additionally you can read the [Midterm Review](midterm-review.md) to prepare
 for the midterm.
