@@ -159,7 +159,7 @@ everything in pico if you really wanted, but this would be difficult).
 
 ### Vim ###
  
-Vim is a difficult to use text editor and very confusing at first. It's goal is
+Vim is a difficult to use text editor and very confusing at first. Its goal is
 to be incredibly efficient by preventing unnecessary movement of your hands
 around the keyboard. It operates in different modes, the most important of 
 which will be *edit mode* and *insert mode*.
