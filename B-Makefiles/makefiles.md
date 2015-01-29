@@ -1,22 +1,23 @@
-## Makefiles ##
+# Makefiles #
 
 Make is a UNIX utility that follows a blueprint you create for compiling
 programs. Calling `make` will automatically search your current directory for a
 file called "Makefile" and use it to call various compiler commands according 
 to the rules outlined therein. 
 
-### Jae's myadd Makefile ###
+## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
-`sample-makefile`
+`sample-makefile`.
 
+### Makefile Variables ###
 ```make
 CC  = gcc
 CXX = g++
 ```
 
-Make has a some pre-configured rules for how to compile programs. For example 
-itknows how to specify files as arguments to a compiler. However, you should 
+Make has some pre-configured rules for how to compile programs. For example,
+it knows how to specify files as arguments to a compiler. However, you should 
 tell it what compiler to use for C files and C++ files. Here, we set the
 special make variables CC and CXX to gcc, the C-compiler, and g++, the c++
 compiler.
@@ -29,9 +30,13 @@ CXXFLAGS = -g -Wall $(INCLUDES)
 ```
 
 Here we define our own variable, INCLUDES, which we can use for directories 
-thatwe wish to include at the compilation step. An example value for INCLUDES 
-could be `-I../myHeaders` which would tell the compiler to look in the myHeaders directory, located one directory above the current directory, during the compilation step for missing header files and other
-sorts of relevant files. For this class, please do NOT use absolute paths in your Makefiles; we do not have the permissions to access your /home/your_uni directory (you'll learn about permissions later on).
+that we wish to include at the compilation step. An example value for INCLUDES 
+could be `-I../myHeaders` which would tell the compiler to look in the myHeaders 
+directory, located one directory above the current directory, during the 
+compilation step for missing header files and other sorts of relevant files. For 
+this class, please do NOT use absolute paths in your Makefiles; we do not have 
+the permissions to access your /home/your_uni directory (you'll learn about 
+permissions later on).
 
 After defining INCLUDES, we define the flags that we want each compiler to be
 run with. In this case we include the `-g` flag for debugging and `-Wall` flag
@@ -42,24 +47,27 @@ those flags as well.
 LDFLAGS = -g
 ```
 
-LDFLAGS are the flags that are appended to the compiler when using it for
-linking. In this case we just want the debugging info to be included.
+LDFLAGS are the flags that are appended to the compiler when the compiler is
+being used for linking. In this case, we just want the debugging info to be 
+included.
 
 ```make
 LDLIBS =
 ```
 
-LDLIBS will automatically be appended to the linker commands. These are flags
-like `-lm` and function similarly to our INCLUDES variable but are added at a
-different step. `m` denotes the math library.
+LDLIBS will automatically be appended to the commands invoked to link. 
+These are flags like `-lm` and function similarly to our INCLUDES variable 
+but are added at a different step. `m` denotes the math library.
 
 That's about it for our variable declarations. The next step is to define
 compile order and dependencies. The very first "target" or rule in your 
-makefile gets built when you type `make` in this case the first target is:
+makefile gets built when you type `make`. In this case, the first target is:
 
 ```make
 main: main.o myadd.o
 ```
+
+### Implicit Rules ###
 
 Note that we did not specify the linking rule, because make follows an implied
 linking rule:
@@ -103,16 +111,20 @@ Lastly, we specify the target for myadd.o:
 myadd.o: myadd.c myadd.h
 ```
 
+### Other (Phony) Targets ###
+
 We'll include two phony targets. We tell make that they're "phony" so that it
-doesn't attempt to use implicit rules or try to compile them. The first target
-we make is "clean" which should remove all intermediate files. 
+doesn't attempt to use implicit rules or try to compile them. 
+
+The first target we make is "clean" which should remove all intermediate files. 
 *Always include a clean* so that `make clean` can be used to remove 
 intermediate files like object files, compiled code, etc. This should return 
 your directory to just its source code that can generate all the other files. 
-*Be careful:* Using `rm -f` will not prompt you to remove files. This is 
-customary for `make clean` but it also means if you make a mistake in 
-designing your rule it could remove files that youdidn't want to. There is no 
-"trash" in UNIX - they'll be gone forever.
+*Be careful:* Using `rm -f` will not prompt you to make sure you want to remove 
+files. This is customary for `make clean` but it also means if you make a 
+mistake in designing your rule it could remove files that you didn't want to. 
+Note that there's no "trash" or "recycle bin" in UNIX: the files will be gone 
+forever!
 
 Lastly, we define a phony "all" target that just depends on the main and clean
 targets. This will always remove all intermediate files and compiled files,
