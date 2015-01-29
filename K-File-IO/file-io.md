@@ -23,6 +23,60 @@ int z = y - x;
 
 Other than that you can treat `size_t` as any other integer type.
 
+
+### File I/O ###
+
+Think of file I/O as writing/reading from stdin or stdout and your life will be
+much simpler. It all starts with File descriptors which you use to reference a 
+file. In order to work with files, you'll need to `#include <stdio.h>`. 
+```c
+FILE *fp; //Declare a file pointer
+fp = fopen("README.txt", "r");
+```
+File descriptors are just fancy pointers for files. By default, all C programs
+are given three to start with: `stdin`, `stdout`, and `stderr` so note that any
+functions you can use file descriptors with you can use on the I/O streams we've
+already mentioned. A file descriptor is a pointer to a special struct that
+stores important information about where you currently are in a file, whether
+you can read/write to it, and what the file is. You don't need to know how it
+works, just accept that it does and you'll need to pass the File descriptor to
+functions that work with files.
+
+`fopen()` is how you'll open files. It takes two arguments, both strings. The
+first is a string representing the path to the file you want to open, and the
+second is the mode with which you will open it. The mode tells whether or not
+you are going to be reading, writing, or appending to the file and also how you
+want to read the file in. Make sure you know the difference between "r", "w",
+"a", "r+", "w+", "a+", and all of the above with a "b" on the end. If `fopen()`
+fails it will return a NULL pointer. This can happen because a file doesn't
+exist (in the case of r's and a's) or because you don't have permissions to
+access the file.
+
+`fclose()` will close the file when you're done. In general you will use
+`fgets()` and `fputs()` to read from and write to files. You can also use the
+variants of printf and scanf, `fprintf()` and `fscanf()` to write to and read
+from files. `getc()` and `putc()` are the lower level versions of these
+functions, and have macros for `getchar()` and `putchar()` which interact with
+`stdin` and `stdout` respectively. The functions `fread()` and `fwrite()` work
+in blocks instead of characters. These can be far more efficient than `fgets()`
+and `fputs()`
+
+### What's Buffering? ###
+
+Buffering determines how often the contents of a stream are sent to their
+destination. There's some low level stuff going on at this point, but just
+understand that its not very efficient to send data one character at a time, so
+buffering happens. Unbuffered streams are constantly flushed to its destination.
+Line-buffered streams are only flushed to its destination after a newline
+character is written. Block-buffered streams are flushed when they reach a
+certain size. You can use `fflush(fp)` to manually flush the buffer for any file
+pointer. 
+
+- stderr is unbuffered (why?)
+- stdout is line-buffered when it's connected to terminal
+- everything else is block-buffered
+
+
 ## File operations ##
 
 All of the following are defined in `stdio.h` and therefore you must 
@@ -130,7 +184,4 @@ int feof(FILE *stream);
 int ferror(FILE *stream);
 ```
 
-So you didn't get what you were expecting from one of the above functions. What
-do you do? You call `feof` or `ferror`. These two functions let you know what
-happened. `feof` returns true if the end of the `stream` has been reached, and
-`ferror` returns true if there was an error reading the `stream`.
+So you didn't get what you were expecting from one of the above functions. What do you do? You call `feof` or `ferror`. These two functions let you know what happened. `feof` returns true if the end of the `stream` has been reached, and `ferror` returns true if there was an error reading the `stream`.
