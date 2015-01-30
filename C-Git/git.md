@@ -11,10 +11,11 @@ In other words, if you mess up your code really badly, you can use git to gracef
 step back to an earlier version. To facilitate this, git needs you to take periodic 
 snapshots of your code, called 'commits' in git parlance. 
 
-Also, in this class, we require that you make git commits to get full credit for your 
-work. We do this because in industry, you will without a doubt be using version control.
+In this class, we require that you make git commits to get full credit for your 
+work. We want you to learn git because in industry, you will without a doubt be using 
+version control.
 
-## Configuration: ##
+## Configuration ##
 
 You need to set your name and email so that your commits are associated with your identity:
 
@@ -36,8 +37,9 @@ In order to version control a directory, you have to 'initialize' it:
 
     git init
 
-Next, we want to make an exact copy of Jae's skeleton code. Git supports
-'cloning', which does just that:
+ **But in this class, we won't be using `git init`**. Instead, all students start by
+ making an exact copy of Jae's skeleton code. Git supports 'cloning', which does just 
+ that:
 
     git clone [source_directory] [destination_directory]
 
@@ -46,7 +48,7 @@ With the above command, you can take Jae's files and create your own copy. Neat!
 ## Updating Your Versioning ##
 Not all the files in a version controlled directory have to be under version control.
 You have to explicitly tell git to watch for changes in certain files. For information
-on which files are version controled, which have changed, etc., run:
+on which files are version controled, which have changed, etc. run:
 
     git status
 
@@ -136,7 +138,7 @@ Example .gitignore file:
     *.a
     main
     *.mbox
-    /labN-2013*
+    /labN-2015*
 
 You can add the `.gitignore` file itself to the `.gitignore`, or you can add it
 to the repository. You may also create a global ignore file so you don't have to
