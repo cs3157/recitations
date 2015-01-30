@@ -11,6 +11,11 @@ Take Jae's Makefile piece by piece. It can be found in this git repository as
 `sample-makefile`.
 
 ### Makefile Variables ###
+Make relies on your variable names being the same as the ones laid out in Jae's
+example Makefile. For example, you must call the `CC` and `LDLIBS` variables 
+by those exact names in order for the implicit rules laid out below to work.
+Here, we'll lay out what each variable does.
+
 ```make
 CC  = gcc
 CXX = g++
@@ -59,9 +64,18 @@ LDLIBS will automatically be appended to the commands invoked to link.
 These are flags like `-lm` and function similarly to our INCLUDES variable 
 but are added at a different step. `m` denotes the math library.
 
+### Targets ###
 That's about it for our variable declarations. The next step is to define
-compile order and dependencies. The very first "target" or rule in your 
-makefile gets built when you type `make`. In this case, the first target is:
+compile order and dependencies. On a high level, you are laying out what files
+each target is dependent on. The following syntax is used to denote that
+target to dependent files relationship:
+
+```make
+[targetname]: [dependency1] [dependency2]
+```
+
+The very first "target" or rule in your makefile gets built when you type `make`. 
+In the case of Jae's example Makefile, the first target is:
 
 ```make
 main: main.o myadd.o
@@ -69,7 +83,8 @@ main: main.o myadd.o
 
 ### Implicit Rules ###
 
-Note that we did not specify the linking rule, because make follows an implied
+Note that we did not specify the linking rule even though we were making an
+executable out of some `.o` files. This is because make follows an implied
 linking rule:
 
     $(CC) $(LDFLAGS) <all-dependent-.o-files> $(LDLIBS)
