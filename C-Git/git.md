@@ -84,6 +84,10 @@ Checking up on your changes:
     git log --stat --summary
     git log -p
 
+To only stage changes (including deletions) to already tracked files, without adding untracked files:
+    
+    git add -u
+
 To remove a file from your git files, run:
 
     git rm file1
