@@ -131,6 +131,8 @@ Note not only the difference in the function, but how the parameters are passed.
 
 For more pointer examples, see `recitation-4-code/basicpointers.c`
 
+---- 
+
 ## Arrays (jk they're the same thing) ##
 
 C has arrays, but they're basically just pointers. An array has a type, just
@@ -141,22 +143,60 @@ in contiguous memory.
 int a[10];
 ```
 
-This would allocate space for 10 integers in contiguous memory locations.
-Declaring multidimensial arrays is also possible.
+This would allocate space on the stack for 10 integers in contiguous memory
+locations. i.e., `a[0]` is located immediately before `a[1]`, and the entire `a`
+array is on the stack. Arrays generally operate like you're used to in Java or
+other languages:
+
+```c
+int a[10];
+a[0] = 0;
+int i = 3;
+a[i] = -1;
+```
+
+However note that arrays in C have no bound checking, so you can access something
+past the end of the array. It may even work, at least most of the time, but
+it's illegal. Valgrind testing can catch some of this, and compiler warnings might
+catch others, but it's up to the programmer to be careful.
+
+```c
+int a[10]
+a[10000]; //the compiler lets you do this, but it's illegal
+```
+Declaring multidimensial arrays is also possible, but fairly rare.
 
     int matrix[50][50];
 
+
+## Pointer Arithmetic ##
+
+If you have a pointer, you can do basic arithmetic with it to address
+adjacent elements. All arithmetic is with respect to the element being addressed,
+so if you have an int pointer `p`, `p+1` points to the next int, which is 4 bytes later.
+So usually you should think in terms of elements, not in terms of bytes.
+
+```c
+int *p = q; //p is a pointer to int; It's pointing to the same place as q, exactly where doesn't matter now
+p+1; //this is a pointer-to-int that's point to an integer that immediately follows p
+*(p+1); //this is an integer, the dereferenced value pointed to by the previous line
+*p++; //this returns the current derefenced value (ie the integer), and advanced the pointer to the next element
+     //the above is VERY common when looping over arrays in C
+```
+
 Because arrays are just contiguous blocks of memory, you can access them using
-pointer arithmetic, or natural array notation:
+both pointer arithmetic and array notation:
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-int *p = &a[0]; // p points to 0
+int *p = a; // p points to the first element of `a`, 0
+int *p = &a[0]; //p still points to 0
+
 *(p+5) == a[5]; // 5 == 5
-magic_function(a); (passes a pointer to the first element of a)
-p+5 == a+5;
-p++; // legal: this is just a pointer like any other
-a++; // illegal (will throw an error): this is an array name, a constant variable
+
+p+5 == a+5; // p+5 is a pointer to the 5th element of the array, so is a+5
+p++; // ok: `p` is just a pointer like any other, p now points to the next element in the array
+a++; // illegal (will throw an error): `a` is an array name, a constant variable
 size_t x = sizeof(a); // x == 40
 size_t y = sizeof(p); // y == 8
 /* NOTE: sizeof is an operator, not a function!
@@ -164,22 +204,31 @@ size_t y = sizeof(p); // y == 8
     size must be known based on only the source,
     not any runtime parameters.
     It can tell the difference between a pointer and
-    an array in the scope in which it was declared.
+    an array INSIDE the scope in which it was declared.
     */
 ```
 
-In most cases, just calling an array by its variable name without the square
-brackets will be interpreted as a pointer to the first element of the array. 
-**Incrementing a pointer will always move it ahead by the number of bytes making up
-the type to which it's pointing**. In other words, incrementing a pointer makes
-the pointer move by the size of the type. In this case we're dealing with a pointer 
-to an int, so the pointer will move by 4 bytes to the next int. 
-Unlike a pointer, though, an array is a constant variable (see the code snippet above
-for how that affects `p++` and `a++`).
+In almost all cases using the variable name of an array with no brackets, ie `a` above,
+is treated as pointer-to pointing to the first element of the array, not an array-of.
+The majors exceptions are `sizeof` inside the scope in which the array was declared,
+and when used as the left hand side of an assignment. When passed into functions,
+dereferenced with `*`, used in arithematic it behaves like a pointer-to-type that
+points to the first element of the array.
+
+Unlike a pointer, though, an array is a constant variable. You cannot change its
+assignment after it has been created, it must point to the same chunk of memory.
+```c
+int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+int *p = a; // p points to the first element of `a`, 0
+
+p++; // ok: `p` is just a pointer like any other, p now points to the next element in the array
+a++; // illegal (will throw an error): `a` is an array name, a constant variable
+```
 
 Note that as discussed above, `sizeof` is an operator, not a function. 
 sizeof is evaluated at *compile time*. This means that the value of the
 operator cannot be anything that depends on user input.
+
 
 ### Strings in C ###
 
@@ -225,6 +274,7 @@ char a[][10] = {"hello", "world" }; //what's the difference here?
 ```
 
 You can find more examples of this in [`E-Memory-Pointers/code/ptrtoptrs.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/ptrtoptrs.c).
+
 
 ## Heap allocations ##
 
