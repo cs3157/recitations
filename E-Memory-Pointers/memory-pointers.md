@@ -151,14 +151,14 @@ pointer arithmetic, or natural array notation:
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-int *p = &a[0]; //p points to 0
-*(p+5) == a[5]; //5 == 5
+int *p = &a[0]; // p points to 0
+*(p+5) == a[5]; // 5 == 5
 magic_function(a); (passes a pointer to the first element of a)
 p+5 == a+5;
-p++; //legal
-a++; //illegal!
-size_t x = sizeof(a); //x == 40
-size_t y = sizeof(p); //y == 8
+p++; // legal: this is just a pointer like any other
+a++; // illegal (will throw an error): this is an array name, a constant variable
+size_t x = sizeof(a); // x == 40
+size_t y = sizeof(p); // y == 8
 /* NOTE: sizeof is an operator, not a function!
     sizeof is evaluated at COMPILE TIME, so the
     size must be known based on only the source,
@@ -170,10 +170,12 @@ size_t y = sizeof(p); //y == 8
 
 In most cases, just calling an array by its variable name without the square
 brackets will be interpreted as a pointer to the first element of the array. 
-Incrementing a pointer will always move it ahead not one byte, but the size of
-the type to which it's pointing. In this case we're dealing with an int so it will likely move it
-ahead 4 bytes to the next int. Unlike a pointer, though, an array is a constant
-variable.
+**Incrementing a pointer will always move it ahead by the number of bytes making up
+the type to which it's pointing**. In other words, incrementing a pointer makes
+the pointer move by the size of the type. In this case we're dealing with a pointer 
+to an int, so the pointer will move by 4 bytes to the next int. 
+Unlike a pointer, though, an array is a constant variable (see the code snippet above
+for how that affects `p++` and `a++`).
 
 Note that as discussed above, `sizeof` is an operator, not a function. 
 sizeof is evaluated at *compile time*. This means that the value of the
@@ -181,7 +183,7 @@ operator cannot be anything that depends on user input.
 
 ### Strings in C ###
 
-Strings in C are just a special case of arrays. C strings are arrays of
+Strings in C are just a special case of arrays: C strings are arrays of
 characters with a null terminating character at the end.
 
 ```c
@@ -191,12 +193,12 @@ char *s = "my string"; // modifiable pointer
 "my string"[0] == 'm' //true!
 ```
 
-There's a slight difference between these two definitions. c is an array which
-means you can't move where it points to, its always going to point to a. s on
-the other hand can be incremented and decremented and moved around however you
-like. "my string", however, can't be modified; it's a string literal! 
+There's a slight difference between these two definitions. `c` is an array which
+means you can't move where it points to: it's always going to point to the character 
+`a`. `s`, on the other hand, can be incremented and decremented and moved around 
+however you like. `"my string"`, however, can't be modified; it's a string literal! 
 
-Some useful string functions (need to #include string.h):
+Some useful string functions (need to `#include string.h`):
 ```c
 char d[20];
 char c[] = "abc";
@@ -212,7 +214,7 @@ strncat(d, "def", 2);
 
 printf("%s\n", d); //what does this print?
 ```
-For a closer look at the strcpy function, see `recitation-4-code/strcpy.c`
+For a closer look at the strcpy function, see [`E-Memory-Pointers/code/strcpy.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/strcpy.c).
 
 So how about an array of strings? Well that would be an array of arrays.
 
@@ -222,7 +224,7 @@ char **p = a;
 char a[][10] = {"hello", "world" }; //what's the difference here?
 ```
 
-You can find more examples of this in `recitation-4-code/ptrtoptrs.c`
+You can find more examples of this in [`E-Memory-Pointers/code/ptrtoptrs.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/ptrtoptrs.c).
 
 ## Heap allocations ##
 
