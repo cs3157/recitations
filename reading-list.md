@@ -110,3 +110,4 @@ An article about why leak checking is one of the less useful features Valgrind o
 * C structure packing http://www.catb.org/esr/structure-packing/
 * * Implementing malloc: http://danluu.com/malloc-tutorial/
 * 21st Century C: O'Reilly book about how we're all dinosaurs for returning 0 from main http://clio.columbia.edu/catalog/10816384?counter=1
+* [Was C for Hipsters?](http://timkellogg.me/blog/2015/02/08/history-of-C/)
