@@ -5,6 +5,9 @@ programs. Calling `make` will automatically search your current directory for a
 file called "Makefile" and use it to call various compiler commands according 
 to the rules outlined therein. 
 
+In other words, by using Makefiles, you can execute all the preprocessing,
+compiling, and linking commands just by typing `make`.
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
