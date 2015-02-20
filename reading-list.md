@@ -112,3 +112,4 @@ An article about why leak checking is one of the less useful features Valgrind o
 * 21st Century C: O'Reilly book about how we're all dinosaurs for returning 0 from main http://clio.columbia.edu/catalog/10816384?counter=1
 * [Was C for Hipsters?](http://timkellogg.me/blog/2015/02/08/history-of-C/)
 * [HTTP Made Really Easy](http://www.jmarshall.com/easy/http/)
+* [A Guide to Undefined Behavior in C and C++](http://blog.regehr.org/archives/213)
