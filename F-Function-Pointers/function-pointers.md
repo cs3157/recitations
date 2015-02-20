@@ -2,40 +2,52 @@ _The main topics for these notes will be those useful for lab 3, material from
 lecture note 9, and useful information for the practice midterm._
 
 ## Function Pointers (K&R 5.11) ##
-It is often the case in programming that you'll want your program to change its
-behavior for the person using your program but have no idea how they may want to
-do this. For example, when writing a sort function, you could just specify a
-parameter that let's them choose between sorting ascending and descending.
-However, what if they wanted to sort characters by their unicode value instead of
+When writing a program, you'll often want your program to offer different 
+possible behaviors, but it's difficult to anticipate what behaviors users might 
+desire. For example, when writing a sort function, you could include a
+parameter that allows users them choose between sorting ascending and descending.
+However, what if a user wanted to sort characters by unicode value instead of
 lexicographically? For this, the user has to supply their own functionality.
-That's where you need function pointers. Some higher level (read
-lambda-programming languages) support this is in a more intuitive way, but C
-does a pretty good job itself.
+This is an example of where a function pointer is useful, as they allow you to
+pass in different functions for different jobs. Some higher level (read:
+lambda-programming languages) support this is in a more 'native' way, but C
+does a pretty good job, too.
+
+In short, *function pointers make it easier to swap out functions called 
+from other functions*. Making parts of your code easy to swap out makes your
+code more modular and extensible. These are characteristics of good code.
 
 ### Accepting functions as a parameter to your function ###
-
-Function pointers allow you to accept as a parameter to your function, another
-function. Let's start out with accepting functions as a parameter:
+Function pointers allow you to accept functions as a parameter to your function. 
+Here's an example of that functionality:
 
 ```c
+void notifier(int (*fn)());
+
 void notifier(int (*fn)()) {
   printf("Starting\n");
-  fn();
+  fn();                   // calling function passed in as a parameter
   printf("Finished\n");
 }
 ```
 
-Let's examine this more closely. We have a function called notifier whose only
-parameter is another function. How do we do this? we specify what kind of
-function it accepts. The basic layout for a function pointer type is `returntype
-(*functionName)(parameter1type, parameter2type, ...)`. Why? Well the returntype
-denotes the type of the function. The name of the function being preceded with
-an asterisk tells us its a pointer. The function is surrounded by parentheses so
-that the compiler doesn't think we've got a variable `returntype *functionName`.
-The parenthesis following the declaration are necessary as well, even if the
-function we want to accept doesn't have any arguments. The parameter's only need
-their types declared so that the compiler can check these. Since you won't have
-access to the code you don't need to worry about what to call them.
+Let's examine this more closely. We have a function called `notifier` whose only
+parameter is another function. When we include a function pointer in a method
+declaration, we specify what type of function it accepts. 
+
+The layout for a function pointer type is:
+```
+  returntype (*functionName)(parameter1type, parameter2type, ...)
+``` 
+**The type of our function pointer is denoted by its return type.**  
+The name of the function being preceded with an asterisk tells us its a pointer. 
+The function is surrounded by parentheses so that the compiler doesn't think 
+we've got a variable `returntype *functionName`. The parentheses following the 
+declaration are necessary as well, even if the function we want to accept 
+doesn't have any arguments. 
+
+Notice that the parameters do not have names. Only their types are declared so 
+that the compiler can check these.
 
 ### Passing a function as a parameter ###
 
@@ -54,9 +66,9 @@ int main(int argc, char **argv) {
 }
 ```
 
-Notice how we have a function `wasteTime`. And when we follow it with
-parentheses it gets called. When we don't, it is automatically a function
-pointer. Why is this?
+Notice the function called `wasteTime`.When we follow `wasteTime` with
+parentheses, the function is called. When we don't include parentheses,
+`wasteTime` is automatically a function pointer. Why is this?
 
 Well everything in the program is stored in memory, even the functions, which
 means even they have an address. So `wasteTime` has an address in memory. When
@@ -67,25 +79,26 @@ Therefore, when we call `notifier` and pass it `wasteTime` without parentheses, 
 passes the address to `wasteTime` to the `notifier` function.
 
 ### Calling functions from pointers ###
-We could further use the functions above as follows:
+While we can't declare a function from the body of a method, we can declare and
+initialize function pointers. Let's expand on the code we've written so far:
 
 ```c
 int main(int argc, char **argv) {
-  int (*f1)();
+  int (*f1)();                        // declare function pointer
   char *(*f2)(char *, const char *);
-  char arr[5] = "bann"
+  char arr[5] = "bann";               // initialize string
 
-  f1 = wasteTime;
+  f1 = wasteTime;                     // assign already defined function to function pointer
   f2 = strcpy;
 
-  notifier(f1);
-  f2(arr, "hihi");
+  notifier(f1);                       // pass function as a parameter
+  f2(arr, "hihi");                    // invoke function using a pointer to it, rather than its actual name, strcpy
   printf("%s\n", arr);
 }
 ```
 
-As you can see from the above code, you can declare variables of "function
-pointer" type and assign function pointers to their values. Then you can call
+As you can see from the above code, you can declare variables of type "function
+pointer" and assign functions to their values. Then you can call
 those functions simply by adding parentheses to the end of the variable name.
 Make sure to check out Jae's notes (lecture 7) for more complicated examples of
 this. Notice that we did the same thing when calling `fn()` in our `notifier`
@@ -98,7 +111,7 @@ like regular pointers either. Think about this small program:
 
 ```c
 void myFunc(int x) {
-  x++; //this function is irrelevant...
+  x++; 
 }
 
 int functionAcceptor(void (*f)(int), void (*g)(int)) {
@@ -106,20 +119,21 @@ int functionAcceptor(void (*f)(int), void (*g)(int)) {
 }
 
 int main() {
-  char *s = functionAcceptor(myFunc, &myFunc) ? "They're the same thing" :
+  char *s = functionAcceptor(myFunc, &myFunc) ? "They're the same thing." :
     "They're totally different.";
   printf("%s", s);
 }
 ```
 
-What will this program print?
+What will this program print? Notice the line where we're comparing 
+`myFunc` and `&myFunc`.
 
 ```
-They're the same thing
+They're the same thing.
 ```
 
-Why? Because referencing a pointer to a function just gets you the same
-pointer back. It has no effect. Too bad. Boring.
+Why? Because **referencing a pointer to a function just gets you the same
+pointer back**. It has no effect. How boring.
 
 
 ## Makefiles ##
