@@ -19,7 +19,7 @@ Contents:
     * See also the very useful [code](E-Memory-Pointers/code/) directory,
       especially `pointerfun.c` and its output `pointerfun-output` for some
       interesting experiments with pointers and memory addresses.
-* [Recitation Note F](F-Function-Pointers/function-pointers.md): Function pointers. Basic File input/output.
+* [Recitation Note F](F-Function-Pointers/function-pointers.md): Function pointers.
 * [Recitation Note G](G-Structs-Unions/structs-unions.md): Structs, Unions, Const, C strings.
 * [Recitation Note H](H-Linked-Lists/linked-lists.md): Linked lists and similar data structures.
 * [Recitation Note I](I-Debugging-GDB/gdb.md) Using GDB and valgrind for debugging.
