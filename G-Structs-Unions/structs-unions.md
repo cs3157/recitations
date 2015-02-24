@@ -74,9 +74,9 @@ directly a member of its own type). This is particular useful for data
 structures like trees.
 
 ```c
-typedef struct {
+typedef struct Node_t {
   void *value;
-  Node *parent;
+  struct Node_t *parent;
 } Node;
 
 Node root, child1, child2, child3, child4;
@@ -90,6 +90,12 @@ Bad:
 
 ```c
 /* this won't work */
+typedef struct {
+  void *value;
+  Node *parent;
+} Node;
+
+/* neither will this */
 struct {
     void *value;
     Node parent;
