@@ -1,4 +1,4 @@
-# Recitation 8 - Midterm Review #
+# Mid-Semester Review #
 
 ## Signed and Unsigned Integers ##
 
