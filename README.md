@@ -36,5 +36,4 @@ Contents:
   containers, metaprogramming.
 * [Recitation Note O](O-Smart-Pointer/smart-pointers.md): Smart pointer explanation.
 
-Additionally you can read the [Midterm Review](midterm-review.md) to prepare
-for the midterm.
+Additionally you can read the [Mid-Semester Review](midsemester-review.md) to brush up on past material throughout the course.

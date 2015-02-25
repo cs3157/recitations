@@ -142,39 +142,11 @@ can have functions with a varible number of functions. If you think about it,
 `printf()` is a good example: you could have `printf("%d\n" &x)` or 
 `printf("%d and %d\n", &x, &y)`. Once you've enumerated all the required
 arguments, you can specify that you would like to also accept variable arguments
-with `...`:
+with an ellipsis (`...`):
 
     int myFWithVarArgs(int a, int b, ...);
 
-
-## Important Things to Review for the Midterm ##
-
-- Arrays, pointers, and the structure of argv. Understanding how these data
-  types and structures work will be crucial to your understanding of C as this
-  class progresses. Try practice problem 1 for an understanding of this.
-- Order of operations. This stuff will make the exam much easier if you're not
-  trying to figure out whether the increment or the dereference happens first
-  when there are no parentheses.
-- Structs and Unions. You've already had to use structs on numerous occassions.
-  Though unions weren't on any labs, but are definitely in the lecture notes and
-  therefore fair game.
-- Stack and Heap allocation. Make sure you know how to use malloc and free. Try
-  to determine if there are memory leaks in some sample code. 
-- mylist / libmylist.a. Make sure you understand how the linked list is supposed to
-  function
-- MdbRec. Make sure you understand how an MdbRec is laid out in memory, and how the
-  Mdb program structures a linked list of MdbRecs.
-- Makefiles and git. These questions are always fair game as well. You've been
-  using makefiles and git long enough that you should know what tracked,
-  untracked, staged, and modified mean in the context of git. You should also
-  know about what rules are implicit to make, and how to write a makefile with pen
-  and paper.
-
-Try to work on pen and paper as much as possible leading up to the midterm.
-Compile-and-check methods aren't going to get you far when you're sitting down
-to take the test, so don't use them to practice. Try to really understand what
-you're writing so that you can be confident it works on your own without the
-compiler checking it for you.
+To reiterate, this will be brought up again later in the semester, but it's good to acclimate to this syntax. *Bonus:* the e;lipsis works in Java function declarations too!
 
 
 ### Some Notes About Lab 4 ###
