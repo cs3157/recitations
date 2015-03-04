@@ -113,3 +113,4 @@ An article about why leak checking is one of the less useful features Valgrind o
 * [Was C for Hipsters?](http://timkellogg.me/blog/2015/02/08/history-of-C/)
 * [HTTP Made Really Easy](http://www.jmarshall.com/easy/http/)
 * [A Guide to Undefined Behavior in C and C++](http://blog.regehr.org/archives/213)
+* [I Do Not Know C](http://kukuruku.co/hub/programming/i-do-not-know-c) -- Q&A with some tricky undefined behavior questions.
