@@ -24,12 +24,12 @@ Contents:
 * [Recitation Note H](H-Linked-Lists/linked-lists.md): Linked lists and similar data structures.
 * [Recitation Note I](I-Debugging-GDB/gdb.md) Using GDB and valgrind for debugging.
 * [Recitation Note J](J-Fork-Exec/fork-exec.md): The UNIX stack. Users, permissions, file
-  attributes. Processes, forking, and signals. TCP/IP and netcat basics.
+  attributes. Processes, forking, and signals. 
     * See also `jsh`, the Jae shell, in the [code](J-Fork-Exec/code/)
       directory for a fun example of forking.
 * [Recitation Note K](K-File-IO/file-io.md): `size_t`. File IO, including reading, writing,
   and seeking in files.
-* [Recitation Note L](L-TCP-IP/tcp-ip.md): TCP/IP stack information. 
+* [Recitation Note L](L-TCP-IP/tcp-ip.md): Interprocess communication: pipes, FIFO, and sockets. TCP/IP stack information and netcat basics. 
 * [Recitation Note M](M-cpp/cpp.md): C++ intro. Classes and structs. Stack vs heap allocation
   in C++. The basic 4. Implicit conversion and operator overloading.
 * [Recitation Note N](N-Templates-Containers/templates-containers.md): C++ generics, templates,
