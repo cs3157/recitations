@@ -100,7 +100,7 @@ An article about why leak checking is one of the less useful features Valgrind o
 
 # To Add #
 * Heartbleed and goto fail writeups
-* The Unreasonable Effectiveness of C
+* [The Unreasonable Effectiveness of C](http://damienkatz.net/2013/01/the_unreasonable_effectiveness_of_c.html)
 
 # To Vet #
 * C++ Value Semantics: http://akrzemi1.wordpress.com/2012/02/03/value-semantics/
