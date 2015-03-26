@@ -115,3 +115,4 @@ An article about why leak checking is one of the less useful features Valgrind o
 * [A Guide to Undefined Behavior in C and C++](http://blog.regehr.org/archives/213)
 * [I Do Not Know C](http://kukuruku.co/hub/programming/i-do-not-know-c) -- Q&A with some tricky undefined behavior questions.
 * [What a C programmer should know about memory](http://marek.vavrusa.com/c/memory/2015/02/20/memory/)
+* [Are pointers and arrays equivalent in C?](http://eli.thegreenplace.net/2009/10/21/are-pointers-and-arrays-equivalent-in-c)
