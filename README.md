@@ -29,7 +29,7 @@ Contents:
       directory for a fun example of forking.
 * [Recitation Note K](K-File-IO/file-io.md): `size_t`. File IO, including reading, writing,
   and seeking in files.
-* [Recitation Note L](L-TCP-IP/tcp-ip.md): Interprocess communication: pipes, FIFO, and sockets. TCP/IP stack information and netcat basics. 
+* [Recitation Note L](L-ICP-TCP-IP/ipc-tcpip.md): Interprocess communication: pipes, FIFO, and sockets. TCP/IP stack information and netcat basics. 
 * [Recitation Note M](M-cpp/cpp.md): C++ intro. Classes and structs. Stack vs heap allocation
   in C++. The basic 4. Implicit conversion and operator overloading.
 * [Recitation Note N](N-Templates-Containers/templates-containers.md): C++ generics, templates,
