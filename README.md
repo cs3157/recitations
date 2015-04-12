@@ -36,6 +36,6 @@ Contents:
   containers, metaprogramming.
 * [Recitation Note O](O-Smart-Pointer/smart-pointers.md): Smart pointer explanation.
 
-Additionally you can read the [Mid-Semester Review](midsemester-review.md) to brush up on past material throughout the course.
+Additionally you can read the [Mid-Semester Review](midsemester-review.md) to brush up on past material in the first part of the course; or  [Mid-Semester Review 2](midsemester-review-2.md) for the second part (ie up to basic C++).
 
 Finally, we've collected a number of interesting articles, posts, etc about C and related stuff in the [reading list](reading-list.md).
