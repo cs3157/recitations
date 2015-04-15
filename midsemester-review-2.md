@@ -148,8 +148,8 @@ examples:
 
 ```
 cat hello.txt > goodbye.txt     // puts contents of hello.txt into a file called goodbye.txt
-cat hello.txt > echo             // puts contents of hello.txt into a __file__ called echo
-cat hello.txt | echo             // puts contents of hello.txt as stdin to echo, which prints to stdout
+cat hello.txt > less            // puts contents of hello.txt into a __file__ called less
+cat hello.txt | less            // puts contents of hello.txt as stdin to the program less
 ```
 
 You can, however, combine `|` and redirects (`>`, `<`, `>>`). Give it a try!
