@@ -167,11 +167,11 @@ For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`
 
 ---- 
 
-## Arrays (jk they're the same thing) ##
+## Arrays ##
 
-C has arrays, but they're basically just pointers to beginning of a large enough
-chunk of memory on the stack to hold the specified number of elements of that
-type.
+C has arrays, but they're very similar to pointers to beginning of a large
+enough chunk of memory on the stack to hold the specified number of elements
+of that type.
 
 ```c
 int a[10];
@@ -191,12 +191,12 @@ a[i] = -1;
 
 However note that arrays in C have no bound checking, so you can read/write an
 element past the end of the array. It may even work, at least most of the time,
-but it's illegal. Valgrind testing can catch some of this, and compiler warnings
-might catch others, but it's up to the programmer to be careful.
+but it's undefined. Valgrind testing can catch some of this, and compiler
+warnings might catch others, but it's up to the programmer to be careful.
 
 ```c
 int a[10]
-a[10000]; //the compiler lets you do this, but it's illegal
+a[10000]; //the compiler lets you do this, but it's undefined
 ```
 
 Declaring multidimensial arrays is also possible, but fairly rare.
@@ -281,7 +281,7 @@ characters with a null terminating character at the end.
 
 ```c
 char c[] = "abc";
-char c[] = {'a', 'b', 'c', '\0'};
+char c[] = {'a', 'b', 'c', '\0'}; // equivalent to the above line
 char *s = "my string"; // modifiable pointer
 "my string"[0] == 'm' //true!
 ```
