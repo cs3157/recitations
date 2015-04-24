@@ -18,4 +18,4 @@ clean:
 all: clean default 
 
 valgrind: main
-	valgrind --leak-check=yes ./main
+	valgrind --leak-check=full ./main

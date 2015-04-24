@@ -374,7 +374,7 @@ stanza at the end:
 
     .PHONY: valgrind
     valgrind: main
-        valgrind --leak-check=yes ./main
+        valgrind --leak-check=full ./main
       
 
 Then instead of running `make` followed by `./main` you can just run
