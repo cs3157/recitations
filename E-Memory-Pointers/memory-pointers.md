@@ -423,10 +423,10 @@ able to find it.
 
 ### Memory leaks ###
 
-Calling malloc without free-ing the memory you've allocated is awful. If you
-don't free space that's malloced when you're finished, it will persist even
-after your program exits. To correct for this, when you're finished, just call
-`free()` on the pointer to the memory that was malloced.
+Calling malloc without free-ing the memory you've allocated is awful. You're
+taking away memory from other running processes.  To correct for this, when
+you're finished, just call `free()` on the pointer to the memory that was
+malloced.
 
 ```c
 free(--p);
