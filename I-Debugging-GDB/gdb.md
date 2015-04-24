@@ -38,13 +38,13 @@ which lets us specify the destination. It's fairly simple:
 
 ## valgrind ##
 After compiler warnings, valgrind is the first tool you should turn to whenever
-you're dealing with possibly memory problems. It analyzes your program
+you're dealing with possible memory problems. It analyzes your program
 **as it runs** for memory errors and leaks. 
 
 Valgrind is very easy to use. All you do is call the program normally, but
-prepend `valgrind --leak-check=yes` to the beginning. So if you were previously
+prepend `valgrind --leak-check=full` to the beginning. So if you were previously
 running `$ ./echo hello world`, now you'd run
-`$ valgrind --leak-check=yes ./echo hello world`
+`$ valgrind --leak-check=full ./echo hello world`
 
 Your program runs completely normally, including letting you type in as you
 wish. At the end, whether your program crashed or exited normally, it prints out
@@ -62,7 +62,9 @@ may cause your problem to crash or act weird. Luckily valgrind will report it,
 and even tell you which line of code it's happening on.
 
 2. **Lost Memory**. You need to know about malloc and heap memory for this to
-make sense, but suffice it to say that you don't want to leak memory.
+make sense, but suffice it to say that you don't want to leak memory because
+the more memory you leak, the less memory other running programs will have
+to use.
 
 Let's try it on a sample program. leaky.c:
 
@@ -176,6 +178,10 @@ First, let's figure out what function you're in, and how you got here.
 `backtrace` (or `bt`), prints the calling stack, including arguments. This can
 be especially useful in recursive programs. 
 
+`frame [n]` will allow you to move around the call stack shown in the output
+of `bt`.  This can be helpful in determining how function arguments are
+generated.
+
 `print expression` will print out an expression. For example `print x` prints
 out x, or `print *x` prints out the pointer x after dereferencing it. We can
 specify a format parameter with a slash, ie `p/t x` will print out x formatted
@@ -244,6 +250,9 @@ of typing `break` you can just type `b`, instead of `continue`, `c`, etc. If you
 want to list all the breakpoints, you could type `info breakpoints`, but you
 could also just type `i b`.
 
+Protip: pressing enter will repeat the most recent command.  No longer do
+you need to mash `s` or `n`!
+
 Protip: Ctl-l is a common unix shortcut to clean up the screen. It can be
 helpful if your program outputs some weird stuff and it all looks janky. Also
 clears a terminal.
@@ -257,7 +266,21 @@ navigate.
 You can quit with `quit`, `q`, and Ctl-D typically. 
 
 
+### Core Dumps and gdb ###
+Sometimes your program will encounter a segmentation fault, at which point,
+printed to the terminal is "Segmentation Fault (core dumped)."  Now, by
+default this "core dumped" message doesn't do anything.  This is because by
+default core dump files are limited to size 0.  However, we can change this
+quite easily by running `ulimit -c unlimited`.  Now when we seg fault, we'll
+get a file called "core" in the working directory.
 
+This "core" file provides a picture of the memory at the time the seg fault
+was encountered.  Luckily all of these fancy UNIX tools work great together
+so we can used gdb to help us do some detective work!  By running `gdb
+./my_program core`, we're instructing `gdb` to load the memory picture at
+the time of the seg fault.  We can then navigate around using the gdb
+commands we just learned (like `bt` and `info locals`) to figure out exactly
+what caused the seg fault!
 
 
 ## Example ##

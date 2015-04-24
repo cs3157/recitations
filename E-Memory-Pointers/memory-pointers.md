@@ -352,7 +352,7 @@ You'll be testing your code with valgrind for this class to make sure you don't
 have any memory errors in your code. This can include forgetting to free
 allocated memory, accessing memory that doesn't exist, etc. To run valgrind call:
 
-    valgrind --leak-check=yes ./your_executable
+    valgrind --leak-check=full ./your_executable
 
 Recall from other classes that if valgrind doesn't return, it means your program
 isn't returning (this is a case of the halting problem). If your valgrind isn't
