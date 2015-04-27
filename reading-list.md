@@ -116,3 +116,4 @@ An article about why leak checking is one of the less useful features Valgrind o
 * [I Do Not Know C](http://kukuruku.co/hub/programming/i-do-not-know-c) -- Q&A with some tricky undefined behavior questions.
 * [What a C programmer should know about memory](http://marek.vavrusa.com/c/memory/2015/02/20/memory/)
 * [Are pointers and arrays equivalent in C?](http://eli.thegreenplace.net/2009/10/21/are-pointers-and-arrays-equivalent-in-c)
+* [Back to Basics](http://www.joelonsoftware.com/articles/fog0000000319.html) Joel Spolsky of Joel on Software writes about C strings being awful, and why malloc is slow, etc.
