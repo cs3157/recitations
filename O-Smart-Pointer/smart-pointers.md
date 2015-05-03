@@ -66,7 +66,7 @@ object properly.
 
 SmartPtr definition
 --------------------
-
+```c
 template <class T>
 class SmartPtr {
 
@@ -153,6 +153,7 @@ class SmartPtr {
 	operator void*() const { return ptr; }
 
 };
+```
 
 ### Reference Cycles ###
 
