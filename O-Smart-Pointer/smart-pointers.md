@@ -178,7 +178,9 @@ SmartPtrs can't point to objects on the stack. Think about what would happen if
 you tried to make that happen?
 
 An object managed by a SmartPtr **must** be managed exclusively by SmartPtr. If
-you mix a SmartPtr and a 
+you mix a SmartPtr and a regular pointer, the world will end. Okay, the world
+won't really end, but bad things can happen - think about what might happen if 
+the SmartPtr `delete`s the object before the regular pointer is done with it.
 
 Don't forget the above discussion on Reference Cycles.
 
