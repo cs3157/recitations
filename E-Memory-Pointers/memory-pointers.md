@@ -167,11 +167,11 @@ For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`
 
 ---- 
 
-## Arrays (jk they're the same thing) ##
+## Arrays ##
 
-C has arrays, but they're basically just pointers to beginning of a large enough
-chunk of memory on the stack to hold the specified number of elements of that
-type.
+C has arrays, but they're very similar to pointers to beginning of a large
+enough chunk of memory on the stack to hold the specified number of elements
+of that type.
 
 ```c
 int a[10];
@@ -191,12 +191,12 @@ a[i] = -1;
 
 However note that arrays in C have no bound checking, so you can read/write an
 element past the end of the array. It may even work, at least most of the time,
-but it's illegal. Valgrind testing can catch some of this, and compiler warnings
-might catch others, but it's up to the programmer to be careful.
+but it's undefined. Valgrind testing can catch some of this, and compiler
+warnings might catch others, but it's up to the programmer to be careful.
 
 ```c
 int a[10]
-a[10000]; //the compiler lets you do this, but it's illegal
+a[10000]; //the compiler lets you do this, but it's undefined
 ```
 
 Declaring multidimensial arrays is also possible, but fairly rare.
@@ -281,7 +281,7 @@ characters with a null terminating character at the end.
 
 ```c
 char c[] = "abc";
-char c[] = {'a', 'b', 'c', '\0'};
+char c[] = {'a', 'b', 'c', '\0'}; // equivalent to the above line
 char *s = "my string"; // modifiable pointer
 "my string"[0] == 'm' //true!
 ```
@@ -352,7 +352,7 @@ You'll be testing your code with valgrind for this class to make sure you don't
 have any memory errors in your code. This can include forgetting to free
 allocated memory, accessing memory that doesn't exist, etc. To run valgrind call:
 
-    valgrind --leak-check=yes ./your_executable
+    valgrind --leak-check=full ./your_executable
 
 Recall from other classes that if valgrind doesn't return, it means your program
 isn't returning (this is a case of the halting problem). If your valgrind isn't
@@ -374,7 +374,7 @@ stanza at the end:
 
     .PHONY: valgrind
     valgrind: main
-        valgrind --leak-check=yes ./main
+        valgrind --leak-check=full ./main
       
 
 Then instead of running `make` followed by `./main` you can just run
@@ -423,10 +423,10 @@ able to find it.
 
 ### Memory leaks ###
 
-Calling malloc without free-ing the memory you've allocated is awful. If you
-don't free space that's malloced when you're finished, it will persist even
-after your program exits. To correct for this, when you're finished, just call
-`free()` on the pointer to the memory that was malloced.
+Calling malloc without free-ing the memory you've allocated is awful. You're
+taking away memory from other running processes.  To correct for this, when
+you're finished, just call `free()` on the pointer to the memory that was
+malloced.
 
 ```c
 free(--p);

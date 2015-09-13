@@ -13,4 +13,4 @@ clean:
 all: clean jsh 
 
 valgrind: jsh
-	valgrind --leak-check=yes ./jsh
+	valgrind --leak-check=full ./jsh

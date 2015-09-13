@@ -30,4 +30,4 @@ clean:
 all: clean pointerfun pointerfun_clang pointerfun_16 pointerfun_32
 
 valgrind: pointerfun
-	valgrind --leak-check=yes ./pointerfun
+	valgrind --leak-check=full ./pointerfun
