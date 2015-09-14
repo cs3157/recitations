@@ -408,6 +408,13 @@ And then finally link our two object files into the executable `main`.
     gcc -g myadd.o main.o -o main
     ls
 
+Or, to compile everything in one go without generating ``.o`` files, do
+
+    gcc -g -Wall *.c -o main
+
+A more explicit way where you will specify all the ``.c`` files is (this is identical the the above command),
+    
+    gcc -g -Wall main.c myadd.c -o main
 
 You should now have an executable file in your directory `main`. Calling
 `./main` will run your program. In this scenario, you *must* use `./` to note to
