@@ -53,8 +53,10 @@ Note: See ***24-smartptr.pdf*** for the actual definition.
 
 
 ### Diagram SmartPtr ###
-Let's [first attempt] (/O-Smart-Pointer/code/stack.gif) to keep track of count 
-in the simplest way possible: an `int` inside the class.
+Let's first attempt to keep track of count in the simplest way possible: an
+`int` inside the class.  We should examine
+[what happens] (/O-Smart-Pointer/code/stack.gif) when two SmartPtrs are
+created and then the first goes out of scope.
 
 As we can see, this will not properly synchronize the value and can even lead to
 deleting the object too soon!
