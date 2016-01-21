@@ -1,30 +1,32 @@
 # Git #
 
 For this part of the recitation, we will follow Jae's "git-tutorial" which can
-be found on the mailing list and the course website. Here's a quick run through of the
-operations reviewed in the tutorial, along with some bonus operations.
+be found on the mailing list and the course website. Here's a quick run through
+of the operations reviewed in the tutorial, along with some bonus operations.
 
 Git is version control software, where version control is "a system that records
-changes to a file or set of files over time so that you can recall specific versions later”
-([source](http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)). 
-In other words, if you mess up your code really badly, you can use git to gracefully
-step back to an earlier version. To facilitate this, git needs you to take periodic 
-snapshots of your code, called 'commits' in git parlance. 
+changes to a file or set of files over time so that you can recall specific
+versions later"
+([source](http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)).
+In other words, if you mess up your code really badly, you can use git to
+gracefully step back to an earlier version. To facilitate this, git needs you to
+take periodic snapshots of your code, called 'commits' in git parlance.
 
-In this class, we require that you make git commits to get full credit for your 
-work. We want you to learn git because in industry, you will without a doubt be using 
-version control.
+In this class, we require that you make git commits to get full credit for your
+work. We want you to learn git because in industry, you will without a doubt be
+using version control.
 
 ## Configuration ##
 
-You need to set your name and email so that your commits are associated with your identity:
+You need to set your name and email so that your commits are associated with
+your identity:
 
     git config --global user.name "Your Full Name"
     git config --global user.email your_uni@columbia.edu
-    
+
 It's also nice to enable color in your console when using git:
 
-    git config --global --add color.ui true
+    git config --global --add color.ui auto
 
 And set your editor globally (here vim, if you prefer emacs use that). Note that
 using the graphical version, `gvim`, is trickier, so we recommend you stick
