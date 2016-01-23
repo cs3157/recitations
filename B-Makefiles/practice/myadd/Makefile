@@ -40,8 +40,8 @@ LDLIBS =
 # Also note that make assumes that main depends on main.o,
 # so we can omit it if we want to.
 
-main: myadd.o
-#main: main.o myadd.o
+main: main.o myadd.o
+#main: myadd.o
 
 # main.o depends not only on main.c, but also on myadd.h because
 # main.c includes myadd.h.  main.o will get recompiled if either
@@ -56,13 +56,13 @@ main: myadd.o
 #     $(CC) -c $(CFLAGS) <the-.c-file>
 #
 
-main.o: myadd.h
-#main.o: main.c myadd.h
+main.o: main.c myadd.h
+#main.o: myadd.h
 
 # And myadd.o depends on myadd.c and myadd.h.
 
-myadd.o: myadd.h
-#myadd.o: myadd.c myadd.h
+myadd.o: myadd.c myadd.h
+#myadd.o: myadd.h
 
 # Always provide the "clean" target that removes intermediate files.
 # What you remove depend on your choice of coding tools
