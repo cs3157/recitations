@@ -6,13 +6,13 @@ MAIN = main
 .PHONY: default
 default: all run
 
-$(MAIN): main.o ops.o opsprinter.o
+$(MAIN): ops.o opsprinter.o
 
-main.o: main.c ops.h
+main.o: ops.h
 
-ops.o: ops.c ops.h opsprinter.h
+ops.o: ops.h opsprinter.h
 
-opsprinter.o: opsprinter.c opsprinter.h
+opsprinter.o: opsprinter.h
 
 .PHONY: all
 all: clean main
