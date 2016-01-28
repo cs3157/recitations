@@ -30,7 +30,7 @@ or [MobaXterm](http://mobaxterm.mobatek.net/)
 information is just:
   - Username: your_uni
   - Password: your clic password
-  - Remote server: clic-lab.cs.columbia.edu
+  - Remote server: clic.cs.columbia.edu
 - Click connect and you'll be in a remote shell session on a random machine in 
 the clic cluster.
 
