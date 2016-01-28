@@ -16,8 +16,7 @@ struct point {
 and usage
 
 ```c
-struct point pt;
-pt = {50, 100};
+struct point pt = {50, 100};
 pt.x == 50; // 1
 pt.y = 3;
 pt.y == 100; // 0
