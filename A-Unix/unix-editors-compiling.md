@@ -13,12 +13,12 @@ its the one you used when creating your clic account.
 If you're on a Mac:
 
 - Open up Terminal
-- type `ssh your_uni@clic-lab.cs.columbia.edu` You will be prompted for your 
+- type `ssh your_uni@clic.cs.columbia.edu` You will be prompted for your 
 clic password. Enter it.
 - NOTE: if you want to enable X11 forwarding (this will allow you to share 
 graphical programs as well as the shell with the remote machine) append the X 
 (must be capital) flag to your ssh command. 
-`ssh your_uni@clic-lab.cs.columbia.edu -X`
+`ssh your_uni@clic.cs.columbia.edu -X`
 - You will now be in a remote shell session on a random machine in the clic 
 cluster.
 
@@ -30,7 +30,7 @@ or [MobaXterm](http://mobaxterm.mobatek.net/)
 information is just:
   - Username: your_uni
   - Password: your clic password
-  - Remote server: clic-lab.cs.columbia.edu
+  - Remote server: clic.cs.columbia.edu
 - Click connect and you'll be in a remote shell session on a random machine in 
 the clic cluster.
 
