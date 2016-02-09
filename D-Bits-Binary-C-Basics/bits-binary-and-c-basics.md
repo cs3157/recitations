@@ -263,7 +263,7 @@ if(condition)
 ### Switch Statements ###
 
 ```c
-switch(v)
+switch(v) {
   case 1: // v == 1
     printf("v is 1");
     break;
@@ -272,7 +272,7 @@ switch(v)
     break;
   default:
     printf("v is neither 1 nor 2");
-end
+}
 ```
 
 ### Loops ###
