@@ -41,8 +41,23 @@ int foo(int auto_1) {
 A global static variable's scope is limited to the current file.
 
 A static variable defined inside a function is initialized once and retains 
-its value over successive calls of that function, as shown 
-(here)[http://stackoverflow.com/a/23777789].
+its value over successive calls of that function, as shown here 
+(source)[http://stackoverflow.com/a/23777789]:
+```c
+int foo()
+{
+    static int x = 5; // assign value of 5 only once
+    x++;
+    return x;
+}
+
+int main()
+{
+    printf("%d\n", foo()); // prints 6
+    printf("%d\n", foo()); // prints 7
+    return 0;
+}
+```
 
 ### Global Variables ###
 
