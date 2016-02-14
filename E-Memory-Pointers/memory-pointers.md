@@ -18,32 +18,37 @@ x = 0;
 //x is still 0 out here
 ```
 
-The above are automatic variables or **stack variables**. Their scope is local
-to a block (code enclosed by curly braces as shown above) - they are created 
-when entering the block and destroyed upon exit.
+The variables inside the curly braces are **stack variables** (also known as 
+automatic variables). Their scope is local to a block (meaning code enclosed 
+by curly braces, as shown above) -- they are created when entering the block
+ and destroyed upon exit.
 
 ### Static Variables ###
 
-Many different meanings depending on where you declare:
+'static' has different meanings depending on where you declare your value. 
+In general, global and static variables are created when the program runs and
+persist until the program ends. This means they will not be re-declared or
+re-initialized.
 
 ```c
-int global_static = 0;
-
-static int file_static = 0;
+static int file_static = 0; // static global variable
 
 int foo(int auto_1) {
     static int block_static = 0;
 }
 ```
-In general, global/static variables are created when the program runs and
-persist until the program ends. This means they will not be re-declared or
-re-initialized.
+
+A global static variable's scope is limited to the current file.
+
+A static variable defined inside a function is initialized once and retains 
+its value over successive calls of that function, as shown 
+(here)[http://stackoverflow.com/a/23777789].
 
 ### Global Variables ###
 
 Global variables are like a special case of static variables. They are
-accessible from all files in the program, and if they are declared within the
-current file already you don't need to use the `extern`. See below:
+accessible from all files in the program, and can be accessed from other 
+files using the `extern` keyword. See below:
 
 In one file:
 ```c
@@ -51,7 +56,7 @@ int global_static = 0;
 
 int main() {
     global_static++;
-    magicPrint();
+    magic_print();
 	return 0;
 }
 ```
@@ -59,9 +64,9 @@ int main() {
 In another file:
 
 ```c
-void magicPrint() {
+void magic_print() {
     extern int global_static;
-    printf("%d\n", global_static); //prints 1
+    printf("%d\n", global_static); // prints 1
 }
 ```
 
