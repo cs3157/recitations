@@ -42,7 +42,7 @@ A global static variable's scope is limited to the current file.
 
 A static variable defined inside a function is initialized once and retains 
 its value over successive calls of that function, as shown here 
-(source)[http://stackoverflow.com/a/23777789]:
+([source](http://stackoverflow.com/a/23777789)):
 ```c
 int foo()
 {
