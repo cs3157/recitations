@@ -88,7 +88,7 @@ the basics.
 
 **Pointer:** A variable that stores a memory address. That's it.
 
-There isn't just one kind of variable called "pointer." Every pointer is a
+There isn't just one data type called "pointer". Every pointer is a
 pointer-to-type, which encodes how to interpret the bytes you find in the memory
 address.
 
@@ -135,14 +135,14 @@ printf("%d", *p); //prints out 5
 further from the underlying value, while `*` removes a level, brining you
 closer. So `*&x` is the same as `x`, as is `*&*&x`.
 
-There are limits though. Why do you think `&&x` is not valid? (Spoiler: because
+There are limits though. Why do you think `&&x` is not valid? (*Spoiler:* because
 `&x` is just a transient *value* of type `int *`, it's not a variable in memory,
-so you cannot get its memory address with the `&` operator.
+so you cannot get its memory address with the `&` operator).
 
 ### Ok, so why use pointers? ###
 
-C is a call-by-value language which means all arguments to functions are copied,
-and a local copy is made on that function's stack. Changes made inside the
+C is a **call-by-value** language which means all arguments to functions are 
+copied, and a local copy is made on that function's stack. Changes made inside the
 function are not reflected on the outside. Therefore if you want a function to
 modify a value that you have, you'll have to tell the function where to find the
 that value by memory address, not just give it the value:
@@ -153,7 +153,7 @@ void increment(int a) {
 }
 
 void actually_increment(int *b) {
-  (*b)++
+  (*b)++;
 }
 
 int main() {
@@ -167,7 +167,7 @@ int main() {
 Note not only the difference in the function, but how the parameters are passed.
 **Passing a pointer is fundamentally a different type than passing a value.**
 
-For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`
+For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`.
 
 
 ---- 
@@ -222,7 +222,7 @@ so if you have an int pointer `int *p`, `p+1` points to the next int, which is 4
 bytes later. *Think in terms of elements, not in terms of bytes.*
 
 ```c
-int *p = q; //p is a pointer to int; It's pointing to the same place as q, exactly where doesn't matter now
+int *p = q; //p is a pointer to int; it's pointing to the same place as q, exactly where doesn't matter now
 p+1; //this is a pointer-to-int that's point to an integer that immediately follows p
 *(p+1); //this is an integer, the dereferenced value pointed to by the previous line
 *p++; //this returns the current derefenced value (ie the integer), and advanced the pointer to the next element
@@ -456,7 +456,6 @@ Valgrind will inform you that the visible behavior of your program depends on an
 ## Lab 2 ##
 
 Tips:
-
   - Test all your code with valgrind. Just do it.
   - Watch out for fence post errors when it comes to invalid read/writes. You're
     probably just one outside of your bounds
