@@ -1,5 +1,5 @@
-_The main topics for these notes will be those useful for lab 3, material from
-lecture note 9, and useful information for the practice midterm._
+_This note aims to cover topics useful for lab 3, material from Jae's lecture 
+note 9, and information that's useful for completing the practice midterm._
 
 ## Function Pointers (K&R 5.11) ##
 When writing a program, you'll often want your program to offer different 
@@ -8,21 +8,21 @@ desire. For example, when writing a sort function, you could include a
 parameter that allows users them choose between sorting ascending and descending.
 However, what if a user wanted to sort characters by unicode value instead of
 lexicographically? For this, the user has to supply their own functionality.
-This is an example of where a function pointer is useful, as they allow you to
+This is an example of where function pointers are useful, as they allow you to
 pass in different functions for different jobs. Some higher level (read:
 lambda-programming languages) support this is in a more 'native' way, but C
 does a pretty good job, too.
 
-In short, *function pointers make it easier to swap out functions called 
-from other functions*. Making parts of your code easy to swap out makes your
-code more modular and extensible. These are characteristics of good code.
+In short, *function pointers make it possible to swap out functions*. 
+Making parts of your code easy to swap out makes your code more modular and 
+extensible. These are characteristics of good code.
 
 ### Accepting functions as a parameter to your function ###
-Function pointers allow you to accept functions as a parameter to your function. 
-Here's an example of that functionality:
+Function pointers allow you to **accept functions as a parameter** to another 
+function. Here's an example of that functionality:
 
 ```c
-void notifier(int (*fn)());
+void notifier(int (*fn)()); // method declaration; could be in separate .h file
 
 void notifier(int (*fn)()) {
   printf("Starting\n");
@@ -39,8 +39,9 @@ The layout for a function pointer type is:
 ```
   returntype (*functionName)(parameter1type, parameter2type, ...)
 ``` 
-**The type of our function pointer is denoted by its return type.**  
-The name of the function being preceded with an asterisk tells us its a pointer. 
+**The type of our function pointer is denoted by its return type and the 
+types of its parameters.**  
+The name of the function being preecded with an asterisk tells us its a pointer. 
 The function is surrounded by parentheses so that the compiler doesn't think 
 we've got a variable `returntype *functionName`. The parentheses following the 
 declaration are necessary as well, even if the function we want to accept 
@@ -68,9 +69,9 @@ int main(int argc, char **argv) {
 
 Notice the function called `wasteTime`.When we follow `wasteTime` with
 parentheses, the function is called. When we don't include parentheses,
-`wasteTime` is automatically a function pointer. Why is this?
+`wasteTime` is automatically a function pointer. **Why is this?**
 
-Well everything in the program is stored in memory, even the functions, which
+Everything in a process is stored in memory, even the functions, which
 means even they have an address. So `wasteTime` has an address in memory. When
 you follow `wasteTime` with parentheses (`wasteTime()`), C goes to the address
 and executes the function. If you think of `wasteTime` as storing a pointer to a
@@ -104,7 +105,6 @@ Make sure to check out Jae's notes (lecture 7) for more complicated examples of
 this. Notice that we did the same thing when calling `fn()` in our `notifier`
 function.
 
-
 ### Functions vs Pointers to Functions ###
 Functions aren't quite like regular variables, so function pointers aren't quite
 like regular pointers either. Think about this small program:
@@ -125,7 +125,7 @@ int main() {
 }
 ```
 
-What will this program print? Notice the line where we're comparing 
+**What will this program print?** Notice the line where we're comparing 
 `myFunc` and `&myFunc`.
 
 ```
@@ -139,22 +139,23 @@ pointer back**. It has no effect. How boring.
 
 This will come up again later on in the semester, but know that C (like Java)
 can have functions with a varible number of functions. If you think about it,
-`printf()` is a good example: you could have `printf("%d\n" &x)` or 
-`printf("%d and %d\n", &x, &y)`. Once you've enumerated all the required
+`printf()` is a good example: you could have `printf("%d\n", x)` or 
+`printf("%d and %d\n", x, y)`. Once you've enumerated all the required
 arguments, you can specify that you would like to also accept variable arguments
 with an ellipsis (`...`):
 
     int myFWithVarArgs(int a, int b, ...);
 
-To reiterate, this will be brought up again later in the semester, but it's good to acclimate to this syntax. *Bonus:* the e;lipsis works in Java function declarations too!
-
+To reiterate, this will be brought up again later in the semester, but it's 
+good to get acclimated to this syntax. 
+*Bonus:* the e;lipsis works in Java function declarations too!
 
 ### Some Notes About Lab 4 ###
 If you plan on doing the pair option and would like to 
-[procure a private GitHub repo](https://github.com/edu), please request one ASAP,
-because it takes a few days to process. Additionally, if you're new to GitHub/BitBucket,
-you may find the [Git Documentation](http://git-scm.com/book), the 
-[GitHub Help page](https://help.github.com/), and the 
+[procure a private GitHub repo](https://github.com/edu), please request one 
+ASAP, because it takes a few days to process. Additionally, if you're new to 
+GitHub/BitBucket, you may find the [Git Documentation](http://git-scm.com/book), 
+the [GitHub Help page](https://help.github.com/), and the 
 [BitBucket Documentation](https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+Documentation+Home)
 handy.
 
