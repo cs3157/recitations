@@ -46,6 +46,7 @@ There are several kinds of redirection possible from the console:
  - `>>` will append the output to a file instead of overwriting the file. 
 
 Here are some examples to try out from your UNIX console:
+```
      [1] $ cat myfile.c 
      [2] $ cat < myfile.c 
      [3] $ cat myfile.c > cat
@@ -57,6 +58,7 @@ Here are some examples to try out from your UNIX console:
      [9] $ valgrind ./anotherprogram >> myoutput
     [10] $ valgrind ./myprogram > ALLthethings 2>&1
     [11] $ valgrind ./anotherprogram >> ALLthethings 2>&1
+```
 
 Each of the above expressions build on each other. If you can tell what the
 effect of each expression above is, then you're set. If not, try them out and
