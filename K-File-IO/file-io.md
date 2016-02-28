@@ -1,26 +1,29 @@
 ## File I/O ##
 ### 3 channels ###
-A C program is automatically given 3 channels for input and output. They can all
-be redirected, but the basic three streams are:
+By convention, every C program is given 3 channels for input/output operations,
+often called I/O. I/O refers to anything that involves data coming into the 
+program from outside (such as getting user input with `scanf`) and writing data 
+to the outside (such as printing data to the console with `printf`). 
 
-- (0) stdin (Standard input)
-  This stream is for incoming characters which normally come from the keyboard
-  but can also be from other sources.
-- (1) stdout (Standard output)
-  This stream is for outgoing characters, and normally goes to the terminal
+The 3 basic channels (often called "streams") are:
+- **(0) stdin (standard input)**
+  This stream is for incoming data, which often comes from the keyboard but can 
+  also be from other sources.
+- **(1) stdout (standard output)**
+  This stream is for outgoing data, and normally goes to the terminal
   screen but does not necessarily have to. (see below) This stream is buffered
   which means it is not sent to the terminal until a new line character is sent.
   This means if you use `printf("hello")` you likely will not see it until the
   end of your program is reached.
-- (2) stderr (Standard error)
+- **(2) stderr (standard error)**
   This stream is for error messages and is not buffered, meaning any characters
   written to it will immediately be flushed to their destination. This
-  destination is normally the terminal screen but can be other locations as
+  destination is often the terminal screen, but can be other locations as
   well.
 
-If you wish to interact with these buffers you will need to `#include <stdio.h>`
-which is a library that defines standard operations such as `printf()` `scanf()`
-and others which you may or may not have already used.
+If you wish to interact with these buffers you will need to `#include <stdio.h>`.
+This library defines standard functions such as `printf()` `scanf()` and others 
+which you may or may not have already used.
 
 ### Redirecting I/O ###
 
