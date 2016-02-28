@@ -5,7 +5,8 @@ often called I/O. I/O refers to anything that involves data coming into the
 program from outside (such as getting user input with `scanf`) and writing data 
 to the outside (such as printing data to the console with `printf`). 
 
-The 3 basic channels (often called "streams") are:
+The 3 basic channels (often called "streams") as well as their corresponding
+integer representations are:
 - **(0) stdin (standard input)**
   This stream is for incoming data, which often comes from the keyboard but can 
   also be from other sources.
@@ -27,14 +28,24 @@ which you may or may not have already used.
 
 ### Redirecting I/O ###
 
-While most input and output to/from programs will go to the shell, it is
-possible to redirect the source of stdin or the destination of stderr and
-stdout. The `<` and `>` characters are used to denote redirection at the 
-console. `2>` will redirect stderr whereas `>` will redirect stdout. `2>&1`
-will redirect stderr to the same location as stdout. `>>` will append the output
-to a file instead of overwriting the file. You can use other programs or files
-on either side of most of these operators.
+Lots of input and output to/from programs is visible in the shell (your terminal 
+screen). That being said, it's possible to redirect the source of stdin or the 
+destination of stderr and stdout. 
 
+There are several kinds of redirection possible from the console:
+- `>` redirects the standard output of the left argument to the right argument.
+  For example `echo "hello world" > hi.txt` will write the words 'hello world'
+  to a file called `hi.txt`.
+- `2>` is similar, except that it takes the standard error and redirects it,
+  rather than the standard output.
+- `<` does 'input redirection', meaning that the contents of the file on the 
+  right of the operator serves as the standard input of the left argument. For 
+  example, after running the example above, `echo < hi.txt` will print "hello
+  world" to the console.
+ - `2>&1` will redirect stderr to the same location as stdout. 
+ - `>>` will append the output to a file instead of overwriting the file. 
+
+Here are some examples to try out from your UNIX console:
      [1] $ cat myfile.c 
      [2] $ cat < myfile.c 
      [3] $ cat myfile.c > cat
