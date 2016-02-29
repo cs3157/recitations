@@ -86,18 +86,18 @@ order of the first 128 ascii characters. The C language is built on a subset of
 7-bit ascii (0-127) so its important to know what the table is like, not to
 memorize it. Also note that in C, single quotes means a character.
 
-Declaration     | x (dec) | y (dec)
---------------- | ------- | -------
-int x;          | NULL    | -
-int x, y;       | NULL    | NULL
-int x = 0, y;   | 0       | NULL
-char x = 'x';   | 120     | -
-char x = '\n';  | 10      | -
-char x = '\13'; | 11      | -
-char x = '0';   | 48      | -
-char x = '\0';  | 0       | -
-char x = 0;     | 0       | -
-long x = 0L;    | 0       | -
+Declaration     | x (dec)   | y (dec)
+--------------- | -------   | -------
+int x;          | undefined | -
+int x, y;       | undefined | undefined
+int x = 0, y;   | 0         | undefined
+char x = 'x';   | 120       | -
+char x = '\n';  | 10        | -
+char x = '\13'; | 11        | -
+char x = '0';   | 48        | -
+char x = '\0';  | 0         | -
+char x = 0;     | 0         | -
+long x = 0L;    | 0         | -
 
 Preceding a constant with 0x denotes hexadecimal notation:
 
