@@ -1,0 +1,18 @@
+
+(1)
+make: `main' is up to date.
+
+(2)
+gcc    -c -o main.o main.c
+gcc    -c -o foo.o foo.c
+gcc   main.o foo.o   -o main
+
+(3)
+gcc   main.o foo.o   -o main
+
+(4)
+gcc    -c -o main.o main.c
+gcc   main.o foo.o   -o main
+
+(5)
+make: `main.o' is up to date.
