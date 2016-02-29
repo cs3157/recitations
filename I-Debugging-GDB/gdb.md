@@ -13,10 +13,11 @@ First, `printf`, which you probably use all the time.
 
 Imagine this program fragment, which is currently crashing.
 
-
-    foo();
-    printf("foo complete");
-    bar();
+```c
+foo();
+printf("foo complete");
+bar();
+```
 
 We added the printf line to the program to determine if the program was crashing
 during `foo()` or during `bar()`. If we see "foo complete", we can determine
@@ -33,25 +34,25 @@ which lets us specify the destination. It's fairly simple:
 `fprintf(stderr, "foo complete\n");`.
 
 
-
 ## valgrind ##
+
 After compiler warnings, valgrind is the first tool you should turn to whenever
 you're dealing with possible memory problems. It analyzes your program
 **as it runs** for memory errors and leaks. 
 
 Valgrind is very easy to use. All you do is call the program normally, but
-prepend `valgrind --leak-check=full` to the beginning. So if you were previously
-running `$ ./echo hello world`, now you'd run
-`$ valgrind --leak-check=full ./echo hello world`
+prepend `valgrind --leak-check=full` to the beginning.
+
+    $ ./twecho hello world # Without valgrind
+    $ valgrind --leak-check=full ./twecho hello world # With valgrind
 
 Your program runs completely normally, including letting you type in as you
 wish. At the end, whether your program crashed or exited normally, it prints out
 a status report, which reports two problems:
 
-1. **Memory Errors**. These are illegal memory accesses, which may result in
-weird behavior, and crashes. If your program is crashing or acting up,
-identifying and fixing these are your second priority (number 1 is fixing
-compiler warnings).
+**Memory Errors**. These are illegal memory accesses, which may result in weird
+behavior, and crashes. If your program is crashing or acting up, identifying and
+fixing these are your second priority (number 1 is fixing compiler warnings).
 
 What are examples of this? The simplest one is to imagine you have an array,
 `int arr[10];`, and you try to set `arr[11] = 11;`. The compiler won't
@@ -59,51 +60,53 @@ warn you about it in any non-trivial case. However this is a memory error, and
 may cause your problem to crash or act weird. Luckily valgrind will report it,
 and even tell you which line of code it's happening on.
 
-2. **Lost Memory**. You need to know about malloc and heap memory for this to
-make sense, but suffice it to say that you don't want to leak memory because
-the more memory you leak, the less memory other running programs will have
-to use.
+**Lost Memory**. You need to know about malloc and heap memory for this to make
+sense, but suffice it to say that you don't want to leak memory because the more
+memory you leak, the less memory other running programs will have to use.
 
-Let's try it on a sample program. leaky.c:
+Let's try it on a sample program, `leaky.c`:
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main(int argc, char **argv) {
-        int *pint = (int *)malloc(sizeof(int));
-        if (pint == NULL) {
-            perror("malloc returned NULL"); /* Jae often defines a die() to do this */
-            exit(1);
-        }
-        *pint = 4;
-
-        printf("The value pointed to by pint is %d \n", *pint);
-
-        return 0;
+int main(int argc, char **argv) {
+    int *pint = (int *)malloc(sizeof(int));
+    if (pint == NULL) {
+        perror("malloc returned NULL"); /* Jae often defines a die() to do this */
+        exit(1);
     }
+    *pint = 4;
 
+    printf("The value pointed to by pint is %d \n", *pint);
+
+    return 0;
+}
+```
 
 Notice that it says you definitely lost 1 block of 4 bytes. The 1 block is from
 the call to malloc on line 5. You can tell it's that file and line number
 because it says `(leaky.c:5)`. 
 
 To fix this program we need to free the memory block we malloc'd. Immediately
-before the return, add `free(pint)`
+before the return, add `free(pint);`.
 
 If you need valgrind to give you even more debugging information, you can add
-two more flags, `--show-reachable=yes` which gives more information about memory
-leaks, and `--track-origins=yes` which gives more information about
-uninitialized values. Thus a more verbose valgrind command is:
+two more flags:
+
+* `--show-reachable=yes` gives more information about memory
+* `--track-origins=yes` gives more information about uninitialized values.
+
+Thus, a more verbose valgrind command is:
 `valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./leaky`
 
-
-Note: You should **ignore all suppressed errors**. They're known problems with
+Note: You should **ignore all suppressed errors.** They're known problems with
 the standard library functions, and they're suppressed because there's nothing
 you can do about them.
 
 
-### aside: why -g ###
+### Aside: why use `-g` when compiling? ###
+
 This is the perfect time to discuss something we glossed over in the first
 CLIC recitation. We told you to always compile your code with `gcc -g`. Why are
 you using `-g` though?
@@ -132,29 +135,24 @@ or just type `help` alone to list all commands.
 #### Loading a program ####
 
 To get started we just need to compile our program (using `-g` of course), then
-run `$gdb -tui ./program`. That opens gdb with a "text user interface", and
+run `$ gdb -tui ./program`. That opens gdb with a "text user interface," and
 waits. You need to give gdb instructions now, which is where it gets scary.
 
 However it's really easy! Type `run` and it will start (include any arguments
-after run if your program needs them, ie `run hello world`). However it just
-goes right through, and I promised you could stop time!
+after run if your program needs them, ie `run hello world`). You'll notice that
+the program just runs straight through, but I promised you could stop time!
 
 #### Breakpoints ####
 
-There are two ways of stopping time, with many little variations. The main way
-is a breakpoint. Breakpoints are points in the source code at which gdb will
-pause running your program. Setting breakpoints is the first, most important,
-step in debugging.
+The main way of stopping time is a **breakpoint.** Breakpoints are points in the
+source code at which gdb will pause running your program. Setting breakpoints is
+the first, most important, step in debugging.
 
 There are three main types of breakpoints:
 
-1. `break 10` to break on line #10 of the current source file
-2. `break mymath.c:14` to break on line #14 of mymath.c
-3. `break multiply` to break at the very beginning of the function multiply
-
-You can also setup a watchpoint on a variable. For example, `watch x` breaks
-whenever the value of x changes. However you can only setup a watch point after
-the variable has been declared, so you'll first need to set a breakpoint.
+1. `break 10` to break on line 10 of the current source file
+2. `break mymath.c:14` to break on line 14 of mymath.c
+3. `break multiply` to break at the very beginning of the function `multiply`
 
 You can take your breakpoints to the next level with conditional breakpoints.
 You set these up just like normal breakpoints, but add `if expression` to only
@@ -162,9 +160,16 @@ break if a certain thing is true. For example, if you have a loop that counts
 down from 100, but you only want to break near the end, you could do
 `break 10 if i <= 2` to avoid breaking on the first 97 iterations. 
 
-Deleting breakpoints is easy, typically you can do `clear` and then the line you
-used to create the break point. You can also do `info breakpoints` to get a list
-of your current breakpoints, and then `delete i` to get rid of the ith one. 
+Deleting breakpoints is easy. Typically, you can do `clear` and then the line
+you used to create the breakpoint. You can also do `info breakpoints` to get a
+list of your current breakpoints, and then `delete i` to get rid of the ith one.
+
+#### Watchpoints ####
+
+You can also set a **watchpoint** on a variable. For example, `watch x` stops
+the program whenever the value of `x` changes. However you can only setup a
+watchpoint after the variable has been declared, so you'll first need to set a
+breakpoint.
 
 #### Examining the program ####
 
@@ -173,18 +178,25 @@ that can let you examine the program.
 
 First, let's figure out what function you're in, and how you got here.
 
-`backtrace` (or `bt`), prints the calling stack, including arguments. This can
-be especially useful in recursive programs. 
+`backtrace` (or `bt`), prints the call stack, including arguments. This can be
+especially useful in recursive programs.
 
-`frame [n]` will allow you to move around the call stack shown in the output
-of `bt`.  This can be helpful in determining how function arguments are
-generated.
+`frame [n]` moves you to the nth call shown in the output of `backtrace`. This
+can be helpful in determining how function arguments are generated.
 
 `print expression` will print out an expression. For example `print x` prints
 out x, or `print *x` prints out the pointer x after dereferencing it. We can
 specify a format parameter with a slash, ie `p/t x` will print out x formatted
-as binary. The parameters are x hexadecimal, d signed decimal, u unsigned
-decimal, o octal, t binary, a address, c character, f floating point.
+as binary. The parameters are:
+
+* `d` for signed decimal
+* `u` for unsigned decimal
+* `x` for hexadecimal
+* `o` for octal
+* `t` for binary
+* `a` for address
+* `c` for character
+* `f` for floating point
 
 There is also a `x` command to print memory addresses and specify more complex
 formatting and print multiple values. For example, if we had `long y = -1;` in
@@ -193,24 +205,24 @@ value of y in binary. We could also do `x/2xi &y` to print out the value of y in
 hex, 
 
 `info locals` will print out all the locally defined variables. It doesn't
-include everything you might think (in particular, it doesn't include function
-parameters, so `print expression` is probably more useful.
+include everything you might think: in particular, it doesn't include function
+parameters, so you'll have to use `print argumentName` to see those.
 
 `ptype variable` prints the type of a variable! This can be nice with multiple
 pointers and such. For example, `ptype x` will say x is an int. This has a more
 powerful analog `whatis expression`, which lets you specify any arbitrary
 expression, for example `whatis &x`, which will say `int *`.
 
-
 #### Setting values ####
+
 Aaaarg, that's so close, except x should be 3, not 2, at the points! Fear not!
 With gdb you can set values! Just run
 
 `set variable = expression`, for example `set x = 4`, and it will change it for
-you. No, you can't change code.
-
+you. (Unfortunately, it's not possible to change code.)
 
 #### Resuming ####
+
 Once you've stopped, after you're doing examining the code, you need to resume
 execution. There are basically 3 amounts that you can resume by. In order from
 smallest to largest they are:
@@ -221,17 +233,16 @@ line through the code of foo.
 
 `next` also runs the code line by line, but it goes *over* functions. So if you
 call `bar()`, it will skip over the call and continue within this block of code.
-Generally, for example, you want to next over library functions.
+Generally, for example, you want to use `next` over library functions.
 
 You can combine step and next with a number, eg, `step 4` to step 4 times at once.
 
 `continue` resumes executing your program until you get to another breakpoint.
 
 There are a few more esoteric ones, such as `finish` to wait for the return, 
-ctl-c to send sigint, and kill to end it. 
+Control-C to send sigint, and kill to end it. 
 
-#### Essential Commands ####
-These can all be referred to by their first letter.
+#### Summary: Essential Commands ####
 
 * `break` _`line` / `file:line` / `function`_
 * `run`
@@ -241,47 +252,47 @@ These can all be referred to by their first letter.
 * `next`
 * `continue`
 
-#### Protips ####
+#### Tips ####
 
-Protip: almost all gdb commands can be abbreviated to a single letter. Instead
+Almost all gdb commands can be abbreviated to a single letter. Instead
 of typing `break` you can just type `b`, instead of `continue`, `c`, etc. If you
 want to list all the breakpoints, you could type `info breakpoints`, but you
 could also just type `i b`.
 
-Protip: pressing enter will repeat the most recent command.  No longer do
-you need to mash `s` or `n`!
+Pressing enter will repeat the most recent command.  No longer do you need to
+mash `s` or `n`!
 
-Protip: Ctl-l is a common unix shortcut to clean up the screen. It can be
+Control-L is a common keyboard shortcut to clean up the screen. It can be
 helpful if your program outputs some weird stuff and it all looks janky. Also
-clears a terminal.
+works in bash.
 
-Protip: you can jump to arbitrary points in execution, but don't you already
-have enough rope to hang yourself?
+You can jump to arbitrary points in execution, but don't you already have enough
+rope to hang yourself?
 
-Protip: `-tui` shows the source code in the top half. Use the arrow keys to
-navigate.
+`-tui` shows the source code in the top half. Use the arrow keys to navigate.
 
-You can quit with `quit`, `q`, and Ctl-D typically. 
+You can quit with `quit`, `q`, and Control-D typically.
 
 
 ### Core Dumps and gdb ###
-Sometimes your program will encounter a segmentation fault, at which point,
-printed to the terminal is "Segmentation Fault (core dumped)."  Now, by
-default this "core dumped" message doesn't do anything.  This is because by
-default core dump files are limited to size 0.  However, we can change this
-quite easily by running `ulimit -c unlimited`.  Now when we seg fault, we'll
-get a file called "core" in the working directory.
 
-This "core" file provides a picture of the memory at the time the seg fault
-was encountered.  Luckily all of these fancy UNIX tools work great together
-so we can used gdb to help us do some detective work!  By running `gdb
-./my_program core`, we're instructing `gdb` to load the memory picture at
-the time of the seg fault.  We can then navigate around using the gdb
-commands we just learned (like `bt` and `info locals`) to figure out exactly
-what caused the seg fault!
+Sometimes your program will encounter a segmentation fault. You'll see
+"Segmentation Fault (core dumped)" printed to the terminal. By default, this
+"core dumped" message doesn't do anything. This is because by default core dump
+files are limited to size 0. However, we can change this quite easily by running
+`ulimit -c unlimited`. Now when we segfault, we'll get a file called "core" in
+the working directory.
+
+This "core" file provides a picture of the memory at the time the segfault was
+encountered. Luckily all of these fancy UNIX tools work great together so we can
+used gdb to help us do some detective work! By running `gdb ./my_program core`,
+we're instructing `gdb` to load the memory picture at the time of the seg fault.
+We can then navigate around using the gdb commands we just learned (like `bt`
+and `info locals`) to figure out exactly what caused the segfault!
 
 
 ## Example ##
+
 It helps to have a concrete example in hand while doing this. Let's calculate 
 2^4, but let's do it the old fashioned way, where exponentiation is repeated
 multiplication, and multiplication is repeated addition. 
@@ -302,21 +313,13 @@ Main prints out `2^-1 = 16`. What's going on? That's crazy!
 
 Let's debug to find out!
 
-
-
-
 _Spoiler: in the exponentiation, we do `(*y)--`, which permanently changes y!_
 
 
-
 ## External Resources ##
-Dense, incredibly helpful gdb reference card: http://users.ece.utexas.edu/~adnan/gdb-refcard.pdf
 
-Slightly slimmer gdb cheat sheet: http://web.cecs.pdx.edu/~jrb/cs201/lectures/handouts/gdbcomm.txt
-
-Look at Jae's emails "ANN: Doing lab 2", and "ANN: Debugging Tips"
-
-Official GDB guide: https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session
-
-Handy walkthrough pdf that covers unix basics, gcc, gdb, make, and basic shell:
-http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf
+* [Dense, incredibly helpful gdb reference card](http://users.ece.utexas.edu/~adnan/gdb-refcard.pdf)
+* [Slightly slimmer gdb cheat sheet](http://web.cecs.pdx.edu/~jrb/cs201/lectures/handouts/gdbcomm.txt)
+* Look at Jae's emails "ANN: Doing lab 2", and "ANN: Debugging Tips"
+* [Official GDB guide](https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session)
+* [Handy walkthrough pdf that covers unix basics, gcc, gdb, make, and basic shell](http://cslibrary.stanford.edu/107/UnixProgrammingTools.pdf)
