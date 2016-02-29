@@ -1,0 +1,8 @@
+(1) STACK
+(2) NEITHER (Program Code)
+(3) STACK
+(4) HEAP
+(5) STACK
+(6) HEAP
+(7) HEAP
+(8) NEITHER (Static)
