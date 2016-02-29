@@ -28,13 +28,6 @@ int main(){
         addFront(listPt, str_dup(words[i]));
     }
 
-    struct Node *node1 = listPt->head;
-    while(node1){
-        printf("%s ", (char*)node1->data);
-        node1 = node1->next;
-    }
-    printf("\n");
-
     //classify pointers
     /* (1) */ classify_pointer( words );
     /* (2) */ classify_pointer( *words );
