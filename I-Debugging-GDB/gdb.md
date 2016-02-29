@@ -114,10 +114,10 @@ being executed, what variables are called, and all sorts of good stuff like
 that. Try recompiling leaky.c above, but without the `-g` flag. When you run
 valgrind it will only report file names, not line numbers, for your errors.
 
-Note: valgrind is linux only. XCode offers some similar, but different,
-functionality for debugging c programs on OS X. I have no idea about Windows,
-but I would guess Visual Studio offers something.
-
+Note: Valgrind is well-supported on Linux only. On OS X, clang's
+[Address Sanitizer](http://clang.llvm.org/docs/AddressSanitizer.html#usage)
+offers something similar. On Windows, there are many Visual Studio plugins for
+memory checking.
 
 
 ## gdb ##
