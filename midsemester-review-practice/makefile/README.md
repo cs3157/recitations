@@ -3,19 +3,19 @@
 1. make
 2. touch main
 3. make
-  * output?
+  * (1) output?
 4. touch foo.h
 5. make
-  * output?
+  * (2) output?
 6. touch foo.o
 7. make
-  * output?
+  * (3) output?
 8. touch main.c
 9. make
-  * output?
+  * (4) output?
 10. touch foo.c
 11. make main.o
-  * output?
+  * (5) output?
 
 
 ### Note: It is not important to get the output verbatim, rather it is important to know what steps will take place with each 'make'.
