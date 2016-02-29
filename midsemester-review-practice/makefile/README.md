@@ -1,5 +1,4 @@
-
-Perform these steps and write the output of commands when asked to:
+## Perform these steps and write the output of commands when asked to:
 
 1. make
 2. touch main
@@ -19,4 +18,4 @@ Perform these steps and write the output of commands when asked to:
     (5) output?
 
 
-Note: It is not important to get the output verbatim, rather it is important to know what steps will take place with each 'make'.
+### Note: It is not important to get the output verbatim, rather it is important to know what steps will take place with each 'make'.
