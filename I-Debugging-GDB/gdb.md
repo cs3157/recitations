@@ -9,9 +9,7 @@ There are three commonly used debugging methods in this class.
 
 ## printf ##
 
-First, `printf`, which you probably use all the time. One word of caution: you
-MUST include `\n` at the end of your printf debugging lines otherwise the output
-may be buffered by the operating system.
+First, `printf`, which you probably use all the time.
 
 Imagine this program fragment, which is currently crashing.
 
@@ -24,10 +22,10 @@ We added the printf line to the program to determine if the program was crashing
 during `foo()` or during `bar()`. If we see "foo complete", we can determine
 that foo definitely completed.
 
-However, if we **do not** see "foo complete" we cannot determine anything! The OS
-may have buffered our standard output for us, so we need to make the debugging
-print statement `printf("foo complete\n");`. The newline encourages the OS to
-not buffer.
+However, if we do **not** see "foo complete," **we cannot determine anything!**
+The C standard library may have buffered our standard output for us, so we need
+to make the debugging print statement `printf("foo complete\n");`. The newline
+encourages the C standard library to send the text to the display immediately.
 
 It would be even better to print debugging information to stderr. This is a bit
 advanced for right now, but you use a slightly different function, `fprintf`,
