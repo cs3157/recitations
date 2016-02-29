@@ -35,6 +35,7 @@ Contents:
 * [Recitation Note N](N-Templates-Containers/templates-containers.md): C++ generics, templates,
   containers, metaprogramming.
 * [Recitation Note O](O-Smart-Pointer/smart-pointers.md): Smart pointer explanation.
+* [Recitation Note Z](Z-Unix-2/unix-2.md): Bonus recitation -- Unix 2.
 
 Additionally you can read the [Mid-Semester Review](midsemester-review.md) to brush up on past material in the first part of the course; or  [Mid-Semester Review 2](midsemester-review-2.md) for the second part (ie up to basic C++).
 
