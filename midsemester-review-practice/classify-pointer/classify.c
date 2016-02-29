@@ -51,4 +51,6 @@ int main(){
         node2 = node2->next;
     }
     removeAllNodes(listPt);
+
+    return 0;
 }

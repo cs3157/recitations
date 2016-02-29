@@ -37,4 +37,6 @@ int main(int argc, char **argv) {
 
     removeAllNodes(&list);
     free(data);
+
+    return 0;
 }
