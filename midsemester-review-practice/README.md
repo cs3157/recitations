@@ -14,9 +14,9 @@ Go into the midsemester-review-practice folder.
 ```bash
 cd midsemester-review-practice/
 ```
-Copy Jae's mylist.h, mdb.h, and solution for mylist.c into the memory folder.
+Copy Jae's solution for mylist.c into the memory folder.
 ```bash
-cp ~file-to-be-copied~ memory/
+cp ~location-of-mylist.c~ memory/
 ```
 Go into each respective directory (bits, classify-pointer, git, makefile, memory) and test the program. Note that classify-pointer does not have a Makefile, which means it is not set up to be tested.
 
