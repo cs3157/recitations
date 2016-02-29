@@ -13,11 +13,10 @@
 11. git status
 
 
-### Ignore how README and solutions.txt interact with the questions below.
-
-## Which files are listed under "Changes to be committed"?
-## Which files are listed under "Changes not staged for commit"?
-## Which files are listed under "Untracked files"?
+#### Ignore how README and solutions.txt interact with the questions below.
+1. Which files are listed under "Changes to be committed"?
+2. Which files are listed under "Changes not staged for commit"?
+3. Which files are listed under "Untracked files"?
 
 
 ## To restart this process:
