@@ -234,7 +234,9 @@ MyString::MyString(const MyString& s)
 
 #### The Assignment Operator ####
 
-If your class necessitates the definition of a copy constructor, your class necessitates the definition of an **assignment operator** for the same reasons. We can write our assignment operator almost entirely the same way we wrote our copy constructor, except now we also have to deal with the existing data of the lvalue. We can examine the contents of the lvalue via the C++ `this` pointer. `this` is a pointer to the object on which we're currently operating. The C++ `this` is not to be confused with the Java `this`, as the Java `this` is the object itself, rather than a pointer to it. 
+If your class necessitates the definition of a copy constructor, your class necessitates the definition of an **assignment operator** for the same reasons. We can write our assignment operator almost entirely the same way we wrote our copy constructor, except now we also have to deal with the existing data of the lvalue. We can examine the contents of the lvalue via the C++ `this` pointer. `this` is a pointer to the object on which we're currently operating.
+
+(You probably guessed it. In C++, the `this` pointer is the same thing as the `this` reference in Java. What you know as object references in Java are indeed none other than pointers hiding behind a more palatable syntax.)
 
 Now that we have `this` at our disposal, we can write our assignment operator:
 
