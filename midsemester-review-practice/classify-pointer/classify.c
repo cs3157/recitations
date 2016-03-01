@@ -7,6 +7,7 @@
 
 char *str_dup(const char *str){
     char *copy = (char *)malloc(strlen(str) + 1);
+    memset(copy, 0, strlen(str) + 1);
     strcpy(copy, str);
     return copy;
 }
