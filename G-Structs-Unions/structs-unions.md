@@ -151,13 +151,16 @@ important to understand that this means once the variable is declared, the
 memory it is referring to cannot be modified. Some examples:
 
 ```c
-const char *string = "bai";
-string[0] = 'h'; //invalid, because the values that string points to are immutable
-string = "hello"; //valid, because we're changing what string points to.
+int x = 1;
+int y = 2;
 
-char *const stuck = "hello";
-stuck = string; //invalid, because the pointer is immutable
-stuck[0] = 'f'; //valid, because the memory the pointer points to is mutable.
+const int *const_val = &x;
+*const_val = 3; //invalid: value in memory is constant
+const_val = &y; //valid: value of pointer, ie. memory location, is not constant
+
+int *const const_ptr = &x;
+const_ptr = &y; //invalid: value of pointer, is constant
+*const_ptr = 4; //valid: value in memory is not constant
 
 const char *const why = "You'll never change anything about me. Ever";
 ```
