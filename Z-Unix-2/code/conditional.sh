@@ -1,6 +1,6 @@
 #!/bin/bash
 
-n=$(cat dogs.sh | wc -l)
+n=$(cat dog.sh | wc -l)
 if [ $n -eq 9 ]; then
     echo "Same number of lines"
 else
