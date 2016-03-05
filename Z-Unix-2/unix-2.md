@@ -34,7 +34,10 @@ want it to exit, leaving us with `bash`, the outer shell that launched it.
 ## The `PATH` variable shows where to find programs ##
 
 Shells also allow us to set variables. The `PATH` variable is a list of
-colon-separated paths to directories that the shell uses to find programs.
+colon-separated paths to directories that the shell looks inside to find
+programs. For example, if you wanted to be able to run your `twecho`
+executable from any directory on CLIC, you could put the absolute path to
+`twecho` in your README.
 
 To see our account's `PATH` variable:
 
@@ -55,7 +58,7 @@ will do the trick:
 export PATH="/home/yourUNI/bin:$PATH"
 ```
 
-(More how this code works at the end of this recitation.)
+(More on how this code works at the end of this recitation.)
 
 
 ### The `bin` directories each have a different purpose ###
@@ -113,7 +116,8 @@ If you're interested in the filesystem and its design, check out these articles:
 ## Permissions restrict what others can do with your files ##
 
 On Unix-style filesystems, each file has a set of permissions associated with
-it. These are:
+it. Each permission has both a character and a number associated with it.
+These are:
 
 * `r` = 4 for read (this file can be opened)
 * `w` = 2 for write (this file can be modified)
@@ -184,10 +188,11 @@ launched from this instance.
 Finally, we can grab the stdout of any command with `$()`:
 
     yourUNI@vienna:~$ all_my_files=$(ls -a)
+    yourUNI@vienna:~$ echo all_my_files # prints stored output of previous run of ls -a
 
 ### Saving commands into a file ###
 
-To put it all together, here's an example of a bash script:
+To put it all together, here's an example of a bash script file:
 
 ```bash
 #!/bin/bash
@@ -243,7 +248,7 @@ done
 
 The comparison operators are kind of weird:
 
-Integers:
+**Integers:**
 
 * `-eq` equal
 * `-ne` not equal
@@ -252,7 +257,7 @@ Integers:
 * `-lt` less than
 * `-le` less than or equal to
 
-Strings:
+**Strings:**
 
 * `==` equal
 * `!=` not equal
