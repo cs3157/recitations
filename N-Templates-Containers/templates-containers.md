@@ -1,103 +1,73 @@
 # C++ templates and containers #
 
-At this point hopefully you've gotten used to writing basic classes in C++ from
-our experience with MyString. At this point we can move in one of two
-directions. First, we could take a more typical Object Oriented track and
-discuss inheritance, polymorphism, and those sorts of things that companies love
-to ask about during tech interviews. However if you've used Java at length
-you're probably already somewhat comfortable with this, even though it's
-incredibly complex and confusing (multiple inheritance = head asplode).
+So far, we know how to write classes in C++ from our experience with `MyString`.
+Since you already know about object orientation (inheritance and things like
+that) from previous courses, we'll talk about generics instead.
 
-Instead, in 3157, we're going to discuss templates and generics. The interaction
-between generics and C++ is very interesting, and they work differently than in
-most other languages. Consequently they're incredibly powerful, and often very
-useful for programming fast and flexible libraries.
+## What is generic programming? ##
 
-#### Recall how we created executables in C (and C++ so far) ####
+**Generic programming** is when a single algorithm is written to work on many
+data types. As programmers, we only have to write the algorithm once: the
+compiler takes care of generating the code for each data type, reducing the need
+to write duplicate code.
 
-If you go back to the beginning of the course, we discussed compilation as the
-following steps:
 
-1. Preprocessing (`#include`, `#define`, other `#` commands)
-2. Compiling (turning raw .c files into .o object files)
-    * Recall, we could also create a library `.a` file from our `.o` files,
-      if we wanted. This would be an extra step after compiling, before linking
-3. Linking (combining 1+ .o files into a single executable)
+### `void *`: Drawbacks of generic programming in C ###
 
-In this step we can throw away the source code after 2, and as long as we have
-the .o and .a files we can link successfully.
+In the mylist lab, we created a linked list library that could handle many data
+types by using `void *`. However, this approach has some problems: it doesn't
+provide any type safety. **Type safety** is the ability of a compiler to ensure
+that types match. For example, this means it will print an error if an `int`
+variable is used when a `std::string` is expected.
 
-#### Drawbacks to void * ####
+Remember how we retrieved items from the linked list? We had to cast the `void
+*` to the type of the item we put into the list. For example, if we added a
+`double *`, the linked list would give us a `void *`, and we would cast it back
+with `(double *)`.
 
-This approach is feasible in C, because it's a small language with
-relatively few types. The prominence of pointers and casting - you can't write
-basically any C without using them - means that using `void *` as a way of
-handling unknown types is fairly natural. This is what we did in our linked
-list in lab 3.
+If we accidentally wrote the wrong type, the program might crash or produce the
+wrong output. The compiler couldn't provide type safety to our linked list
+library because once the pointer is cast to `void *`, it loses the original type
+information.
 
-However it has some problems: it doesn't provide any type safety, so you have to
-constantly cast your void pointers to whatever type they really should be. This
-means that the compiler is essentially helpless - it can't provide the static
-checking that catches errors at compile time. Additionally, the list can't
-provide any guarantees about the lifetime of things to which it points. As you
-may have seen, it's very easy to end up with invalid pointers.
+In summary, the C compiler is helpless once data is cast to `void *` — it can't
+catch type errors at compile time.
 
-### Templates ###
 
-Templates are (one way) C++ "solves" the problems with `void *` pointers.
-Templates let you write code that accepts generic data types and provide
-compile time type checks. In 3157 we'll primarily focus on class templates (like
-`vector`), not function templates.
+## Using templates with classes ##
 
-Before we proceed into talking about templates, a word of warning. Templates
-break, or at least abuse, the standard mental model of compiling and linking
-that we've established so far. They do things that "feel" like linking, but it's
-actually happening during compiling. So just be aware that you'll need a new
-mental bucket for thinking about templates. (We'll
-[discuss](#templates-under-the-hood) that more soon.)
+C++ implements generic programming using templates. **Templates** let us write
+code so that the compiler can "fill in the blanks" with the requested type when
+we use the code. So for a list library, the compiler would use the template to
+generate a different copy of the list code for each type we want to store in it
+(`double`, `MdbRec`, etc).
 
-Templates are kind of like madlibs. They contain almost the whole story, but
-leave certain things blank. Whatever you put in the blank will complete the
-story. Using templates is generally quite easy. Say we want a vector (discussed
-more below): we just define a vector and specify the type of object it holds.
-Let's say we want to store a bunch of ints and then a bunch of MdbRecs. That's
-easy:
+Here's an example of using a templated class in C++. `vector` is an expandable
+array in C++, like `ArrayList` in Java or `list` in Python. (We'll see later how
+to write templated classes.)
 
 ```cpp
-
+#include <iostream>
 #include <vector>
-//...
 
-vector<int> ivec;
-vector<MdbRec> mdbvec;
+vector<int> ivec; // This vector holds items of type int
+vector<MdbRec> mdbvec; // This vector holds items of type MdbRec
+vector<vector<MyString>> msvecvec; // vector holds vectors of MyString
 ```
 
-But there's no need to stop there! What if we want a vector of vectors of
-MyStrings?
+The type of `ivec` is `vector<int>`. This not the same type as `mdbvec`, which
+has type `vector<MdbRec>`. The type of the templated object includes the types
+we want the compiler to fill into the template.
+
+Now let's see how to write a templated class. We use the `template` keyword
+before the class definition:
 
 ```cpp
-vector<vector<MyString> > msvecvec;
-```
-
-So, what's the type of `ivec`? `vector`? Nope! It's type `vector<int>`. The type
-of the template'd thing includes the type of the things being used in the
-template. This is because templates are handled in the compilation step, and
-basically generate a new type. This isn't exactly what happens, but mentally you
-can think of the compiler as seeing your `vector<int>` and creating a normal,
-non-template type `vector_int`; then it goes through and replaces every instance
-of the `vector<int>` template type with the `vector_int` normal type. If
-elsewhere you use `vector<MyString>`, it creates an entirely separate class
-called `vector_mystring`.
-
-It helps to think about how the implementation is written. 
-
-```cpp
-template <typename T>
+template <typename T> // "T" is the type to be "filled in"
 class vector {
   public:
-    //......
     void push_back(const T& x);
-        //......
+    T& at(size_t index);
 
   private:
     T *a;
@@ -107,135 +77,149 @@ class vector {
 };
 ```
 
-Note that `push_back` takes a constant reference to type T (`const T&`). If
-you've done lab 9, you'll know that it's generally better to take constant
-references for a couple of reasons:
+When we ask the compiler for a `vector<int>`, it "fills in" `int` whenever it
+finds `T`, and compiles the resulting class. This happens every time we use
+`vector` with a new type.
 
-1. By taking `const`, you increase the range of things you can take (both
-`const` and non-`const`)
-2. By taking a reference, you avoid the overhead associated with copy
-constructors, temporaries, etc.
-
-#### Templates: under the hood ####
-
-So we recalled above how compiling worked in C. We create a struct, like `struct
-List list`, and call a function like `initList(&list)`. The compiler looks at our
-source code and our included headers to see if the type `struct List` and the
-function `initList(struct list *)` are defined anywhere. It doesn't care about
-the implementation at this point, only whether they're defined as valid, legal
-types. If so, it creates an object file. Later the linker goes through and links
-the separately compiled objects together into a single executable.
-
-This all breaks down with templates. As we discussed previously, there is no
-type `vector`. It's code that can work with *any* type. So whenever you use a
-`vector`, the compiler needs to see the entire definition because it has two
-jobs to do: 1) check that you're using it validly, and 2) *actually generate the
-code*. When you use the template with a type, the compiler is actually creating
-entirely new types, functions, etc. To do that it needs to have the full code
-available. **This is why we put templates entirely in the .hfiles.**
-
-A comment from Jae about this: 
-
-> Template compilation is very tricky.  The crux of the problem is that when a
-piece of code *uses* a template, the compiler needs to see the whole definition
-of the template because it needs to generate a typed instance.  This is
-different from C, where the compiler does not need to see the body of a function
-when it's compiling a piece of code that calls it.  Basically, the C model of
-separating interface (.h) and implementation (.c) doesn't really work in C++.
-This is one of the things in C++ that is fundamentally incompatible with C, and
-no matter what you do you'll end up with a kludge.
-
-> We take the easiest way (as most people do): each compilation unit (i.e. each
-cpp file that *uses* a template function or a template class) will include the
-generated typed instances of a template.  That is, if foo.cpp and bar.cpp both
-use Stack<int>, foo.o and bar.o will each have the generated Stack<int> machine
-code in there.  The linker will throw away the duplicates at link time.
-Wasteful, but simple.  This is known as the "Borland" model.  (Borland is a
-compiler vendor that most of you are too young to know. I actually remember
-installing Borland C++ compiler on my PC from 3.5-inch floppy disks, 22 of
-them.)
-
-> This gcc manual page explains the Borland model and other more fancier
-alternatives: http://gcc.gnu.org/onlinedocs/gcc/Template-Instantiation.html
+If we have a `vector<int>`, the compiler knows that we'll always get an `int&`
+back when we call the `at()` method. If we try to store the result into, for
+example, an `MdbRec`, the compiler will give us an error.
 
 
-See the end of Lippman 5th ed 16.1.1, "Template Compilation" for a more thorough
-explanation.
+## Using templates with functions ##
 
-
-#### Anecdote: Template metaprogramming to an extreme ####
-
-One really nice feature about templates is that, although they take a long time
-to compile, they're incredibly fast running. There's literally no overhead
-during execution for a templated class, because they're just turned into the
-code that you would have written yourself anyways.
-
-There's a really cool Bayesian statistics project at Columbia run by
-Andrew Gelman's group called Stan http://mc-stan.org/. It's very fast to run
-complicated statistical models (under a second for moderate sizes, where
-competitors would be several minutes), in part because the whole thing very
-extensively uses C++ templates. However it comes at the cost of 30-60 second
-compilations every time you want to create a new model (even just a tiny tweak).
-This is also because of the C++ templates, which mean it has to recompile a huge
-amount of code every time. By using templates the code is a little trickier to
-write, longer to compile, but the end result is execution times that are as fast
-as hand written code, with significantly more flexibility for the end user. This
-lets them have end users write whatever models they want, at basically no cost
-in slowness.
-
-
-#### Alternate Template Motivation ####
-
-If you'd like another reason for templates, the canonical example is writing
-these two functions:
+Just like with classes, we can also use templates to write generic functions.
+Let's say we want to write a comparison function that works for many types. We
+could write it out by hand:
 
 ```cpp
 // returns 0 if the values are equal, -1 if v1 is smaller, 1 if v2 is smaller
 int compare(const string &v1, const string &v2)
 {
-    if (v1 < v2)
-        return -1;
-    if (v2 < v1)
-        return 1;
-    return 0;
+  cout << "Now comparing: " << v1 << " and " << v2 << "\n";
+  if (v1 < v2)
+    return -1;
+  if (v2 < v1)
+    return 1;
+  return 0;
 } 
 int compare(const double &v1, const double &v2)
 {
-    if (v2 < v1)
-        return 1;
-    if (v1 < v2)
-        return -1;
-    return 0;
+  cout << "Now comparing: " << v1 << " and " << v2 << "\n";
+  if (v2 < v1)
+    return 1;
+  if (v1 < v2)
+    return -1;
+  return 0;
 }
 ```
 
-You might realize that functions are nearly identical, but still have two
-implementations: one for strings and one for doubles. And all of this doesn't
-help you at all if you want to write a `compare` for ints! If only there was a
-way to do the same logic, and use the already existing operator overloading to
-just call whatever the appropriate `operator<` function...luckily ,templates do
-this!
+These functions are identical, which is bad because we've copied and pasted
+code. We'd have to copy and paste a third time if we wanted to compare a new
+type, such as `int`. Furthermore, every time we want to change the algorithm, we
+would have to modify each copy, increasing the likelihood of bugs.
 
-The template'd version of this is:
+Since `string`, `double`, and `int` all have `operator<` defined and can all be
+printed with `cout`, we can condense the functions above into a template:
 
 ```cpp
 template <typename T>
 int compare(const T &v1, const T &v2)
 {
-    if (v2 < v1)
-        return 1;
-    if (v1 < v2)
-        return -1;
-    return 0;
+  cout << "Now comparing: " << v1 << " and " << v2 << "\n";
+  if (v2 < v1)
+    return 1;
+  if (v1 < v2)
+    return -1;
+  return 0;
 }
 ```
 
 
-#### What's with that weird double template stuff for ostream? ####
+## Templates under the hood ##
 
-http://publib.boulder.ibm.com/infocenter/comphelp/v8v101/index.jsp?topic=%2Fcom.ibm.xlcpp8a.doc%2Flanguage%2Fref%2Ffriends_and_templates.htm
+Templates aren't like any other language feature we've seen so far, so they
+complicate the compilation process. But understanding this complexity enables us
+to write concise, high-performance programs that are impossible in many other
+languages.
 
-Sometimes you need to define FUNCTION templates in association with a CLASS
+Read through this section if you're curious about how the C++ compiler achieves
+this. It may also help you debug weird template-related error messages.
+
+### The compilation process, so far ###
+
+If you go back to the beginning of the course, we discussed compilation as the
+following steps:
+
+1. Preprocessing (`#include`, `#define`, other `#` directives)
+2. Compiling (turning .c files into .o object files)
+    * Recall, we could also create a library `.a` file from our `.o` files,
+      if we wanted. This would be an extra step after compiling, before linking
+3. Linking (combining multiple .o files into a single executable)
+
+In this compilation process, we can throw away the source code after 2, and as
+long as we have the .o or .a files we can link successfully. Also, the compiler
+does not need to see the body of a function when compiling code that calls it
+— it only needs the header, which tells the argument and return types of the
+functions.
+
+The same is not true of C++ templates. When we use a template, the compiler must
+have access to the original source code to "fill in" the types — it is
+generating entirely new classes and functions. So, we cannot put templates into
+.cpp files and turn them into .o files to be used later. There is no such thing
+as `vector.o`. Instead, we put the templates in header files, and include them
+wherever they are used.
+
+What if multiple .cpp files are using the same instantiation of a template? For
+example, let's say we have `foo.cpp` and `bar.cpp`, which both use
+`vector<int>`. After compiling `foo.o` and `bar.o`, we'll have one copy of
+`vector<int>` in each file. The duplicates are removed when we link `foo.o` and
+`bar.o` together into an executable. This is known as the **Borland model**.
+It's inefficient because the compiler duplicates work, but is simpler to
+implement.
+
+One consequence is that the C model of separating interfaces (.h files) and
+implementations (.c files) no longer holds in C++. According to Jae, this is one
+of the things in C++ that is fundamentally incompatible with C, and no matter
+what you do you'll end up with a kludge.
+
+Further reading:
+- GCC manual section 7.5, ["Where's the Template?"](https://gcc.gnu.org/onlinedocs/gcc/Template-Instantiation.html)
+- The end of Lippman 5th ed 16.1.1, "Template Compilation"
+
+
+### Note: Why go through this trouble? Templates are fast! ###
+
+Although templates take a long time to compile, they're incredibly fast when
+running. Unlike other languages' implementations of generics, there is literally
+no overhead during execution for a templated class, because they're just turned
+into the code that you would have written by hand. This is an example of a
+**zero-overhead abstraction:** templating makes programming easier, but don't
+make our programs slower when they run.
+
+There's a really cool Bayesian statistics project at Columbia run by Andrew
+Gelman's group called [Stan](http://mc-stan.org/). Stan runs complicated
+statistical models very quickly: under a second for moderate sizes, where
+competitors would take several minutes. One reason for the speed is extensive
+use of C++ templates.
+
+However, this comes at the cost of taking 30--60 seconds to compile models (even
+just a tiny tweak). Remember when we said that a new class gets generated every
+time you use a template with a new type? With templates, it's very easy to make
+the compiler generate a lot of classes with a small amount of code.
+
+But it's worth it: the code is tricker to write and takes longer to compile, but
+the end result is execution times that are as fast as hand written code, with
+significantly more flexibility for the end user. This lets them have end users
+write whatever models they want at no performance cost.
+
+
+### What's with that weird double template stuff for ostream? ###
+
+Check out this discussion about [overloading `operator<<` in a templated
+class](http://www.cplusplus.com/forum/general/45776/). Here's what's going on:
+
+Sometimes you need to define _function_ templates in association with a _class_
 template. This is a friend function that depends on the specific type of the
 class. If we look at Jae's stack example from lecture note 22, he declares 
 
@@ -248,7 +232,7 @@ There's one function for each type used, ie there's a
 operator<<_for_stack_of_int, and operator<<_for_stack_of_strings. Those are
 different functions, and each needs to be created as separate function
 templates. However they're friends, they aren't member functions, hence they
-need to be declared as separate templates.
+need to be declared as separate templates with respect to the class.
 
 
 ## Containers ##
@@ -259,7 +243,7 @@ set of library classes for containing a bunch of objects of some type. They're
 implemented with templates, and are pretty much the canonical example of
 templates in the language.
 
-#### Value Semantics ####
+### Value Semantics ###
 
 One key feature of containers is that they provide **value semantics**. That is,
 containers at least appear to make copies of the things you store into them, and
@@ -273,7 +257,7 @@ so handy. Something about STL containers could easily be a final question.
 Note that Jae's lecture note 22 does a good job of explaining containers and
 iterators.
 
-#### What can you do with containers? ####
+### What can you do with containers? ###
 
 Iterators, of course, but also: things like sorting, inserting, swapping,
 splicing, merging, etc, etc. You can pass them into functions that will sort, or
@@ -363,9 +347,6 @@ to return (key, value) tuples.
 ```
 
 
-
-
-
 ## Iterators ##
 
 Iterators are the key feature that makes containers so useful as a group. Every
@@ -409,7 +390,6 @@ whether one is less than the other.
 
 There is also a `const_iterator`, which gives you const references, and behaves
 exactly the same way conceptually.
-
 
 
 ## Clang ##

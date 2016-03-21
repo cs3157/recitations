@@ -232,6 +232,11 @@ MyString::MyString(const MyString& s)
 }
 ```
 
+Note that the copy constructor takes a constant reference (`const MyString&`). It's generally better to take constant references for a couple of reasons:
+
+1. By taking `const`, you increase the range of things you can take (both `const` and not `const` arguments).
+2. By taking a reference, you avoid the overhead associated with making a copy of the argument, so the code will be a little faster.
+
 #### The Assignment Operator ####
 
 If your class necessitates the definition of a copy constructor, your class necessitates the definition of an **assignment operator** for the same reasons. We can write our assignment operator almost entirely the same way we wrote our copy constructor, except now we also have to deal with the existing data of the lvalue. We can examine the contents of the lvalue via the C++ `this` pointer. `this` is a pointer to the object on which we're currently operating.
