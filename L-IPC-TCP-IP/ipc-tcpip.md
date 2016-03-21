@@ -37,7 +37,7 @@ is able to receive `program1`'s output. The stdout of `tee` is piped to `program
 allowing `program2` to receive `program1`'s output as well. Nifty!
 
 If you'd like to run this example, programs 1, 2, 3, and `input.txt` can be found
-in the [recitation-L-code directory](https://github.com/cs3157/recitations/tree/master/L-ICP-TCP-IP/code).
+in the [recitation-L-code directory](https://github.com/cs3157/recitations/tree/master/L-IPC-TCP-IP/code).
 
 Pipes and FIFOs are fine for local, one-way data flow, but oftentimes we want
 our interprocess communication to be even more flexible. That's when we can use sockets.
