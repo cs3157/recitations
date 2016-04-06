@@ -303,7 +303,7 @@ characters with a null terminating character at the end.
 char c[] = "abc";
 char c[] = {'a', 'b', 'c', '\0'}; // equivalent to the above line
 char *s = "my string"; // modifiable pointer
-"my string"[0] == 'm' //true!
+"my string"[0] == 'm'; //true!
 ```
 
 There's a slight difference between these two definitions. `c` is an array which
