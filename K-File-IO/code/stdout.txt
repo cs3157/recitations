@@ -1,0 +1,11 @@
+---------------test1---------------
+case 1: hello
+case 2: he---------------test2---------------
+case 1: hello
+fread return value = 1
+EOF? 0
+case 2: hello
+fread return value = 0
+EOF? 1
+---------------test3---------------
+world
