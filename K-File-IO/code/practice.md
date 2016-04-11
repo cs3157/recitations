@@ -16,11 +16,15 @@ However, there are still a few details that are not expressed in the above two g
 
 ```
 DESCRIPTION
-fgets() reads in at most one less than size characters from stream and stores them into the buffer pointed to by s.
-    Reading stops after an EOF or a newline. If a newline is read, it is stored into the  buffer. A terminating  null byte ('\0') is stored after the last character in the buffer.
+fgets() reads in at most one less than size characters from stream and 
+stores them into the buffer pointed to by s.
+    Reading stops after an EOF or a newline. 
+    If a newline is read, it is stored into the  buffer. 
+    A terminating  null byte ('\0') is stored after the last character in the buffer.
 
 RETURN VALUE
-gets() and fgets() return s on success, and NULL on error or when end of file occurs while no  characters  have  been read.
+gets() and fgets() return s on success, and NULL on error or 
+when end of file occurs while no characters have been read.
 ```
 
 Why does `fgets()` read in at most **one less than** size of characters from `stream`?
@@ -90,16 +94,20 @@ Verify this by opening the `test1_case2` file
 
 ```
 DESCRIPTION
-The function fread() reads nmemb elements of data, each size bytes long, from the stream pointed to by stream, storing them at the location given by ptr.
+The function fread() reads nmemb elements of data, each size bytes long, from the stream pointed to by stream, 
+storing them at the location given by ptr.
 
-The function fwrite() writes nmemb elements of data, each size bytes long,  to  the  stream  pointed  to  by  stream, obtaining them from the location given by ptr.
+The function fwrite() writes nmemb elements of data, each size bytes long, to the stream pointed to by stream, 
+obtaining them from the location given by ptr.
 
 RETURN VALUE
-fread()  and  fwrite()  return the number of items successfully read or written (i.e., not the number of characters).
+fread() and fwrite()  return the number of items successfully read 
+or written (i.e., not the number of characters).
 
 If an error occurs, or the end-of-file is reached, the return value is a short item count (or zero).
 
-fread() does not distinguish between end-of-file and error, and callers must use feof(3) and ferror(3)  to  determine which occurred.
+fread() does not distinguish between end-of-file and error, and callers must use feof(3) and ferror(3) to 
+determine which occurred.
 ```
 
 `fread()` / `fwrite()` don't care about the contents of the file.
@@ -147,8 +155,7 @@ Verify this by opening the `test2_case2` file.
 
 ## Test 3 ##
 
-### `fread()` vs. `fgets()` ### 
-### `fwrite()` vs. `fputs()` ###
+`fread()` vs. `fgets()`, `fwrite()` vs. `fputs()`
 
 Recall Lab 4, and think about which function we used for `loadmdb()` vs `mdb-lookup.c`.
 
