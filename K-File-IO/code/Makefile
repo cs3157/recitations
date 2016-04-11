@@ -1,7 +1,6 @@
 CC = gcc
 CFLAGS = -g -Wall
 LDFLAGS = -g
-MAIN = main
 
 fileio: fileio.o
 
