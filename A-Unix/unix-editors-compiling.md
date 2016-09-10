@@ -1,49 +1,39 @@
+# Unix, Text Editors, and Compiling #
+
 ## Logging in ##
 
-(Remember: If you don't have a CS/clic account, you'll need to request one from 
-the CS department first.)
+- If you're on a Mac, open up the Terminal app.
+- If you're on Windows, install [MobaXterm](http://mobaxterm.mobatek.net/).
+- Type `ssh your_uni@clac.cs.columbia.edu`. You will be prompted for your CLAC
+password.
+- NOTE: if you want to enable X11 forwarding (this will allow you to share
+graphical programs as well as the shell with the remote machine) append the X
+(must be capital) flag to your ssh command.
+`ssh your_uni@clac.cs.columbia.edu -X`
 
-Logging in is fairly simple if you're in the clic lab. Just use your UNI and 
-password on any of the machines when prompted. You may have to back out once 
-to be able to enter your UNI.
+### Changing your password ###
 
-Remember that your password isn't necessarily the same as your UNI password, 
-its the one you used when creating your clic account.
+Earlier this week, we generated a password and emailed it to you. To keep your
+account secure, you should change the password ASAP by typing:
 
-If you're on a Mac:
+    passwd
 
-- Open up Terminal
-- type `ssh your_uni@clic.cs.columbia.edu` You will be prompted for your 
-clic password. Enter it.
-- NOTE: if you want to enable X11 forwarding (this will allow you to share 
-graphical programs as well as the shell with the remote machine) append the X 
-(must be capital) flag to your ssh command. 
-`ssh your_uni@clic.cs.columbia.edu -X`
-- You will now be in a remote shell session on a random machine in the clic 
-cluster.
+Enter your current password and hit return. Then, enter your new password.
 
-If you're on Windows:
+### What about CLIC? ###
 
-- Download and install either [Putty](http://cuit.columbia.edu/putty-software) 
-or [MobaXterm](http://mobaxterm.mobatek.net/)
-- Each program has a fairly simple to use GUI for connecting, so the relevant 
-information is just:
-  - Username: your_uni
-  - Password: your clic password
-  - Remote server: clic.cs.columbia.edu
-- Click connect and you'll be in a remote shell session on a random machine in 
-the clic cluster.
+You might've heard about CLIC, the CS department's computing service. We used to
+require CLIC accounts for this course, but we are now running our own computing
+infrastructure called CLAC. It stands for "**C** **L**anguage is **A**wesome and
+**C**ool."
 
-Also note, if you ever need to connect to a specific machine in the clic 
-cluster (this will be necessary if you want multiple sessions on the same 
-machine) just use `ssh your_uni@machine.clic.cs.columbia.edu`
 
 ## Basic UNIX ##
  
 
 ### Paths ###
- 
-A good place to start with UNIX is the filesystem structure. Our clic machines 
+
+A good place to start with UNIX is the filesystem structure. Our CLAC machines
 run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
 the break between directories and files. An example file path in UNIX might be 
 `/usr/bin/dict`. The path `/` by itself denotes *the highest level directory*. 
@@ -59,8 +49,8 @@ directory `/usr/bin` using the relative path `../../`.
 
 ### Basic Navigation ###
 
-When you log into clic, your current (working) directory will be
-`/home/your_uni`. Check this by typing:
+When you log into CLAC, your current (working) directory will be
+`/students/your_uni`. Check this by typing:
 
     pwd
 
@@ -82,7 +72,7 @@ relative paths?)
 
     cd cs3157/learning
     cd ./cs3157/learning
-    cd /home/your_uni/cs3157/learning
+    cd /students/your_uni/cs3157/learning
 
 Let's create a new text file using the `touch` command. This will create
 a new empty file if one does not exist, or update the last modified date if a
@@ -270,7 +260,7 @@ Just like vim, emacs also has a configuration file that you can edit. This is
 There should be default settings there already, but feel free to add more for
 shortcuts.
 
-*Note that backspaces can be a little funky when ssh-ing into CLIC and your
+*Note that backspaces can be a little funky when ssh-ing into CLAC and your
 *backspace button might actually be sending "Ctrl + H" instead! To fix this you
 *will have to add the following lines to your .emacs file.
 
