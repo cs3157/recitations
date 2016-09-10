@@ -29,23 +29,26 @@ infrastructure called CLAC. It stands for "**C** **L**anguage is **A**wesome and
 
 
 ## Basic UNIX ##
- 
 
 ### Paths ###
 
 A good place to start with UNIX is the filesystem structure. Our CLAC machines
-run Ubuntu linux. Unlike Windows machines, UNIX uses forward slashes to denote 
-the break between directories and files. An example file path in UNIX might be 
-`/usr/bin/dict`. The path `/` by itself denotes *the highest level directory*. 
-If you start any path with a forward slash, it will assumed to be a path 
-relative to the root directory `/`. Alternatively, your current directory is 
-represented by the notation `./`. In most cases you can leave this off. You 
-can find out your current directory using the command `pwd`. If you're current
-directory is `/usr/bin` and you wish to reference the directory `/usr` in a
-path, you can do so using *either* `/usr` (this is known as an absolute path),
-or you can use `../` (this is a relative path. `../` denotes the directory above
-the current directory. You could reference the root directory `/` from the
-directory `/usr/bin` using the relative path `../../`.
+run Ubuntu Linux. Unlike Windows machines, UNIX uses forward slashes to denote
+the break between directories and files.
+
+An example file path in UNIX might be `/usr/bin/dict`. The path `/` by itself
+denotes *the highest level directory*. If you start any path with a forward
+slash, it will assumed to be a path relative to the root directory `/`.
+
+Alternatively, your current directory is represented by the notation `./`. In
+most cases you can leave this off. You can find out your current directory using
+the command `pwd`.
+
+If your current directory is `/usr/bin` and you wish to reference the directory
+`/usr` in a path, you can do so using *either* `/usr` (this is known as an
+absolute path), or you can use `../` (this is a relative path. `../` denotes the
+directory above the current directory. You could reference the root directory
+`/` from the directory `/usr/bin` using the relative path `../../`.
 
 ### Basic Navigation ###
 
@@ -54,14 +57,14 @@ When you log into CLAC, your current (working) directory will be
 
     pwd
 
-This is what's known as your home directory. You can do pretty
-much whatever you want to the files in this directory. You own the place. Let's
-view all the files in the current directory:
+This is what's known as your home directory. You can do pretty much whatever you
+want to the files in this directory. You own the place. Let's view all the files
+in the current directory:
 
     ls
 
-Let's make a new directory here for your work in this class. Use the `mkdir` 
-command to make a new directory:
+Let's make some new directories here for your work in this class. Use the
+`mkdir` command to make a new directory:
 
     mkdir cs3157 
     mkdir cs3157/learning
@@ -81,28 +84,38 @@ file exists.
     touch testing.txt
     touch .hidden.txt
 
-Let's see if this worked. Try the `ls` command again. 
-Some commands in UNIX take flags. These are special arguments
-preceded by a dash. Usually it will make the most sense to attach the `-l` and
-the `-a` flags to our ls calls. `-l` will include the permissions of each file
-(more on this later) and `-a` will include files that are hidden (in UNIX, these
-are files that start with a .)
+Let's see if this worked. Try the `ls` command again.
+
+Some commands in UNIX take flags. These are special arguments preceded by a
+dash. The two flags we use the most with `ls` are:
+
+- `-l` will show more information about each file, such as the size, owner, and
+permissions. (More on this later.)
+- `-a` will include files that are hidden. In UNIX, these are files whose names
+start with a period `.`
+
+Try these commands. Notice how the output changes for each one.
 
     ls
     ls -l
-    ls -la //we can combine flags for ls
+    ls -a
 
-Notice the differences in output each time the command is run. Now let's delete
-our hidden file using the remove command, `rm`.
+We can also combine flags for `ls`:
+
+    ls -la
+
+Now let's delete our hidden file using the remove command, `rm`.
 
     rm .hidden.txt
     ls -la
 
-Alright, now lets get rid of the directory we created here. `rm` accepts flags 
-too and won't let you delete directories unless you specify to run it 
-recursively (repeatedly go into each subdirectory and delete all files. It will
-also ask for confirmation that you want to delete files unless you tell it to 
-force the delete. For force delete, use `-f` and for recursive use `-r`:
+Alright, now let's get rid of the directory we created here. Just as with
+`.hidden.txt`, we'll use the `rm` command.
+
+However, `rm` doesn't let you delete directories unless you specify to run it
+recursively (`-r`) (repeatedly go into each subdirectory and delete all files). It will
+also ask for confirmation that you want to delete files unless you tell it to
+force the delete (`-f`).
 
     cd ../
     rm learning -rf
@@ -143,9 +156,10 @@ find the command you're looking for.
 ## Text Editors ##
  
 
-There are two main text editors that you can use from inside terminal: emacs and
-vim. Which you use will ultimately be your decision (you could even write
-everything in pico if you really wanted, but this would be difficult).
+There are two main text editors that you can use from inside terminal: `emacs`
+and `vim`. Although we are teaching the course with `vim`, which editor you use
+is ultimately your decision. (You could even write everything in `nano` if you
+really wanted, but this would be difficult).
 
 ### Vim ###
  
