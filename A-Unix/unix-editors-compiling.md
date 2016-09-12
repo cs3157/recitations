@@ -240,8 +240,8 @@ vimrc:
 ### Emacs ###
 *May be skipped for time*
  
-Emacs is an easier to pick up text editor but has less efficient keyboard
-shortcuts compared to vim.
+Emacs is an easier to pick up text editor, and many of its commands are identical
+to those of the shell.
 
 Let's start by editing a new file in emacs
 
@@ -251,13 +251,13 @@ As soon as emacs starts running, you will be able to type into it. There is no
 special insert mode like in vim. You can backspace at any time without having to
 switch between modes.
 
-Emacs has much of the functionality that vim has and we present the basics below:
+Emacs has the same functionality as vim, and we present the basics below:
   
   - 'Ctrl-f' will move your cursor forward, 'Ctrl-b' will move it back, 'Ctrl-p'
-    will move it up, 'Ctrl-n' will move it down
-  - 'Ctrl-k' will delete the current line
+    will move it up, 'Ctrl-n' will move it down; the arrow keys work as well
   - 'Ctrl-s' will search for a word forward, 'Ctrl-r' will search for a word backward
   - 'Ctrl-a' goes to beginning of line, 'Ctrl-e' goes to end
+  - 'Ctrl-k' will delete the portion of the current line after the cursor
   - 'Ctrl-spacebar' to select text to manipulate
   - 'Esc-w' to copy text, 'Ctrl-w' to cut text, Ctrl-y' will paste your most
     recently copied/deleted text
@@ -283,6 +283,15 @@ shortcuts.
     ;; make sure your backspace is mapped correctly
     (global-set-key "\C-h" 'backward-delete-char)
 
+And if you want mouse support, you'll have to add the following:
+
+    (require 'mouse) ; mouse support
+    (xterm-mouse-mode t) ; Turn on mouse mode
+    (defun track-mouse (e)) ; Track the mouse
+    (setq mouse-sel-mode t) ; Mouse selection
+    (delete-selection-mode 1) ; For deleting the current selection
+    (global-set-key [mouse-4] (lambda () (interactive) (scroll-down 1))) ; For scrolling up
+    (global-set-key [mouse-5] (lambda () (interactive) (scroll-up 1))) ; For scrolling down
 
 ## Compiling and linking a C Program ##
 
