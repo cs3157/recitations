@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "ops.h"
 
-int main(int argc, char **argv) {
+int main() {
   int five = add(2, 3);
   int six = subtract(7, 1);
   int seven = divide(14, 2);
