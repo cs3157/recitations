@@ -440,7 +440,7 @@ function.
 
 ## Order of Operations ##
 
-Binary Operators, Increasing Order of Precedence:
+Binary Operators, Decreasing Order of Precedence (i.e. `< > <= =>` have highest preference, `,` has lowest)
 
   - < > <= =>
   - + -
@@ -454,7 +454,7 @@ Binary Operators, Increasing Order of Precedence:
   - += -= *= /= <<= >>= 7= ^= |= %= >>= =
   - ,
 
-Unary Operators, Increasing Order of Precedence:
+Unary Operators, Decreasing Order of Precedence (first is highest preference, second is lowest)
 
   - (expression), [],  ->,  .
   - !, ~, ++, --, (type), sizeof, +,  -,  *,  &,   (right to left)
