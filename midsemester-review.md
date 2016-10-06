@@ -99,7 +99,7 @@ char x = '\0';  | 0         | -
 char x = 0;     | 0         | -
 long x = 0L;    | 0         | -
 
-Preceding a constant with 0x denotes hexadecimal notation:
+Preceding a constant with 0x denotes hexadecimal notation, and preceding it with 0 denotes octal notation:
 
     (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
     (037777777777 == -1); //returns 1 (true)
