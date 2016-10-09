@@ -10,7 +10,7 @@ example struct:
 struct point {
   int x;
   int y;
-}
+};
 ```
 
 and usage
@@ -30,7 +30,7 @@ that uses the one we already have.
 struct rect {
   struct point p1;
   struct point p2;
-}
+};
 // Usage:
 struct point leftTop = {50, 40};
 struct point rightBottom = {100, 0};
