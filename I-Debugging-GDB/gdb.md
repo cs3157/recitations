@@ -108,7 +108,7 @@ you can do about them.
 ### Aside: why use `-g` when compiling? ###
 
 This is the perfect time to discuss something we glossed over in the first
-CLIC recitation. We told you to always compile your code with `gcc -g`. Why are
+CLAC recitation. We told you to always compile your code with `gcc -g`. Why are
 you using `-g` though?
 
 `-g` embeds debugging information into the object files, and then into the
