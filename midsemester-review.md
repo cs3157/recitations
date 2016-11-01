@@ -55,7 +55,7 @@ Memory size for each type depends on system, and only restrictions are that
 
     char <= short <= int <= long <= long long
 
-Clic machines follow
+CLAC machines follow
 
   - char = 1 byte
   - short = 2 bytes
