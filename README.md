@@ -9,7 +9,7 @@ by current and former students, are welcome.
 Contents:
 
 * [Recitation Note A](A-Unix/unix-editors-compiling.md): Introduction to UNIX, compile your first C 
-  program. Be sure to have a CLIC account from CRF before the recitation.
+  program.
 * [Recitation Note B](B-Makefiles/makefiles.md): Makefiles. 
     * You may find the [sample-Makefile](B-Makefiles/sample-Makefile) a useful reference.
 * [Recitation Note C](C-Git/git.md): Configuring and using Git for version control and file tracking.
