@@ -397,6 +397,6 @@ exactly the same way conceptually.
 Clang is a newer alternative to gcc. It was designed primarily by Apple to be a
 drop in replacement to gcc, but with a license apple prefers, and to support
 better debugging and static analysis. Apple uses it for XCode, and it's
-available on clic as well. So if you're getting crazy error messages you don't
+available on CLAC as well. So if you're getting crazy error messages you don't
 understand, you can try changing `g++` to `clang++` in your Makefile, and seeing
 if you get more easily interpreted error messages.
