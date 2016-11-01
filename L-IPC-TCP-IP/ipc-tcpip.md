@@ -110,7 +110,7 @@ and above.
 
 ### But why don't I ever use IP addresses on the Internet? ###
 Good catch. We just said that IP sends packets toward IP addresses. But instead
-of typing `160.39.63.50`, you use a hostname, like `paris.clic.cs.columbia.edu`
+of typing `160.39.63.50`, you use a hostname, like `clac.cs.columbia.edu`
 or `google.com`.
 
 DNS, **Domain Name Service**, is a protocol and server setup that translates
