@@ -10,7 +10,7 @@ learn tips and tricks to improve productivity on Unix-like computers.
 
 A **shell** is a program used to access files and programs on a computer. They
 can be graphical or text-based -- in this class, we'll only worry about text
-shells. Examples include `bash` (the default on CLIC), `zsh`, and Windows
+shells. Examples include `bash` (the default on CLAC), `zsh`, and Windows
 PowerShell. The original shell program was the Thompson shell, `sh`.
 
 The shell is only special in that it's automatically run when we open a new
@@ -19,7 +19,7 @@ terminal window. Apart from that, it's just like any other program. In fact, in
 that takes user input and prints out a response.
 
 Similarly, we can run a shell as a program by typing its name. Let's say we're
-using `bash` on CLIC, and want to try out `csh`:
+using `bash` on CLAC, and want to try out `csh`:
 
     yourUNI@vienna:~$ csh
     vienna:~% echo 'Hello World'
@@ -36,7 +36,7 @@ want it to exit, leaving us with `bash`, the outer shell that launched it.
 Shells also allow us to set variables. The `PATH` variable is a list of
 colon-separated paths to directories that the shell looks inside to find
 programs. For example, if you wanted to be able to run your `twecho`
-executable from any directory on CLIC, you could put the absolute path to
+executable from any directory on CLAC, you could put the absolute path to
 `twecho` in your README.
 
 To see our account's `PATH` variable:
@@ -49,7 +49,7 @@ finds a program matching what we typed. So for `gcc`, it would search for
 `/sbin/gcc`, `/usr/local/sbin/gcc`, `/usr/local/bin/gcc`, etc.
 
 With this knowledge, prepending to `PATH` is a clever way to use our own
-programs instead of the ones provided by the CLIC administrators -- it'll force
+programs instead of the ones provided by the CLAC administrators -- it'll force
 the shell to search our directory before looking anywhere else. For example, if
 we keep our programs in `/home/yourUNI/bin`, adding this to the end of `.bashrc`
 will do the trick:
@@ -287,6 +287,6 @@ fi
 ## SSH launches shells on computers over the network ##
 
 Just a note about how SSH works. When we type 
-`ssh yourUNI@clic.cs.columbia.edu`, the SSH program makes a connection to a CLIC
+`ssh yourUNI@clac.cs.columbia.edu`, the SSH program makes a connection to a CLAC
 server. The remote server launches a shell program, and connects its input and
 output to the SSH connection, so that we can control the computer remotely.
