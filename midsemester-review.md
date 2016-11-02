@@ -461,6 +461,10 @@ Unary Operators, Decreasing Order of Precedence (first is highest preference, se
   
 ## On Memory Errors ##
 
+all of these fall under invalid read/write
+memory leaks happen when you don't free all the memory that you had.
+Why malloc? when you want some memory/data to persist.
+
 Source: http://www.cprogramming.com/tutorial/memory_debugging_parallel_inspector.html
 
 ### Invalid Memory Access ###
@@ -470,6 +474,7 @@ char *pStr = (char*) malloc(25);
 free(pStr); 
 strcpy(pStr, "parallel programming"); // Invalid write to deallocated memory in heap
 ```
+You freed before you wrote. 
 
 ### Missing Allocation ###
 
@@ -489,6 +494,11 @@ int b = a * 4; // uninitialized read of variable a
 ```
 
 For more information, reference [Recitation 4](recitation-4.md).
+
+## THOUGHTS ##
+KNOW UR LINKED LISTS
+know SIGINTS
+TBH UNDERSTAND STRCPY. MAN 3 MAN 3
 
 ## Good to Know Additional Topics ##
 
