@@ -40,7 +40,7 @@ There are several kinds of redirection possible from the console:
   rather than the standard output.
 - `<` does 'input redirection', meaning that the contents of the file on the 
   right of the operator serves as the standard input of the left argument. For 
-  example, after running the example above, `echo < hi.txt` will print "hello
+  example, after running the example above, `cat < hi.txt` will print "hello
   world" to the console.
  - `2>&1` will redirect stderr to the same location as stdout. 
  - `>>` will append the output to a file instead of overwriting the file. 
