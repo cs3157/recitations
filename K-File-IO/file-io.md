@@ -78,7 +78,7 @@ printf("%-15.10s", "hello, world");
 sscanf("25 Dec 1988", "%d %s %d", &day, month, &year);
 ```
 
-### Functions with Variable Arguments ###
+### Optional Topic: Functions with Variable Arguments ###
 
 `printf()` and `scanf()` family of functions accept a variable number of
 arguments. You can do this too! Once you've enumerated all the required
