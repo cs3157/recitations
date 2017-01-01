@@ -173,7 +173,7 @@ want to read the file in. Make sure you know the difference between "r", "w",
 "a", "r+", "w+", "a+", and all of the above with a "b" on the end. If `fopen()`
 fails it will return a NULL pointer. This can happen because a file doesn't
 exist (in the case of r's) or because you don't have permissions to
-access the file. If you fopen a file with the 'a' option that does not exist, the file will, however, be created. `fclose()` will close the file when you're done.
+access the file. If you fopen a non-existent file with the 'a' or 'w' option, the file will, however, be created. `fclose()` will close the file when you're done.
 
 ```c
 FILE *fopen(char *name, char *mode);
