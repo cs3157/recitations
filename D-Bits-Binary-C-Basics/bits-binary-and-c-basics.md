@@ -296,3 +296,42 @@ Using `break;` inside a loop will break out of the innermost loop. Using
 `continue;` will stop executing the current iteration of the loop and skip to
 the next iteration. `for(;;)` is an idiom for an infinite loop. `goto label`
 will jump to a line beginning with `label: `. Be careful with gotos.
+
+## Appendix: Truth Tables for Bitwise Operations ##
+### AND
+If both bits are 1, the result will be 1. Otherwise, the result is 0.
+
+`A` | `B` | `A & B`
+:--:|:---:|:------:
+0   | 0   | **0**
+0   | 1   | **0**
+1   | 0   | **0**
+1   | 1   | **1**
+
+### OR
+If either bit is 1, the result will be 1. Otherwise, the result is 0.
+
+`A` | `B` | <code>A &#124; B</code>
+:--:|:---:|:--------------------------:
+0   | 0   | **0**
+0   | 1   | **1**
+1   | 0   | **1**
+1   | 1   | **1**
+
+### XOR
+If both bits differ, the result is 1. If both bits are the same, the result is 0.
+
+`A` | `B` | `A ^ B`
+:--:|:---:|:------:
+0   | 0   | **0**
+0   | 1   | **1**
+1   | 0   | **1**
+1   | 1   | **0**
+
+### NOT
+The result is the opposite of the bit's current value.
+
+`A` | `~A`
+:--:|:-----:
+0   | **1**
+1   | **0**
