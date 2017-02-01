@@ -90,8 +90,12 @@ complement on its operatand by flipping each bit.
 
 The bitwise shift operators, `<<` and `>>`, shift their left operand by the 
 number of digits specified by the right operand. Left shifting always fills 
-vacated bits by zero. Right shifting varies from machine to machine and whether 
-or not we're talking unsigned or signed.
+vacated bits by zero.
+
+Right shifting depends on whether we're dealing with signed or unsigned numbers.
+Unsigned numbers and positive signed numbers fill vacated bits with zero.
+Right-shifting negative signed numbers can produce varying results depending
+on the machine and compiler.
 
 ```
 int x = 2;  // 000010 in binary
