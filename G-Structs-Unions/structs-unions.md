@@ -164,3 +164,46 @@ const_ptr = &y; //invalid: value of pointer, is constant
 
 const char *const why = "You'll never change anything about me. Ever";
 ```
+
+### Struct padding ###
+For performance and for compatibility between different types of machines, C
+compilers will add padding to structs whose sizes don't align with memory
+boundaries. On CLAC and most other platforms, this means that if a struct's
+size isn't a multiple of 4 bytes, the compiler will add padding until it is.
+
+Take the following program as an example:
+
+```c
+#include <stdio.h>
+
+struct test {
+    char c;
+    int n;
+};
+
+int main()
+{
+    printf("%d\n", sizeof(struct test));
+    return 0;
+}
+```
+
+Can you guess what the output will be?
+
+On CLAC, even though we have one byte for `c` and four bytes for `n`, this
+program will print 8 instead of 5. The compiler invisibly added three bytes
+of padding. Although it's not recommended and can produce slightly slower
+code, we can disable this functionality to get the true size of the struct
+like so:
+
+```c
+#pragma pack(push, 1) // Align on every one byte -- effectively no padding
+struct test{
+    char c;
+    int n;
+};
+#pragma pack(pop)
+```
+
+Now ```sizeof(struct test)``` will print 5 and have no padding. You should
+never have to use the ```#pragma``` command, though.
