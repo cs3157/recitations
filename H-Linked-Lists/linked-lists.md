@@ -165,9 +165,8 @@ struct Node *addAfter(struct List *list, struct Node *prevNode, void *data)
 - If `prevNode` is `NULL`, this function should behave just like `addFront`.
 - Otherwise, assume `prevNode` to be in the list, add a new node containing
 `data` after `prevNode`.
-    - Using the same idea as `findNode`, go through the list until you find
 your match.
-    - Then, reroute some `next` pointers appropriately to "insert" the node
+    Reroute some `next` pointers appropriately to "insert" the node
 you just made into the list.
 
 ### Reversing a List
