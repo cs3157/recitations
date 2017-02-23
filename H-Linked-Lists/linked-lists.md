@@ -191,12 +191,6 @@ NULL&lt;-[next|data]1&lt;-[next|data]2&lt;-[next|data]3&lt;-...&lt;-[next|data]n
                                                         head^
 </pre>
 
-Perhaps a simpler method is to create a temporary list. Traverse through the
-original list and then add each node to the front of the temporary list.
-The temporary list will be the reverse of the original list. Of course,
-there's an equivalent method that doesn't involve traversal, but still
-uses the same fundamental idea.
-
 Revecho
 -------
 In part1, we create a library file called `libmylist.a` that contains our
