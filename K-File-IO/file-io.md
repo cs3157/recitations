@@ -126,7 +126,7 @@ that it's an unsigned integer type. This means it works like an integer but
 ```c
 size_t x = 5;
 size_t y = 3;
-int z = x + y;
+size_t z = x + y;
 ```
 
 The following is not (and wouldn't be a good idea even if the value was
@@ -135,7 +135,7 @@ positive):
 ```c
 size_t x = 5;
 size_t y = 3;
-int z = y - x;
+size_t z = y - x;
 ```
 
 Other than that you can treat `size_t` as any other integer type.
