@@ -1,43 +1,90 @@
-## Bits, Bytes and Binary ##
+# Bits, Bytes and Binary
 
-Let's just refresh our memory about memory:
+Let's take a bit of time to refresh our memory about bits...
+before we have a look at memory:
 
-  - A **bit** is a single digit in binary; on or off; 1 or 0
-  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
-  - **Hexadecimal** is another notation to count even higher in fewer places
-    - Two hexadecimal places express 1 byte
-    - FF in Hexadecimal is 255
-  - **Two's complement**
-    - Most modern computers use this notation for signed integers
-    - **Most significant bit**: Usually the leftmost, but generally the bit 
-    with the highest value: If 1000 = 8, then 1 is the most significant bit. 
-    If we were using a different notation such as 1010 = 5, then the rightmost 
-    0 is the most significant bit. 
-    - If the most significant bit is 1, then in two's complement, you're 
-    looking at a negative number
-    - To convert: 1010 (read as ten if unsigned), first note that it is
-      negative. Then find its magnitude by flipping all the bits (0101, 5) and
-      then adding 1 (0110) meaning the value is -6.
-    - Consult the following table to see something interesting: (note the
-      wraparound effect
+  - **Bit** (b):
+    - A single digit in binary
+    - Can take on one of two possible values: 1 or 0
+    - Often used to represent on/off, true/false, etc.
+  - **Byte** (B):
+    - 8 bits make a byte
+    - Can take on 2^8 = 256 different values (from 0 to 255, inclusive)
+  - **Hexadecimal**:
+    - A base-16 numerical notation that can represent up to 15 in a single digit
+    - Uses base-10 + first 5 letters of alphabet:
+      { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f }
+    - By convention, we prefix numbers in hexadecimal notation with "0x"
+      e.g. 0x3157
+    - Single digit can represent up to 2^4; two digits can represent 2^8
+    - Bytes are often represented using 2 hexadecimal digits
+  - **Least significant bit** (LSB):
+    - Right-most binary digit
+    - Usually denotes whether a number is even or odd
+  - **Most significant bit** (MSB):
+    - Left-most binary digit
+    - Meaning depends on representation:
+      for unsigned (positive) integers, this is just the largest place value;
+      for signed integers, see below (Two's complement)
+
+### Two's Complement
+
+Two's complement is signed binary representation system;
+"signed" refers to the fact that we can also represent negative numbers,
+i.e. there is a bit which represents the positive/negative sign.
+Most modern computer use this representation for signed integers.
+
+The most significant bit (MSB, see above) tells us the sign of the number.
+If it's a 0, the number is positive, but if it's a 1, the number is negative.
+
+To figure out what negative number is represented (e.g. 1100):
+
+  1. Make sure that MSB is 1; note that the number is negative (**1**100)
+  2. Invert all the bits (1100 -> 0011)
+  3. Find the number's magnitude as if it were positive (0011 = 3)
+  4. The value of the number is that magnitude, but negative (-3)
+
+So why do we use this weird form of representation?
+Well as it turns out, in two's complement, the computer can perform arithmetic
+on negative numbers as if they were positive numbers!
+(Find out more in w3827: Fundamentals of Computer Systems.)
+
+Let's look at how two's complement works in 3 bits first:
       
-Binary | usigned decimal | two's complement decimal
------- | --------------- | ----------------------- 
-000    | 0               | 0
-001    | 1               | 1
-010    | 2               | 2
-011    | 3               | 3
-100    | 4               | -4
-101    | 5               | -3
-110    | 6               | -2
-111    | 7               | -1
+Binary | unsigned decimal | two's complement decimal
+------ | ---------------- | ------------------------ 
+000    | 0                | 0
+001    | 1                | 1
+010    | 2                | 2
+011    | 3                | 3
+100    | 4                | -4
+101    | 5                | -3
+110    | 6                | -2
+111    | 7                | -1
 
-Be aware of some important boundaries as well:
+Things to notice:
 
-  - 0x00000000 = 0
-  - 0x7FFFFFFF = 2147483647
-  - 0x80000000 = -2147483648
-  - 0xFFFFFFFF = -1
+- We can only represent half as many positive integers
+  (max = 2^(3-1) - 1 = 4 - 1 = 3)
+- We can represent 1 more negative integer than we can positive integers
+  (min = -(2^(3-1)) = -4)
+- If we "add" 1 more to 111, it'll **wraparound** to 000
+
+In general, for N-bit two's complement:
+
+- max = 2^(N-1) - 1
+- min = -(2^(N-1))
+
+It's also important to be aware of some note-worthy boundaries
+(example in 32-bits, written in hex):
+
+- All 0s (0x00000000) = 0
+- Leading 0, rest are 1s (0x7FFFFFFF) = max (2147483647)
+- Leading 1, rest are 0s (0x80000000) = min (-2147483648)
+- All 1s (0xFFFFFFFF) = -1
+
+Try converting these hex numbers to binary and seeing for yourself!
+
 
 ### Bitwise Operators ###
 
