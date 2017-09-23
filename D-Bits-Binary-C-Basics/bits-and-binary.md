@@ -1,4 +1,4 @@
-# Bits, Bytes and Binary
+# Bits, Bytes, and Binary
 
 Before we have a look at how memory works,
 let's take a bit of time to refresh our memory about bits:

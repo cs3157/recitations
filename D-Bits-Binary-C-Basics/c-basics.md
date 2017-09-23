@@ -1,3 +1,18 @@
+# C Basics
+
+C is a general-purpose programming language developed by Dennis Ritchie
+at Bell Labs in the early 1970s.
+It introduced a lot of the syntactic and programming conventions we see
+in the numerous programming languages it influenced,
+including Java, Javascript, Go, C#, Objective-C, and of course C++.
+
+C code maps very efficiently to lower-level machine code,
+giving programmers very precise control of the execution of their program.
+Because of this, it's often used in systems programming
+for low-latency, low-overhead, close-to-hardware applications.
+
+Now, without further ado, let's take a look at C!
+
 ## Data Types: Numbers ##
 
 Integer Types:
