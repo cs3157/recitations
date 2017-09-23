@@ -141,7 +141,7 @@ A file may have any combination of those three permissions.
 We may represent them as follows:
 
 Permission | Symbolic | Binary | Decimal
-----------------------------------------
+---------- | -------- | ------ | -------
 Read       | `r--`    | `100`  | 4
 Write      | `-w-`    | `010`  | 2
 Execute    | `--x`    | `001`  | 1
