@@ -1,7 +1,7 @@
 # Bits, Bytes and Binary
 
-Let's take a bit of time to refresh our memory about bits...
-before we have a look at memory:
+Before we have a look at how memory works,
+let's take a bit of time to refresh our memory about bits:
 
   - **Bit** (b):
     - A single digit in binary
