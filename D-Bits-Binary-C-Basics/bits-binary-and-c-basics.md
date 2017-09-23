@@ -209,21 +209,46 @@ assert(~y == -6);   // 1010 (-6, signed)
 ```
 
 
-#### Bit Shifting ####
+### Bitshifting `<<` `>>`
 
-The bitwise shift operators, `<<` and `>>`, shift their left operand by the 
-number of digits specified by the right operand. Left shifting always fills 
-vacated bits by zero.
+Another useful operation is the bitshift.
+What we mean by "shifting bits" is pushing all the digits in a number.
+We can shift to the left, or shift to the right.
 
-Right shifting depends on whether we're dealing with signed or unsigned numbers.
-Unsigned numbers and positive signed numbers fill vacated bits with zero.
-Right-shifting negative signed numbers can produce varying results depending
-on the machine and compiler.
+#### Leftshift `<<`
+
+For `x << n`,
+each bit in `x` is shifted to the left (towards the MSB) by `n` digits:
+
+- Left-shifting always fills the vacated bits on the right with 0s
+- The displaced bits on the left are discarded
+
+Note that this is equivalent to mulitplying a number by 2^`n`!
 
 ```
-int x = 2;  // 000010 in binary
-x << 2;     // 001000 (8)
-8 >> 1;     // 000100 (4)
+int x = 1;              // 0001 in binary
+assert(x << 2 == 4);    // 0100 (4)
+```
+
+#### Rightshift `>>`
+
+For `x >> n`,
+each bit in `x` is shifted to the right (towards the LSB) by `n` digits:
+
+- How the vacated bits get filled depends on what we're dealing with:
+  - Right shifting unsigned numbers fills vacated bits on the left with 0s
+  - Right shifting signed numbers produces results that vary
+    depending on the machine and compiler,
+    but on most modern computers, doing so will **sign extend** the number,
+    i.e. the value of the MSB (the sign) will be used to pad the vacated bits
+- The displaced bits on the right are discarded
+
+Note that this is equivalent to dividing a number by 2^`n`
+(and discarding the remainder)!
+
+```
+int x = 5;              // 0101 in binary
+assert(x >> 1 == 1);    // 0001 (1)
 ```
 
 ## Data Types: Numbers ##
