@@ -13,45 +13,136 @@ for low-latency, low-overhead, close-to-hardware applications.
 
 Now, without further ado, let's take a look at C!
 
-## Data Types: Numbers ##
 
-Integer Types:
+## Types
 
-  - char
-  - int
+Before going into detail about the different types available in C,
+it's important to convey what we mean by the term, "**type**"
+(though without getting too technical with a mathematical definition).
 
-Modifiers (and sugar):
+For our purposes, and colloquially speaking, a type in C is just
+how we choose to understand the data we find in memory.
+It defines _how much data_ we should be expecting to read,
+and _how to understand_ the data we find. 
 
-  - short
-  - long
+Now, with that in mind, let's look at some types!
 
-Memory size for each type depends on system, and only restrictions are that
+### Integer Types
+
+Integers in C all use the binary number system we discussed previously;
+two's complement for signed integers, and regular binary for unsigned.
+So the only difference between integer types (of the same signedness)
+is their size, which is also related to the range of values they can represent.
+
+C only defines the size of each type in relation to the others:
 
     char <= short <= int <= long <= long long
 
-CLAC machines follow
+Technically there's nothing stopping them from all of them being the same size,
+but it's all dependent on what kind of machine and compiler you're using.
+CLAC machines use the following:
 
-  - char = 1 byte
-  - short = 2 bytes
-  - int = 4 bytes
-  - long = 8 (these last two vary from system to system a lot)
-  - long long = 8 
+Type        | Size
+----------- | -------
+`char`      | 1 byte
+`short`     | 2 bytes
+`int`       | 4 bytes
+`long`      | 8 bytes
+`long long` | 8 bytes
 
-Test it out for yourself:
+On most modern machines, the sizes for `char`, `short`, and `int`
+are fairly consistent, and the same as what we have on CLAC.
+However, the sizes for `long` and `long long` vary a lot from system to system.
+
+You can always test it out for yourself:
 
 ```c
 #include <stdio.h>
  
- int main(int argc, char** argv) {
-   printf("char: %d\n
-     short: %d\n
-     int: %d\n
-     long: %d\n
-     longlong: %d\n",
-     sizeof(char), sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
-   return 0;
+int main(void) {
+    printf("char: %lu\n
+            short: %lu\n
+            int: %lu\n
+            long: %lu\n
+            longlong: %lu\n",
+        sizeof(char), sizeof(short), sizeof(int),
+        sizeof(long), sizeof(long long));
+    return 0;
 }
 ```
+
+When we declare an integer type, we can modify it with the keyword
+`signed` or `unsigned` to tell the compiler the signedness of the integer.
+When unspecified, most integer types are signed by default.
+
+C also allows the programmer to use `long` and `short` as modifiers for `int`,
+which are the same as not having used the keyword `int` at all.
+So don't be alarmed if you see a `long int` type! It's just a `long`.
+
+Also, if we don't write `int` and only specify the signedness, it's an `int`.
+
+The following are equivalent:
+
+`short`                 | `short int`               | `signed short`        | `signed short int`
+`long`                  | `long int`                | `signed long`         | `signed long int`
+`long long`             | `long long int`           | `signed long long`    | `signed long long int`
+`int`                   | `signed`                  | `signed int`
+`unsigned int`          | `unsigned`
+`unsigned short`        | `unsigned short int`
+`unsigned long`         | `unsigned long int`
+`unsigned long long`    | `unsigned long long int`
+
+This is just a detail to watch out for, but not super important.
+Most of the time we use the notation in the leftmost column, by convention.
+
+### Floating-Point Types
+
+There are three types for floating-point numbers in C,
+for single-precision, double-precision, and extended-precision floating point.
+How they're bitwise represented differs from machine to machine,
+but most modern computers use the IEEE-754 floating-point standard.
+If you're curious to see what it looks like,
+you can reuse some of your code from lab1 to do so
+(don't worry about the casting stuff just yet, it'll make sense later on):
+
+```c
+float f = 3.157;        // or whatever you want it to be!
+int *i = (int *) &f;    // don't worry about what this means
+                        // we're tricking the compiler to think that
+                        // the float is a binary (;
+
+print_hex(*i);
+print_binary(*i);       // implementation is left as an exercise to the reader
+```
+
+Like with integers, the sizes are defined relative to each other.
+They are:
+
+    float <= double <= long double
+
+The sizes on CLAC are as follows:
+
+Type            | Size
+--------------- | ---------
+`float`         | 4 bytes
+`double`        | 8 bytes
+`long double`   | 16 byetes
+
+Again, you can test it out for yourself:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    printf("float: %lu\n
+            double: %lu\n
+            long double: %lu\n",
+        sizeof(float), sizeof(double), sizeof(long double));
+    return 0;
+}
+```
+
+
 
 Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
 [The Ascii Table](http://www.asciitable.com) and understand the relationships 
@@ -90,17 +181,6 @@ preserves the bit pattern:
   int i = uc; //i == 255
 ```
 
-Float and double are the two floating point types (decimal) and can be 
-expressedwith a decimal point or as scientific notation:
-
-    float miles = 1.8;
-    double big = 1e10;
-
-The only implementation constraint is that
-
-    float <= double <= long double
-
-so they could all be one size, or be three distinct sizes.
 
 In C there is no such thing as a string, just an array and pointers.
 Essentially, a bunch of single characters located consecutively in memory will
