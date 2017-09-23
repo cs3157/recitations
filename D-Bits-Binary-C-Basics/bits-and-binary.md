@@ -148,9 +148,9 @@ Execute    | `--x`    | `001`  | 1
 
 So, let's set our variables in code:
 
-    int READ = 100;
-    int WRITE = 010;
-    int EXEC = 001;
+    int READ = 0x4;     // 100 in binary
+    int WRITE = 0x2;    // 010 in binary
+    int EXEC = 0x1;     // 001 in binary
 
 If we wanted to specify permissions for reading and writing but not executing,
 we could do the following:
