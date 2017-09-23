@@ -105,15 +105,13 @@ If you're curious to see what it looks like,
 you can reuse some of your code from lab1 to do so
 (don't worry about the casting stuff just yet, it'll make sense later on):
 
-```c
-float f = 3.157;        // or whatever you want it to be!
-int *i = (int *) &f;    // don't worry about what this means
-                        // we're tricking the compiler to think that
-                        // the float is a binary (;
+    float f = 3.157;        // or whatever you want it to be!
+    int *i = (int *) &f;    // don't worry about what this means
+                            // we're tricking the compiler to think that
+                            // the float is a binary (;
 
-print_hex(*i);
-print_binary(*i);       // implementation is left as an exercise to the reader
-```
+    print_hex(*i);
+    print_binary(*i);       // implementation left as an exercise to the reader
 
 Like with integers, the sizes are defined relative to each other.
 They are:
@@ -187,10 +185,8 @@ or to trick the compiler (as you saw before).
 For example, let's say that we have a function `foo()`
 that takes a single `float` as its parameter:
 
-```c
-int x = 34;
-foo((float) x);
-```
+    int x = 34;
+    foo((float) x);
 
 When we cast from an integer type to a floating-point type,
 the compiler produces instructions to convert our integer representation
@@ -213,53 +209,131 @@ int main(void) {
     printf("int to float: %f\n", (float) i);    // prints 4.000000
     printf("long (no cast): %ld\n", ll);        // prints 3000000000
     printf("long to int: %d\n", (int) ll);      // prints -1294967296
+    return 0;
+}
 ```
 
 As you can see, downcasting the 8-byte `long` truncated our integer,
 which means something very different as a signed, 4-byte integer.
 
 
-Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
-[The Ascii Table](http://www.asciitable.com) and understand the relationships 
-in theorder of the first 128 ascii characters. The C language is built on a 
-subset of 7-bit ascii (0-127) so its important to know what the table is like, 
-not to memorize it. Also note that in C, single quotes means a character.
+### Literals
 
-Declaration     | x (dec) | y (dec)
---------------- | ------- | -------
-int x;          | NULL    | -
-int x, y;       | NULL    | NULL
-int x = 0, y;   | 0       | NULL
-char x = 'x';   | 120     | -
-char x = '\n';  | 10      | -
-char x = '\13'; | 11      | -
-char x = '0';   | 48      | -
-char x = '\0';  | 0       | -
-char x = 0;     | 0       | -
-long x = 0L;    | 0       | -
+Literals are values hard-coded into our program.
+Most literals look fairly self-explanatory (especially numeric literals),
+but there are some C-specific notations that we should be aware about.
 
-Preceding a constant with 0x denotes hexadecimal notation:
+#### Octal and Hexadecimal Literals
 
-    (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
-    (037777777777 == -1); //returns 1 (true)
-    sizeof(1234L); //returns 8
-    sizeof(1234); //returns 4
-    0xFFFFU; //returns 65535
-    0177777U; //returns 65535
+Octal (base 8) literals start with a leading `0`.
+The following digits can only consist of `0` through `7`.
 
-Also not that converting a signed value to an unsigned value or vice verse
-preserves the bit pattern:
+Hexadecimal (base 16) literals start with a leading `0x` or `0X`
+The following digits can only consist of `0` through `9` and `a` through `f`
+(capitalization doesn't matter).
 
-```c
-  char c = -1; //0xFF
-  unsigned char uc = c; //0xFF
-  int i = uc; //i == 255
-```
+Let's look at different ways of writing the number 42:
+
+    42      // decimal
+    052     // octal
+    0X2A    // hexadecimal
+    0x2a    // also hexadecimal
+
+#### `unsigned` Literals
+
+To specify that a number is unsigned, it should be followed by a `u` or a `U`.
+For example:
+
+    8u
+    0xffffffffu
+
+#### `long` and `long long` Literals
+
+A number by itself is understood by the compiler to be an `int` by default.
+To specify that it is a `long` or `long long`,
+use `l`/`L` and `ll`/`LL` respectively by appending it to the end of the number.
+For example:
+
+    4l
+    4LL
+    0x4l
+
+#### Floating-point literals
+
+Floating numbers can be written several different ways:
+
+- Just as a number: `42` (inferred)
+- A number with a decimal: `42.`, `4.2`, `.42`
+- Exponent form: `4e2`
+
+These are all `double`s by default; one can specify `float` or `long double`
+using suffixes `f`/`F` or `l/L` respectively.
+
+#### Character literals
+
+You might've noticed that, unlike in Python or Javascript,
+in C, single quotation marks `'` aren't the same as double quoatation marks `"`.
+This is becauase single quotation marks are used for single character literals,
+while double quotation marks are used for string literals (more on this later).
+
+C uses ASCII encoding for characters, which assigns each character an integer.
+Recall that a `char` is usually 1 byte; this is because each ASCII character
+can be representedy a single byte (it only specifies 128 characters).
+Have a look at [The ASCII Table](asciitable.com) to see what's what.
+
+Instead of assigning raw numbers to `char`s,
+we can alternatively write them as character literals:
+
+    char a = 'a';           // same as writing char a = 97
+    char newline = '\n';    // same as writing char newling = 10
+    assert(a == 97);
+    assert(newline == 10;
+
+The backslash `\` is used to specify an **escape sequence**,
+to denote characters that might be difficult to otherwise type out.
+Here are some common escape sequences:
+
+Escape Sequence | Character Description
+--------------- | ---------------------
+`\n`            | newline
+`\r`            | carriage return
+`\\`            | backslash
+`\'`            | single quote
+`\"`            | double quote
+
+A `\` may also be followed by a numeric value in octal notation;
+`\x` may be followed by a numeric value in hexadecimal notation.
+So, consider the following:
+
+    char a = 0;
+    char b = '0';       // 48 in binary
+    char c = '\0';
+    char d = '\x0';
+
+    assert(a == b);
+    assert(a != c);
+    assert(a == d);
+
+`char` literals can be added and subtracted just like any other number,
+so if you wanted to find what position in the alphabet the letter `j` is,
+you could do something like the following:
+
+    'j' - 'a'
 
 
-In C there is no such thing as a string, just an array and pointers.
-Essentially, a bunch of single characters located consecutively in memory will
-make up a string, but more on this later.
+#### String Literals
+
+We're not going to go too deep into this just yet
+until we look at pointers and arrays,
+but understand that there are no "real" strings in C.
+String literals represent an array of characters, which are what C strings are.
+
+We can write them surrounded by double quotation marks `"`,
+with escape sequences too:
+
+    "I am a not really a string\n"
+
+We'll be talking a lot more about strings later on, so hold tight.
 
 
 ## Expressions ##
