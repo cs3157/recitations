@@ -141,7 +141,36 @@ int main(void) {
     return 0;
 }
 ```
+## Declarations, Casting, Literals
 
+### Declarations
+
+Just like in Java, we declare variables using the following syntactic structure:
+
+    [<modifiers..>] <type> [<modifiers..>] <variable name>;
+
+This _declares_ a variable, but _does not initialize_ it.
+That is to say, we've told the compiler how much space we want
+and how to read what we'll eventually put there,
+but we've not actually put anything there yet!
+There's no guarantee what garbage might be written in the piece of memory
+we're given, so trying to access it will result in **undefined behavior**
+(no guarantees for what will happen during compilation or execution;
+you'll here us talk about this _a lot_, specifically about avoiding it).
+
+    int x;              // x is declared, but uninitialized
+    printf("%d", x);    // undefined behavior; don't do this!
+    x = 4;              // x is now initialized to 6
+
+We can also declare multiple variables of the same type all at once,
+separating the variable names with a `,`:
+
+    int y, z;           // y and z are declared, but both uninitialized
+
+Just like in Java, we can declare and initialize our variables all at once:
+
+    int x = 2;          // x is declared and initialized to 9
+    int y = 0, z;       // y and z are declared, only y is initialized (to 0)
 
 
 Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
@@ -291,3 +320,15 @@ Using `break;` inside a loop will break out of the innermost loop. Using
 the next iteration. `for(;;)` is an idiom for an infinite loop. `goto label`
 will jump to a line beginning with `label: `. Be careful with gotos.
 
+#### `const`
+
+The `const` keyword tells that compiler that once a variable is initialized,
+it shouldn't be assigned to again.
+The type modifer can come either before or after the type:
+
+    const int x;
+    int const y;
+
+Note that this is only compiler enforced,
+but like what we did above to print floats in binary, 
+we can trick the compiler 
