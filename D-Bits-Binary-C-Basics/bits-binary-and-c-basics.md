@@ -42,7 +42,8 @@ To figure out what negative number is represented (e.g. 1100):
   1. Make sure that MSB is 1; note that the number is negative (**1**100)
   2. Invert all the bits (1100 -> 0011)
   3. Find the number's magnitude as if it were positive (0011 = 3)
-  4. The value of the number is that magnitude, but negative (-3)
+  4. Add 1 to the magnitude (3 + 1 = 4)
+  5. The value of the number is the negative of the result from step 4 (-4)
 
 So why do we use this weird form of representation?
 Well as it turns out, in two's complement, the computer can perform arithmetic
@@ -86,52 +87,127 @@ It's also important to be aware of some note-worthy boundaries
 Try converting these hex numbers to binary and seeing for yourself!
 
 
-### Bitwise Operators ###
+## Bitwise Operators
 
-While we're on the subject of binary representation, let's take a moment to 
-examine C's bitwise operators. They're a bit tricky, but perform extremely fast 
-low level operations and learning them well now will help you with more 
-complex concepts later on.
+Remember that bits can be used to represent boolean (true/false) values too.
+This means that we can operate on each bit as a boolean value
+using C's bitwise operators.
+They're a bit tricky, but they have a wide range of uses in systems programming,
+partly because they are extremely fast to compute.
 
-#### Bitwise AND ###
+Note that these are different from C's _boolean_ operators
+(`&&`, `||`, `!`)! Bitwise operators operate independently on _each_ bit.
 
-The bitwise AND operator, `&`, takes two integers as operands and returns a 
-new integer with a bit pattern consisting of ones only in the positions that 
-both operands contain bits set to 1.
+If you need a refresher on boolean operators and their truth tables,
+see the appendix.
 
-```
-int x = 5;  // 0101 in binary
-int y = 12; // 1100 in binary
-x & y;      // 0100 (4)
-```
 
-Note: `x & y == 4`, but `x && y == 1`. Can you explain why?
+#### Bitwise AND `&`
 
-This provides a handy way of checking the bit value at a given position in a 
-number:
+Takes two integers as operands and returns a new integer where its bit pattern
+consists of 1s only where both operands also have 1s in the same position.
+For example:
 
 ```
-int mask = 8; // 1000 in binary, for checking the 4th bit
-x & mask;     // 0, since 5 doesn't contain a 1 in the 4th bit
-y & mask;     // 1000 == 8 > 0, since 12 contains a 1 in the 4th bit
+int x = 5;          // 0101 in binary
+int y = 12;         // 1100 in binary
+assert(x & y == 4); // 0100 (4)
 ```
 
-#### Bitwise OR ####
-
-The bitwise OR, `|`, behaves like the bitwise AND but the returned integer's 
-bit pattern consists of ones where either operand has a 1.
+This provides a handy way of checking the bit value at a given position,
+using a **bitmask**:
 
 ```
-int x = 5;  // 0101 in binary
-int y = 12; // 1100 in binary
-x | y;      // 1101 (13)
+int mask = 0x8;         // 1000 in binary, for checking the 4th bit
+assert(!(x & mask));    // 5 (0101) doesn't contain a 1 in the 4th bit
+assert(y & mask);       // 12 (1100) contains a 1 in the 4th bit
 ```
 
-#### Bitwise XOR and Complement ####
+It's called a bitmask because we place 0s in the digits we don't want to read,
+which will _mask_ out the corresponding digits via the bitwise AND.
 
-The bitwise XOR, `^`, sets 1 in each bit where its operands differ and 0 
-where they are the same. The bitwise complement, `~`, performs the one's 
-complement on its operatand by flipping each bit.
+
+#### Bitwise OR `|`
+
+Behaves just like the bitwise AND, except with an OR operation.
+Takes two integers as operands and returns a new integer where its bit pattern
+consists of 1s where either operand also has a 1 in the same position.
+For example:
+
+```
+int x = 5;              // 0101 in binary
+int y = 12;             // 1100 in binary
+assert(x | y == 13);    // 1101 (13)
+```
+
+This is really useful for combining boolean options.
+For example, say we wanted to set access permissions on a file.
+In UNIX-like systems, we represent read, write, and execute permissions.
+A file may have any combination of those three permissions.
+We may represent them as follows:
+
+Permission | Symbolic | Binary | Decimal
+----------------------------------------
+Read       | `r--`    | `100`  | 4
+Write      | `-w-`    | `010`  | 2
+Execute    | `--x`    | `001`  | 1
+
+So, let's set our variables in code:
+
+```
+int READ = 100;
+int WRITE = 010;
+int EXEC = 001;
+```
+
+If we wanted to specify permissions for reading and writing but not executing,
+we could do the following:
+
+```
+int perm = READ | WRITE; // 100 | 010 == 110
+```
+
+Later we can verify that the file has the right permissions
+by reading the corresponding bit using a bitmask.
+
+```
+assert(perm & READ);    // can read
+assert(perm & WRITE);   // can write
+assert(!(perm & EXEC)); // cannot execute
+```
+
+Some of this may seem familiar if you've ever used `ls -la` or `chmod`.
+You'll come across this again later when we take a second look at UNIX!
+
+
+#### Bitwise XOR `~`
+
+Also known as a bitwise eXclusive OR;
+behaves just like the bitwise AND and OR, except with an XOR operation.
+Takes two integers as operands and returns a new integer where its bit pattern
+consists of 1s where only one of its operands has a 1 in the same position.
+For example:
+
+```
+int x = 6;          // 0110 in binary
+int y = 5;          // 0101 in binary
+assert(x ^ y == 3); // 0011 (3)
+```
+
+
+#### Bitwise NOT `~`
+
+Also known as a bitwise complement.
+Takes two integers as operands and returns an integer with all its bits flipped.
+
+```
+unsigned int x = 5; // 0101 in binary, unsigned
+int y = 5;          // 0101 in binary, signed
+
+assert(~x == 10);   // 1010 (10, unsigned)
+assert(~y == -6);   // 1010 (-6, signed)
+```
+
 
 #### Bit Shifting ####
 
