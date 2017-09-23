@@ -193,7 +193,7 @@ Takes two integers as operands and returns an integer with all its bits flipped.
     assert(~y == -6);   // 1010 (-6, signed)
 
 
-### Bitshifting `<<` `>>`
+### Bitshifting
 
 Another useful operation is the bitshift.
 What we mean by "shifting bits" is pushing all the digits in a number.
