@@ -336,7 +336,95 @@ with escape sequences too:
 We'll be talking a lot more about strings later on, so hold tight.
 
 
-## Expressions ##
+## Expressions and Statements
+
+In C, we differentiate between **expressions** and **statements**.
+Simply put, statements don't necessarily have a value, whereas expressions do.
+All expressions can be statements, but not all statements can be expressions.
+
+This will become clearer as we look at some examples.
+
+### Expressions
+
+A C expression is any syntactic construct that yields a value.
+It can be as simple as a variable or a literal,
+or it can be combinations of other expressions via operators.
+Function calls are also expressions that yield value of what they return.
+
+We're not going to go through all the operators one by one,
+but we'll note some important details and gotchas.
+
+For variables `x` and `y`, and some function `foo()`,
+the following are examples of expressions:
+
+    3157
+    x
+    x + y
+    x = y + 3157
+    x += y
+    x++
+    foo(x, y + 3157)
+
+Note that an assignment `=` operation is also an expression!
+It assigns the value of its right operand to its left operand,
+and yields the value of the left operand.
+This might seem weird at first, but it allows us to do things like:
+
+    x = y = 3157
+    x = (y = 3157)
+
+The second line unpacks it a little bit:
+it's saying, assign `3157` to `y`, and then assign the value of that to `x`.
+
+#### Uncommon Operators
+
+Well, these aren't really uncommon, but it's possible you haven't seen these yet
+depending on what language experience you've had before.
+
+##### Self-assignment `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `|=`
+
+Apply the operation before the `=` to the left and right operand,
+then assign to the left operand.
+So, `x += y` is the same as `x = x + y`
+
+##### Increment/decrement `++` `--`
+
+Used to add 1 or subtract 1 from its operand.
+There are two flavors of these operators:
+the prefix version `++x` `--x` (appears on the left of the operand)
+increments/decrements first, and yields the value after the operation
+(`x++` is equivalent to `x += 1`);
+the postfix version `x++` `x--` (appears on the right of the operand)
+increments/decrements as well, but yields the value _before_ the operation.
+
+   int b1 = 5, a1 = 5;
+   int b2 = ++b1;           // b2 is assigned the value of 6
+   int a2 = a1++;           // a2 is assigned the value of 5
+
+##### Ternary conditional operator `? :`
+
+This is the syntax for the ternary operator:
+
+    <expression-1> ? <expression-2> : <expression-3>
+
+The value of a conditional expression is dependent on that of
+the expression before the `?` operator.
+If `<expression-1>` is non-zero, then the conditional value yields the value
+of `<expression-2>`; otherwise it yields the value of `<expression-3>`.
+Here's an example:
+
+    int t = 1, f = 0;
+    int a = t ? 42 : 24;        // a is assigned the value of 42
+    double b = f ? 4.2 : 1e20   // b is assigned the value of 1e20
+
+It's sort of the same idea as an if/then/else, but keep in mind that
+those are separate, syntactic constructs in C (which we will cover below).
+
+
+#### Operator Precedence
+
+#### L-values and R-values
+
 
     char *myString = "Here's a string!" //string literal
     int x = 10; //variable declaration and assignment
