@@ -201,6 +201,23 @@ When we convert between floating-point types of different levels of precision,
 again the compiler helps us do the conversion, though we may lose precision
 if we're casting from a more precise floating-point type to a less precise one.
 
+```c
+#include <stdio.h>
+
+int main(void) {
+    char c = 4;
+    int i = 4;
+    long l = 3000000000;
+
+    printf("char to int: %d\n", (int) c);       // prints 4
+    printf("int to float: %f\n", (float) i);    // prints 4.000000
+    printf("long (no cast): %ld\n", ll);        // prints 3000000000
+    printf("long to int: %d\n", (int) ll);      // prints -1294967296
+```
+
+As you can see, downcasting the 8-byte `long` truncated our integer,
+which means something very different as a signed, 4-byte integer.
+
 
 Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
 [The Ascii Table](http://www.asciitable.com) and understand the relationships 
