@@ -143,7 +143,7 @@ int main(void) {
 ```
 ## Declarations, Casting, Literals
 
-### Declarations
+### Variable Declarations
 
 Just like in Java, we declare variables using the following syntactic structure:
 
@@ -171,6 +171,35 @@ Just like in Java, we can declare and initialize our variables all at once:
 
     int x = 2;          // x is declared and initialized to 9
     int y = 0, z;       // y and z are declared, only y is initialized (to 0)
+
+
+### Type Casting
+
+Also like in Java, we can cast variables from one type to another.
+We do so with the following syntax:
+
+    (<type>) <variable>
+
+This comes in handy for changing the type of a variable
+to suit the interface of a function we might want to call,
+or to trick the compiler (as you saw before).
+
+For example, let's say that we have a function `foo()`
+that takes a single `float` as its parameter:
+
+```c
+int x = 34;
+foo((float) x);
+```
+
+When we cast from an integer type to a floating-point type,
+the compiler produces instructions to convert our integer representation
+to floating-point representation.
+Keep in mind that when we convert between integer types, 
+we extend/truncate our integer (we often see non-zero MSBs are discarded).
+When we convert between floating-point types of different levels of precision,
+again the compiler helps us do the conversion, though we may lose precision
+if we're casting from a more precise floating-point type to a less precise one.
 
 
 Here are some declarations to help you understand what really happens when we're talking characters and integers. Definitely take a look at 
