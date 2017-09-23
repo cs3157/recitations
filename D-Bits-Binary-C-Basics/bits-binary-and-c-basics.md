@@ -108,20 +108,16 @@ Takes two integers as operands and returns a new integer where its bit pattern
 consists of 1s only where both operands also have 1s in the same position.
 For example:
 
-```
-int x = 5;          // 0101 in binary
-int y = 12;         // 1100 in binary
-assert(x & y == 4); // 0100 (4)
-```
+    int x = 5;          // 0101 in binary
+    int y = 12;         // 1100 in binary
+    assert(x & y == 4); // 0100 (4)
 
 This provides a handy way of checking the bit value at a given position,
 using a **bitmask**:
 
-```
-int mask = 0x8;         // 1000 in binary, for checking the 4th bit
-assert(!(x & mask));    // 5 (0101) doesn't contain a 1 in the 4th bit
-assert(y & mask);       // 12 (1100) contains a 1 in the 4th bit
-```
+    int mask = 0x8;         // 1000 in binary, for checking the 4th bit
+    assert(!(x & mask));    // 5 (0101) doesn't contain a 1 in the 4th bit
+    assert(y & mask);       // 12 (1100) contains a 1 in the 4th bit
 
 It's called a bitmask because we place 0s in the digits we don't want to read,
 which will _mask_ out the corresponding digits via the bitwise AND.
@@ -134,11 +130,9 @@ Takes two integers as operands and returns a new integer where its bit pattern
 consists of 1s where either operand also has a 1 in the same position.
 For example:
 
-```
-int x = 5;              // 0101 in binary
-int y = 12;             // 1100 in binary
-assert(x | y == 13);    // 1101 (13)
-```
+    int x = 5;              // 0101 in binary
+    int y = 12;             // 1100 in binary
+    assert(x | y == 13);    // 1101 (13)
 
 This is really useful for combining boolean options.
 For example, say we wanted to set access permissions on a file.
@@ -154,27 +148,21 @@ Execute    | `--x`    | `001`  | 1
 
 So, let's set our variables in code:
 
-```
-int READ = 100;
-int WRITE = 010;
-int EXEC = 001;
-```
+    int READ = 100;
+    int WRITE = 010;
+    int EXEC = 001;
 
 If we wanted to specify permissions for reading and writing but not executing,
 we could do the following:
 
-```
-int perm = READ | WRITE; // 100 | 010 == 110
-```
+    int perm = READ | WRITE; // 100 | 010 == 110
 
 Later we can verify that the file has the right permissions
 by reading the corresponding bit using a bitmask.
 
-```
-assert(perm & READ);    // can read
-assert(perm & WRITE);   // can write
-assert(!(perm & EXEC)); // cannot execute
-```
+    assert(perm & READ);    // can read
+    assert(perm & WRITE);   // can write
+    assert(!(perm & EXEC)); // cannot execute
 
 Some of this may seem familiar if you've ever used `ls -la` or `chmod`.
 You'll come across this again later when we take a second look at UNIX!
@@ -188,11 +176,9 @@ Takes two integers as operands and returns a new integer where its bit pattern
 consists of 1s where only one of its operands has a 1 in the same position.
 For example:
 
-```
-int x = 6;          // 0110 in binary
-int y = 5;          // 0101 in binary
-assert(x ^ y == 3); // 0011 (3)
-```
+    int x = 6;          // 0110 in binary
+    int y = 5;          // 0101 in binary
+    assert(x ^ y == 3); // 0011 (3)
 
 
 #### Bitwise NOT `~`
@@ -200,13 +186,11 @@ assert(x ^ y == 3); // 0011 (3)
 Also known as a bitwise complement.
 Takes two integers as operands and returns an integer with all its bits flipped.
 
-```
-unsigned int x = 5; // 0101 in binary, unsigned
-int y = 5;          // 0101 in binary, signed
+    unsigned int x = 5; // 0101 in binary, unsigned
+    int y = 5;          // 0101 in binary, signed
 
-assert(~x == 10);   // 1010 (10, unsigned)
-assert(~y == -6);   // 1010 (-6, signed)
-```
+    assert(~x == 10);   // 1010 (10, unsigned)
+    assert(~y == -6);   // 1010 (-6, signed)
 
 
 ### Bitshifting `<<` `>>`
@@ -225,10 +209,8 @@ each bit in `x` is shifted to the left (towards the MSB) by `n` digits:
 
 Note that this is equivalent to mulitplying a number by 2^`n`!
 
-```
-int x = 1;              // 0001 in binary
-assert(x << 2 == 4);    // 0100 (4)
-```
+    int x = 1;              // 0001 in binary
+    assert(x << 2 == 4);    // 0100 (4)
 
 #### Rightshift `>>`
 
@@ -246,10 +228,8 @@ each bit in `x` is shifted to the right (towards the LSB) by `n` digits:
 Note that this is equivalent to dividing a number by 2^`n`
 (and discarding the remainder)!
 
-```
-int x = 5;              // 0101 in binary
-assert(x >> 1 == 1);    // 0001 (1)
-```
+    int x = 5;              // 0101 in binary
+    assert(x >> 1 == 1);    // 0001 (1)
 
 ## Data Types: Numbers ##
 
