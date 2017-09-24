@@ -421,60 +421,68 @@ It's sort of the same idea as an if/then/else, but keep in mind that
 those are separate, syntactic constructs in C (which we will cover below).
 
 
+#### "Boolean" operators
+
+You've probably noticed that there is no boolean type in C.
+That's we simply represent false with 0, and true with anything non-zero!
+This allows for some convenient shorthand: `if (x != 0)` is the same as `if(x)`.
+
+The comparison operators, `<` `>` `<=` `>=` `==` `=!`.
+
+Operations that typically return boolean values in other languages
+instead return 1 for true and 0 for false in C.
+This includes the comparison operators, `<` `>` `<=` `>=` `==` `=!`,
+and the logical operators `&&` `||` `!`.
+We can confirm this with the following code:
+
+    printf("'true': %d\n", 0 < 3);  // prints 1
+
+##### Short circuit evaluation `&&` `||`
+
+Usually, an expression that contains subexpressions
+(as operands to an operator, or as arguments to a function call)
+will first evaluate those subexpressions
+before evaluating the greater overall expression.
+So let us consider the following two functions:
+
+    int foo(void) {
+        printf("foo!\n");
+        return 1;
+    }
+
+    int bar(void) {
+        printf("bar!\n");
+        return 0;
+    }
+
+The following expression will evaluate both `foo()` and `bar()` function calls:
+
+    foo() + bar()
+
+We can tell by the fact that both `foo!` and `bar!` are printed.
+
+However, `&&` and `||` use **short circuit evaluation**;
+this means that their operands are evaluated only as necessary.
+For example, for the expression `L && R`, if we know `L` is 0 (false),
+we know the value of the logical AND expression is going to be 0
+regardless of what happens with `R`.
+The operators skip the operands which they know are no longer necessary.
+To demonstrate:
+
+    foo() && bar();     // prints foo! bar!
+    foo() || bar();     // only prints foo!
+    bar() && foo();     // only prints bar!
+    bar() || foo();     // prints bar! foo!
+
+This means that for some short-circuited statement like `X && Y`,
+even if calling` Y` somehow crashes the system,
+we can avoid it all together by not ever reaching that codepath
+
+
 #### Operator Precedence
 
 #### L-values and R-values
 
-
-    char *myString = "Here's a string!" //string literal
-    int x = 10; //variable declaration and assignment
-    int x; //variable declaration
-    x = 30; //variable assignment: lvalue = rvalue
-
-The order of the increment/decrement operators in C matters:
-
-    int x = 1;
-    int y = x++; // y==1
-    y = ++x; // y==3
-
-Valid binary operators in order of increasing precedence:
-
-  - + -
-  - * / %
-
-The positive and negative operators are more tightly binding than any of the
-above operators (+/-).
-
-Comparison operators:
-
-  - < > <= >=
-
-All of these comparison operators have the same precedence, and are more tightly
-binding than the equality and inequality operators (==/!=).
-
-The logical operators are `||` for or, `&&` for and, and `!` for not. The "or"
-and "and" operators short-circuit.
-
-[Bitwise operators](recitation-2.md#bitwise-operators) are tricky and can be 
-used for a variety of purposes. See the examples in the recitation 2 notes for 
-a refresher.
-
-Ternary operator:
-
-```c
-x = a ? b : c;
-```
-
-is the same thing as this:
-
-```c
-if(a)
-  x = b;
-else
-  x = c;
-```
-
-Note that any integer is also a boolean!! 0 is false, any other number is true!
 
 
 ## Statements ##
