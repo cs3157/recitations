@@ -34,7 +34,8 @@ Let's refresh our memory about memory:
 -   If negative, invert all bits and add 1 to find out what number is
     represented
 
-The table shows the same bit pattern interpreted as unsigned and signed integers:
+The table shows the same bit pattern interpreted as unsigned and signed
+integers, assuming that integers are 3 bits long:
 
 Binary | unsigned decimal | two's complement decimal
 ------ | ---------------- | ------------------------
@@ -150,7 +151,10 @@ double avogadro = 6.02e23; // 6.02 x 10^23
 -   C "strings" are an array of characters
 -   Have a null byte (`'\0'` or `0`) at the end
 
-    char *s = "Hello world!";
+```c
+char *s = "cs3157";
+// similar to the array { 'c', 's', '3', '1', '5', '7', '\0' }
+```
 
 
 ### Bitwise Operators ###
@@ -162,7 +166,7 @@ double avogadro = 6.02e23; // 6.02 x 10^23
   n = n & 0177; // n bitwise-and 00000001111111
   ```
 
-- `|` can be used to set on all bits:
+- `|` can be used to ensure that bits are set:
 
   ```c
   n = n | 0177; // n bitwise-or 00000001111111
@@ -171,10 +175,8 @@ double avogadro = 6.02e23; // 6.02 x 10^23
 - It's easy to confuse bitwise and `&` with logical and `&&`:
 
   ```c
-  int x = 1;
-  int y = 2;
-  printf("%d\n", x & y);  // 0
-  printf("%d\n", x && y); // 1
+  printf("%d\n", 1 & 2);  // 0
+  printf("%d\n", 1 && 2); // 1
   ```
 
 - `^` is a bitwise exclusive or. The resulting bit is 1 if the inputs were
@@ -188,31 +190,14 @@ double avogadro = 6.02e23; // 6.02 x 10^23
 
   ```c
   int x = 2;
-  x = x << 2; // x == 8
-  x = x >> 1; // x == 4
+  int y = x << 2; // y == 8
+  int z = x >> 1; // z == 1
   ```
 
 
 ### Order of Operations ###
 
-Binary operators, listed in order of decreasing precedence:
-
-  - `< > <= =>`
-  - `+ -`
-  - `* / %`
-  - `&`
-  - `^`
-  - `|`
-  - `&&`
-  - `||`
-  - ternary operator: `a ? b : c`
-  - `+= -= *= /= <<= >>= 7= ^= |= %= >>= =`
-  - `,`
-
-Unary operators, listed in order of decreasing precedence:
-
-  - (expression), `[]`,  `->`,  `.`
-  - `!`, `~`, `++`, `--`, (type), `sizeof`, `+`, `-`, `*`, `&`,  (right to left)
+Make sure you're familiar with [operator precedence in C](http://en.cppreference.com/w/c/language/operator_precedence).
 
 Based on the precedence rules, what does `*p++` do?
 
@@ -287,7 +272,7 @@ Make sure you know what levels of tracking exist:
   - tracked, unmodified
   - tracked, modified, but unstaged
   - tracked, modified, staged
-  - tracked, committed (??? What's wrong here?)
+  - tracked, committed
 
 
 ## Makefiles ##
@@ -296,20 +281,20 @@ _Main article: [Makefiles](B-Makefiles/makefiles.md)_
 
 Let's review Jae's sample Makefile piece by piece:
 
-```make
-CC  = gcc
-CXX = g++
-```
+> ```make
+> CC  = gcc
+> CXX = g++
+> ```
 
 Make has a pre-configured rules for how to compile C programs. We just need to
 set Makefile variables for the C compiler (`CXX`) and C++ compiler (`CXX`).
 
-```make
-INCLUDES =
-
-CFLAGS   = -g -Wall $(INCLUDES)
-CXXFLAGS = -g -Wall $(INCLUDES)
-```
+> ```make
+> INCLUDES =
+>
+> CFLAGS   = -g -Wall $(INCLUDES)
+> CXXFLAGS = -g -Wall $(INCLUDES)
+> ```
 
 Here we define our own variable, `INCLUDES`, which use to specify directories
 to search for header files during compilation. For example, the value
@@ -319,15 +304,15 @@ header files.
 Also set the flags we want each compilation to run with. What do these flags
 mean? We also reference our `INCLUDES` to add those flags as well.
 
-```make
-LDFLAGS = -g
-```
+> ```make
+> LDFLAGS = -g
+> ```
 
 Flags to pass during the linking step.
 
-```make
-LDLIBS =
-```
+> ```make
+> LDLIBS =
+> ```
 
 `LDLIBS` will automatically be appended to the linker commands. These are flags
 like `-lm` for linking the math library. It's analogous to our `INCLUDES` from
@@ -336,9 +321,9 @@ the compilation step.
 Now we define the dependencies of our files. The first target we specify is
 run if we simply type `make`:
 
-```make
-main: main.o myadd.o
-```
+> ```make
+> main: main.o myadd.o
+> ```
 
 This rule means that make should produce an executable `main` by linking
 `main.o` and `myadd.o`. When either `.o` file is modified, it will regenerate
@@ -349,14 +334,18 @@ If we don't provide a command to run, make follows this implied linking rule:
     $(CC) $(LDFLAGS) <all-dependent-.o-files> $(LDLIBS)
 
 It also assumes that `main` depends on `main.o`, so we could have omitted
-`main.o`.
+`main.o` like this:
+
+```make
+main: myadd.o
+```
 
 (Take a moment to understand how all of that works. Makefile dependencies are an
 important topic!)
 
-```make
-main.o: main.c myadd.h
-```
+> ```make
+> main.o: main.c myadd.h
+> ```
 
 Again, we don't specify a command here because make assumes the implicit rule:
 
@@ -367,29 +356,29 @@ have omitted `main.c`.
 
 Why does main.o depend on main.h?
 
-```make
-myadd.o: myadd.c myadd.h
-```
+> ```make
+> myadd.o: myadd.c myadd.h
+> ```
 
 Same as previous.
 
-```make
-.PHONY: clean
-clean:
-        rm -f *.o a.out core main
-```
+> ```make
+> .PHONY: clean
+> clean:
+>         rm -f *.o a.out core main
+> ```
 
-If a target is marked as "phony," make won't try to compile it. So `make clean`
-will always run the associated commands, even if there is a file named `clean`
-in the directory.
+Since the `clean` target is "phony," make won't look for a file named `clean` to
+decide whether it should run the commands in the target. So `make clean` will
+always run, even if there is a file named `clean` in the directory.
 
 The first phony target removes the compiler-generated files so that only the
 source code is left.
 
-```make
-.PHONY: all
-all: clean main
-```
+> ```make
+> .PHONY: all
+> all: clean main
+> ```
 
 Make runs its dependencies left-to-right. So the `all` target will first run
 `clean`, then generate `main`. Run `make all` when you want to completely
@@ -430,6 +419,7 @@ Passing a function as a parameter:
 int wasteTime() {
   int i;
   for (i = 0; i < 1000000; i++) { }
+  printf("Finished counting to %d\n", i);
   return i;
 }
 
@@ -510,8 +500,9 @@ Just some things it might pay to know well:
 -   What `MdbRec` structs look like and how to use them
 -   How to use the functions from lab3 and what they return
 -   What the pipeline for lab5 looked like and how it worked
--   malloc and free...this is tough
 -   **Please follow directions!** The exam will be graded in the same way your
     labs are graded if not less lenient. Read all the directions. Take your time
     to understand them. If it says "write the line number and the code that
     should be on that line," do just that!
+
+Thanks for reading these notes. Good luck on the exam!
