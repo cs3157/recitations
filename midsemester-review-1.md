@@ -1,32 +1,41 @@
-# Mid-Semester Review #
+# Mid-Semester Review 1 #
 
-## Signed and Unsigned Integers ##
+This document is an outline of what's covered in our mid-semester review
+session. If you'd like more detail, use the link in each section to see the full
+review session notes for that topic.
 
-From [Recitation 3](recitation-3.md):
 
-### Bits Bytes and Binary ###
+## Bits, Bytes, and Binary ##
 
-Let's just refresh our memory about memory:
+_Main article: [Bits, Bytes, and Binary](D-Bits-Binary-C-Basics/bits-and-binary.md)_
 
-  - A **bit** is a single digit in binary; on or off; 1 or 0
-  - 8 bits form a single **byte**: 11111111 = 2^8 - 1 = 255
-  - **Hexadecimal** is another notation to count even higher in fewer places
-    - Two hexadecimal places express 1 byte
-    - FF in Hexadecimal is 255
-  - **Two's complement**
-    - Most modern computers use this notation for signed integers
-    - **Most significant bit**: Usually the leftmost, but generally the bit with the
-      highest value: If 1000 = 8, then 1 is the most significant bit. If we were
-      using a different notation such as 1010 = 5, then the rightmost 0 is the
-      most significant bit. 
-    - If the most significant bit is 1, then in two's complement, you're looking
-      at a negative number
-    - To convert: 1010 (read as ten if unsigned), first note that it is
-      negative. Then find its magnitude by flipping all the bits (0101, 5) and
-      then adding 1 (0110) meaning the value is -6.
-    - Consult the following table to see something interesting: (note the
-      wraparound effect
-      
+Let's refresh our memory about memory:
+
+- **Bit** (b)
+  - A single digit in binary
+  - Two possible values: 1 or 0
+- **Byte** (B)
+  - 8 bits make a byte
+  - Can take on 2^8 = 256 different values (from 0 to 255, inclusive)
+- **Hexadecimal**
+  - A base-16 numerical notation that can represent up to 15 in a single digit
+  - Uses base-10 + first 5 letters of alphabet:
+    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f }
+  - 2 hexadecimal digits make a byte
+- **Least significant bit** (LSB)
+  - Right-most binary digit
+- **Most significant bit** (MSB)
+  - Left-most binary digit
+  - Indicates positive or negative for signed integers
+
+### Two's Complement ###
+
+-   MSB indicates whether number is positive (1) or negative (0)
+-   If negative, invert all bits and add 1 to find out what number is
+    represented
+
+The table shows the same bit pattern interpreted as unsigned and signed integers:
+
 Binary | unsigned decimal | two's complement decimal
 ------ | ---------------- | ------------------------
 000    | 0                | 0
@@ -39,52 +48,52 @@ Binary | unsigned decimal | two's complement decimal
 111    | 7                | -1
 
 
+## C Basics ##
+
+_Main article: [C Basics](D-Bits-Binary-C-Basics/c-basics.md)_
+
 ### Data Types: Numbers ###
-
-Integer Types:
-
-  - char
-  - int
-
-Modifiers (and sugar):
-
-  - short
-  - long
 
 Memory size for each type depends on system, and only restrictions are that
 
     char <= short <= int <= long <= long long
 
-CLAC machines follow
+CLAC machines follow:
 
-  - char = 1 byte
-  - short = 2 bytes
-  - int = 4 bytes
-  - long = 8 (these last two vary from system to system a lot)
-  - long long = 8 
+Type        | Size
+----------- | -------
+`char`      | 1 byte
+`short`     | 2 bytes
+`int`       | 4 bytes
+`long`      | 8 bytes
+`long long` | 8 bytes
 
-Test it out for yourself:
+Use the `sizeof` operator to find the size of a data type in bytes:
 
 ```c
-#include <stdio.h>
- 
- int main(int argc, char** argv) {
-   printf("char: %d\n
-     short: %d\n
-     int: %d\n
-     long: %d\n
-     longlong: %d\n",
-     sizeof(char), sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
-   return 0;
-}
+// sizeof on a data type
+printf("ints are %d bytes", sizeof(int));
+
+// Works on variable names too
+char *p;
+printf("pointers are %d bytes", sizeof(p));
 ```
 
-Here are some declarations to help you understand what really happens when we're
-talking characters and integers. Definitely take a look at [The
-Ascii Table](http://www.asciitable.com) and understand the relationships in the
-order of the first 128 ascii characters. The C language is built on a subset of
-7-bit ascii (0-127) so its important to know what the table is like, not to
-memorize it. Also note that in C, single quotes means a character.
+
+### ASCII ###
+
+-   The "character" or `char` data type is simply a very small integer
+-   C uses a system called ASCII encoding to assign a number to each character
+    -   For example, `'a'` is 97
+-   See [ASCII table](http://man7.org/linux/man-pages/man7/ascii.7.html) for the
+    complete list
+    -   Focus on understanding relationships between values rather than trying
+        to memorize the whole thing
+    -   For example, capital letters have smaller numerical values than
+        lowercase ones
+
+Here are some integer declarations and the corresponding values of the
+variables:
 
 Declaration     | x (dec)   | y (dec)
 --------------- | -------   | -------
@@ -97,93 +106,132 @@ char x = '\13'; | 11        | -
 char x = '0';   | 48        | -
 char x = '\0';  | 0         | -
 char x = 0;     | 0         | -
-long x = 0L;    | 0         | -
 
-Preceding a constant with 0x denotes hexadecimal notation, and preceding it with 0 denotes octal notation:
 
-    (0xFFFFFFFF == -1); //returns 1 (which is true, but C doesn't have true)
-    (037777777777 == -1); //returns 1 (true)
-    sizeof(1234L); //returns 8
-    sizeof(1234); //returns 4
-    0xFFFFU; //returns 65535
-    0177777U; //returns 65535
+### Different notations for integer literals ###
 
-Float and double are the two floating point types (decimal) and can be expressed
-with a decimal point or as scientific notation:
+-   Single quote `'` means character (double quotes `"` are for strings)
+-   `0x` at the beginning means hexadecimal notation
+-   `0` at the beginning means octal notation
 
-    float miles = 1.8;
-    double big = 1e10;
+So, the following literals all have the same value:
+
+    '@'   // character literal
+    0x40  // hexadecimal
+    0100  // octal
+    64    // decimal
+
+Some more hex and octal examples:
+
+    (0xFFFFFFFF == -1)    // equal to 1 (which is true, but C doesn't have true)
+    (037777777777 == -1)  // 1 (true)
+    0xFFFFU               // 65535
+    0177777U              //  65535
+
+
+### Floating point types ###
 
 The only implementation constraint is that
 
     float <= double <= long double
 
-so they could all be one size, or be three distinct sizes.
+Floating point types can be expressed with a decimal point or scientific
+notation:
 
-In C there is no such thing as a string, just an array and pointers.
-Essentially, a bunch of single characters located consecutively in memory will
-make up a string, but more on this later.
+    float miles = 1.8;
+    double avogadro = 6.02e23; // 6.02 x 10^23
 
-## Bitwise Operators ##
 
-Also from [Recitation 3](recitation-3.md):
+### Strings ###
 
-Bit-wise operators are tricky and can be used for a variety of purposes:
+-   No string object in C
+-   C "strings" are an array of characters
+-   Have a null byte (`'\0'` or `0`) at the end
 
-  - `&` can be used to "mask" or turn off all bits except certain ones. For
-    example:
-        
-        n = n & 0177; // n and 00000001111111
+    char *s = "Hello world!";
 
-  - `|` can be used to set on all bits:
 
-        n = n | 0177; // n or 00001111111
+### Bitwise Operators ###
 
-  - Note:
+- `&` can be used to "mask" or turn off all bits except certain ones. For
+  example:
 
-        int x = 1;
-        int y = 2;
-        x & y; // 0
-        x && y; // 1
+      n = n & 0177; // n bitwise-and 00000001111111
 
-  - `^` Sets 1 in each bit where its operators differ and 0 where they are the
-    same.
-  - `<<` and `>>` shift their left operator by the number of digits specified by
-    the right operator. Left shifting always fills vacated bits by zero. Right
-    shifting varies from machine to machine and whether or not we're talking
-    unsigned or signed.
+- `|` can be used to set on all bits:
 
-        int x = 2;
-        x = x << 2; // x == 8
-        x = x >> 1; // x == 4
+      n = n | 0177; // n bitwise-or 00000001111111
 
-  - `~` just does the one's complement, ie. flipping all the bits.
+- It's easy to confuse bitwise and `&` with logical and `&&`:
 
-## Declarations ##
+      int x = 1;
+      int y = 2;
+      printf("%d\n", x & y);  // 0
+      printf("%d\n", x && y); // 1
 
-It seems in order to prepare for the midterm, it might be a good idea to go over
-some existing programs and declarations.
+- `^` is a bitwise exclusive or. The resulting bit is 1 if the inputs were
+  different, and 0 if they were the same.
 
-  - For integer expressions, write the actual number value in decimal notation.
-    (Remember char is integer!)
-  - For non-integer expressions, write the type name, in the format that you use
+- `~` flips all the bits.
+
+- `<<` and `>>` shift their left operand by the number of digits specified by
+  the right operand. Left shifting fills vacated bits by zero. Right shifting
+  typically fills with whatever the MSB was.
+
+      int x = 2;
+      x = x << 2; // x == 8
+      x = x >> 1; // x == 4
+
+
+### Order of Operations ###
+
+Binary operators, listed in order of decreasing precedence:
+
+  - `< > <= =>`
+  - `+ -`
+  - `* / %`
+  - `&`
+  - `^`
+  - `|`
+  - `&&`
+  - `||`
+  - ternary operator: `a ? b : c`
+  - `+= -= *= /= <<= >>= 7= ^= |= %= >>= =`
+  - `,`
+
+Unary operators, listed in order of decreasing precedence:
+
+  - (expression), `[]`,  `->`,  `.`
+  - `!`, `~`, `++`, `--`, (type), `sizeof`, `+`, `-`, `*`, `&`,  (right to left)
+
+Based on the precedence rules, what does `*p++` do?
+
+
+## Test yourself: C Basics ##
+
+On midterm 1, a common type of question provides a C program, then asks you to
+evaluate some expressions based on what was declared or run in that program.
+
+The instructions will typically say:
+
+-   For integer expressions, write the actual number value in decimal notation.
+    -   Remember — `char` is a type of integer!
+    -   Boolean expressions, such as `x == 1`, are also integer expressions.
+        This means you should never write "true" or "false."
+-   For non-integer expressions, write the type name, in the format that you use
     to declare a variable of that type.
-  - Write "invalid" if a given expression is not a valid C expression
+-   Write "INVALID" if a given expression is not a valid C expression.
 
-Note:
+On the front of the exam, you might find useful information like:
 
-  - Boolean expressions are integer expressions in C. Do not write true or
-    false.
-  - You can assume that the program is run with no command line argument
-
-On the front of the exam, you'll find useful information (sometimes) like:
-
-  - Language: C
-  - Compiler: gcc
-  - Platform: Ubuntu Linux 12.04, 64-bit version
-  - Primitive type sizes: sizeof(int) is 4 and sizeof(int *) is 8
+> Language: C<br>
+> Compiler: gcc<br>
+> Platform: Ubuntu Linux 16.04, 64-bit version<br>
+> Primitive type sizes: `sizeof(int)` is 4 and `sizeof(int *)` is 8
 
 Now you know tons about the other types!
+
+Consider the following program:
 
 ```c
 struct Node {
@@ -194,8 +242,8 @@ struct Node {
 int main(int argc, char **argv)
 {
   int a = 3;
-  int b[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-  struct Node arr[5] = {&a, arr+1, b, arr+2, "hello", arr+3};
+  int b[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  struct Node arr[5] = { &a, arr + 1, b, arr + 2, "hello", arr + 3 };
 ```
 
 Some tricky (maybe not) questions now:
@@ -209,16 +257,21 @@ Some tricky (maybe not) questions now:
   - `arr[0].data[4]`
   - `sizeof(arr[3].next)`
 
-## Git and Makefiles ##
 
-Some key git commands to understand the basic usage of:
+## Git ##
 
-  - git clone
-  - git status
-  - git add
-  - git commit
+_Main article: [Git](C-Git/git.md)_
 
-Make sure you know what levels of git tracking exist:
+Some key Git commands to understand the basic usage of:
+
+    git clone
+    git status
+    git add
+    git commit
+
+Use `git help <command>` to see the manual page for a command.
+
+Make sure you know what levels of tracking exist:
 
   - untracked
   - tracked, unmodified
@@ -226,23 +279,20 @@ Make sure you know what levels of git tracking exist:
   - tracked, modified, staged
   - tracked, committed (??? What's wrong here?)
 
-Also know how dependencies work in Make. Jae's sample makefile is really great
-to use to understand this. I've included the relevant sections from [recitation
-2](recitation-2.md) below:
 
-Take Jae's Makefile piece by piece. It can be found in this git repository as
-`sample-makefile`
+## Makefiles ##
+
+_Main article: [Makefiles](B-Makefiles/makefiles.md)_
+
+Let's review Jae's sample Makefile piece by piece:
 
 ```make
 CC  = gcc
 CXX = g++
 ```
 
-Make has a some pre-configured rules for how to compile programs. For example it
-knows how to specify files as arguments to a compiler. However, you should tell
-it what compiler to use for C files and C++ files. Here, we set the
-special make variables CC and CXX to gcc, the C-compiler, and g++, the c++
-compiler.
+Make has a pre-configured rules for how to compile C programs. We just need to
+set Makefile variables for the C compiler (`CXX`) and C++ compiler (`CXX`).
 
 ```make
 INCLUDES =
@@ -251,119 +301,103 @@ CFLAGS   = -g -Wall $(INCLUDES)
 CXXFLAGS = -g -Wall $(INCLUDES)
 ```
 
-Here we define our own variable, INCLUDES, which we can use for directories that
-we wish to include at the compilation step. An example value for INCLUDES could
-be `-I/home/jae/cs3157` which would tell the compiler to look in
-/home/jae/cs3157 during the compilation step for missing header files and other
-sorts of relevant files.
+Here we define our own variable, `INCLUDES`, which use to specify directories
+to search for header files during compilation. For example, the value
+`-I/home/jae/cs3157` would tell the compiler to look in `/home/jae/cs3157` for
+header files.
 
-After defining INCLUDES, we define the flags that we want each compiler to be
-run with. In this case we include the `-g` flag for debugging and `-Wall` flag
-to display all warnings. Lastly, we reference our variable INCLUDES to add those
-flags as well.
+Also set the flags we want each compilation to run with. What do these flags
+mean? We also reference our `INCLUDES` to add those flags as well.
 
 ```make
 LDFLAGS = -g
 ```
 
-LDFLAGS are the flags that are appended to the compiler when using it for
-linking. In this case we just want the debugging info to be included.
+Flags to pass during the linking step.
 
 ```make
 LDLIBS =
 ```
 
-LDLIBS will automatically be appended to the linker commands. These are flags
-like `-lm` and function similarly to our INCLUDES variable but are added at a
-different step. `m` denotes the math library.
+`LDLIBS` will automatically be appended to the linker commands. These are flags
+like `-lm` for linking the math library. It's analogous to our `INCLUDES` from
+the compilation step.
 
-That's about it for our variable declarations. The next step is to define
-compile order and dependencies. The very first "target" or rule in your makefile
-gets built when you type `make` in this case the first target is:
+Now we define the dependencies of our files. The first target we specify is
+run if we simply type `make`:
 
 ```make
 main: main.o myadd.o
 ```
 
-Note that we did not specify the linking rule, because make follows an implied
-linking rule:
+This rule means that make should produce an executable `main` by linking
+`main.o` and `myadd.o`. When either `.o` file is modified, it will regenerate
+`main` the next time we run `make`.
+
+If we don't provide a command to run, make follows this implied linking rule:
 
     $(CC) $(LDFLAGS) <all-dependent-.o-files> $(LDLIBS)
 
-Also note that make assumes that main depends on main.o, so we could omit it:
+It also assumes that `main` depends on `main.o`, so we could have omitted
+`main.o`.
 
-    main: myadd.o 
-
-Basically what this rule says is make should produce an executable called "main"
-by linking myadd.o and main.o. This declares main.o and myadd.o as dependencies
-of main, meaning that if any of the dependencies (or their dependencies) change 
-between the last time this target was run, it should re-run the outdated targets
-as well as this one.
-
-The next target we declare is main.o:
+(Take a moment to understand how all of that works. Makefile dependencies are an
+important topic!)
 
 ```make
 main.o: main.c myadd.h
 ```
 
-This says that main.o depends on main.c (assumed) as well as myadd.h. See last
-week's recitation notes to understand why main.o depends on myadd.h. We could
-omit main.c as follows:
-
-  main.o: myadd.h
-
-Either way, we do not specify a rule here because make assumes the implicit
-rule:
+Again, we don't specify a command here because make assumes the implicit rule:
 
     $(CC) -c $(CFLAGS) <the-.c-file>
 
-Lastly, we specify the target for myadd.o:
+Just as before, the dependency of `main.o` on `main.c` is implicit. So we could
+have omitted `main.c`.
+
+Why does main.o depend on main.h?
 
 ```make
 myadd.o: myadd.c myadd.h
 ```
 
-We'll include two phony targets. We tell make that they're "phony" so that it
-doesn't attempt to use implicit rules or try to compile them. The first target
-we make is "clean" which should remove all intermediate files. *Always include a
-clean* so that `make clean` can be used to remove intermediate files like object
-files, compiled code, etc. This should return your directory to just its source
-code that can generate all the other files. *Be careful:* Using `rm -r` will not
-prompt you to remove files. This is customary for `make clean` but it also means
-if you make a mistake in designing your rule it could remove files that you
-didn't want to. There is no "trash" in UNIX - they'll be gone forever.
-
-Lastly, we define a phony "all" target that just depends on the main and clean
-targets. This will always remove all intermediate files and compiled files,
-forcing make to recompile everything when main is called.
+Same as previous.
 
 ```make
 .PHONY: clean
 clean:
         rm -f *.o a.out core main
+```
 
+If a target is marked as "phony," make won't try to compile it. So `make clean`
+will always run the associated commands, even if there is a file named `clean`
+in the directory.
+
+The first phony target removes the compiler-generated files so that only the
+source code is left.
+
+```make
 .PHONY: all
 all: clean main
 ```
 
+Make runs its dependencies left-to-right. So the `all` target will first run
+`clean`, then generate `main`. Run `make all` when you want to completely
+recompile the program from scratch, without using any previously compiled files.
+
+
 ## Function Pointers ##
 
-From [Recitation 5](recitation-5.md):
+_Main article: [Function Pointers](F-Function-Pointers/function-pointers.md)_
 
-It is often the case in programming that you'll want your program to change its
-behavior for the person using your program but have no idea how they may want to
-do this. For example, when writing a sort function, you could just specify a
-parameter that let's them choose between sorting ascending and descending.
-However, what if they wanted to sort characters by their unicode value instead of
-lexicographically? For this, the user has to supply their own functionality.
-That's where you need function pointers. Some higher level (read
-lambda-programming languages) support this is in a more intuitive way, but C
-does a pretty good job itself.
+-   Problem: want to write an algorithm then let users customize its
+    functionality
+    -   Example: a sorting algorithm may let users specify whether characters
+        should be compared lexicographically, or by Unicode value
+-   Solution: The caller passes a pointer to a function that implements the
+    desired feature
 
-### Accepting functions as a parameter to your function ###
-
-Function pointers allow you to accept as a parameter to your function, another
-function. Let's start out with accepting functions as a parameter:
+Example of accepting a function as an parameter to your function:
 
 ```c
 void notifier(int (*fn)()) {
@@ -373,134 +407,101 @@ void notifier(int (*fn)()) {
 }
 ```
 
-Let's examine this more closely. We have a function called notifier whose only
-parameter is another function. How do we do this? we specify what kind of
-function it accepts. The basic layout for a function pointer type is `returntype
-(*functionName)(parameter1type, parameter2type, ...)`. Why? Well the returntype
-denotes the type of the function. The name of the function being preceded with
-an asterisk tells us its a pointer. The function is surrounded by parentheses so
-that the compiler doesn't think we've got a variable `returntype *functionName`.
-The parenthese following the declaration are necessary as well, even if the
-function we want to accept doesn't have any arguments. The parameter's only need
-their types declared so that the compiler can check these. Since you won't have
-access to the code you don't need to worry about what to call them.
+-   Basic layout for a function pointer type is
+    `returnType (*functionName)(parameterType1, parameterType2, ...)`
+    -   More examples: [goshdarnfunctionpointers.com](http://goshdarnfunctionpointers.com)
+-   This denotes the return and parameter types of functions you can accept
+-   Parentheses are necessary even if there are no arguments
+-   What does the function do?
 
-### Passing a function as a parameter ###
+Passing a function as a parameter:
 
 ```c
 int wasteTime() {
-  int i = 0;
-  while(i < 1000000)
-    i++;
+  int i;
+  for (i = 0; i < 1000000; i++) { }
   return i;
 }
 
 int main(int argc, char **argv) {
-  wasteTime();
-  notifier(wasteTime);
+  wasteTime(); // Calling the function directly
+  notifier(wasteTime); // Passing a pointer to the function
+
   return 0;
 }
 ```
 
-Notice how we have a function `wasteTime`. And when we follow it with
-perentheses it gets called. When we don't, it is automatically a function
-pointer. Why is this?
+-   Notice the difference between calling a function directly and passing it as
+    a function pointer
+-   Everything in the program is stored in memory — this means the `wasteTime`
+    function's code also has an address
+-   Calling a function causes the program to start executing code at that
+    address
+-   Getting a pointer to the function instead gets the value of that address
+    -   Value can be stored in a variable or passed as a parameter
 
-Well everything in the program is stored in memory, even the functions, which
-means even they have an address. So `wasteTime` has an address in memory. When
-you follow `wasteTime` with perentheses (`wasteTime()`), C goes to the address
-and executes the function. If you think of `wasteTime` as storing a pointer to a
-function, then you can think of `wasteTime()` as dereferencing the pointer.
-Therefore, when we call `notifier` and pass it `wasteTime` without parentheses, it
-passes the address to `wasteTime` to the `notifier` function.
-
-### Calling functions from pointers ###
-We could further use the functions above as follows:
+Storing a function pointer in a variable (this example is equivalent to the one above):
 
 ```c
 int main(int argc, char **argv) {
   int (*f1)();
-  char *(*f2)(char *, const char *);
-  char arr[5] = "bann"
-
   f1 = wasteTime;
-  f2 = strcpy;
 
-  notifier(f1);
-  f2(arr, "hihi");
+  f1(); // Calling the function through the function pointer
+  notifier(f1); // Passing a pointer to the function
+
+  return 0;
 }
 ```
 
-As you can see from the above code, you can declare variables of "function
-pointer" type and assign function pointers to their values. Then you can call
-those functions simply by adding parentheses to the end of the variable name.
-Make sure to check out Jae's notes (lecture 7) for more complicated examples of
-this. Notice that we did the same thing when calling `fn()` in our `notifier`
-function.
+-   Call function pointers by adding parentheses to the end of the variable name
+-   Check out Jae's notes (lecture 7) for more complicated examples
 
-## Order of Operations ##
 
-Binary Operators, Decreasing Order of Precedence (i.e. `< > <= =>` have highest preference, `,` has lowest)
+## Memory Errors ##
 
-  - < > <= =>
-  - + -
-  - * / %
-  - &
-  - ^
-  - |
-  - &&
-  - ||
-  - ternary
-  - += -= *= /= <<= >>= 7= ^= |= %= >>= =
-  - ,
+_Main article: [Memory and Pointers](E-Memory-Pointers/memory-pointers.md)_
 
-Unary Operators, Decreasing Order of Precedence (first is highest preference, second is lowest)
+Here are some common Valgrind errors:
 
-  - (expression), [],  ->,  .
-  - !, ~, ++, --, (type), sizeof, +,  -,  *,  &,   (right to left)
-  
-## On Memory Errors ##
-
-Source: http://www.cprogramming.com/tutorial/memory_debugging_parallel_inspector.html
-
-### Invalid Memory Access ###
+### Illegal read / write errors ###
 
 ```c
-char *pStr = (char*) malloc(25); 
-free(pStr); 
-strcpy(pStr, "parallel programming"); // Invalid write to deallocated memory in heap
+int a[10];
+a[10] = 42; // wrote past the end of the array
 ```
 
-### Missing Allocation ###
+### Illegal frees ###
 
 ```c
-char* pStr = (char*) malloc(20); 
-free(pStr); 
-free(pStr); // results in an invalid deallocation
+char *p = malloc(16);
+free(p);
+free(p); // p was already freed, so you can't free it again
 ```
 
-### Uninitialized Memory Access ###
+### Use of uninitialized values ###
 
 ```c
-char *pStr = (char*) malloc(512);
-char c = pStr[0]; // the contents of pStr were not initialized
-int a; 
-int b = a * 4; // uninitialized read of variable a 
+char *p = malloc(16);
+char c = p[0]; // nothing was written to p[0] before reading from it
+
+int n;
+printf("%d\n", n); // nothing was written to n before passing it as an argument
 ```
 
-For more information, reference [Recitation 4](recitation-4.md).
+You can find a full list of errors and more detailed explanations in the
+[Valgrind manual, Section 4.2: Explanation of error messages from Memcheck](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.errormsgs).
 
-## Good to Know Additional Topics ##
+
+## Other exam tips! ##
 
 Just some things it might pay to know well:
 
-  - What mdbrec's look like and how you interacted with them
-  - How the functions you implemented in lab3 should work, what they return,
-    etc. etc.
-  - What the pipeline for lab5 looked like and how it worked
-  - The ASCII Table (See [Recitation 3](recitation-3.md))
-  - malloc and free...this is tough
-  - **PLEASE PLEASE PLEASE PLEASE FOLLOW DIRECTIONS** The exam will be graded
-    in the same way your labs are graded if not less lenient. Read all the
-    directions. If it says "write the line number and the code that should be
-    on that line," do just that!
+-   What `MdbRec` structs look like and how to use them
+-   How to use the functions from lab3 and what they return
+-   What the pipeline for lab5 looked like and how it worked
+-   malloc and free...this is tough
+-   **Please follow directions!** The exam will be graded in the same way your
+    labs are graded if not less lenient. Read all the directions. Take your time
+    to understand them. If it says "write the line number and the code that
+    should be on that line," do just that!
