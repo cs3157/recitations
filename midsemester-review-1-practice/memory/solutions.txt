@@ -1,1 +1,4 @@
-80 bytes
+40 bytes
+
+No crash, because free() is only called on memory from malloc(). It is never
+used on the static variable r.

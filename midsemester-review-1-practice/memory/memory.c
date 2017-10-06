@@ -4,6 +4,8 @@
 #include "mylist.h"
 #include "mdb.h"
 
+struct MdbRec r;
+
 int main(int argc, char **argv) { 
 
     struct List list;
@@ -18,7 +20,7 @@ int main(int argc, char **argv) {
     memcpy(n2->name, "jae", sizeof("jae"));
     memcpy(n2->msg, "woolee", sizeof("woolee"));
 
-    struct MdbRec *n3 = (struct MdbRec *) malloc(sizeof(struct MdbRec));
+    struct MdbRec *n3 = &r;
     memcpy(n3->name, "12345678", sizeof("12345678"));
     memcpy(n3->msg, "90", sizeof("90"));
 
@@ -30,7 +32,7 @@ int main(int argc, char **argv) {
     struct Node *head = list.head;
     struct MdbRec* data;
     while(head){
-        data = (struct MdbRec*) head->data;
+        data = (struct MdbRec *) head->data;
         printf("name: {%s} \n", data->name);
         head = head->next;
     }
