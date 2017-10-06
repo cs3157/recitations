@@ -95,17 +95,17 @@ printf("pointers are %d bytes", sizeof(p));
 Here are some integer declarations and the corresponding values of the
 variables:
 
-Declaration     | x (dec)   | y (dec)
---------------- | -------   | -------
-int x;          | undefined | -
-int x, y;       | undefined | undefined
-int x = 0, y;   | 0         | undefined
-char x = 'x';   | 120       | -
-char x = '\n';  | 10        | -
-char x = '\13'; | 11        | -
-char x = '0';   | 48        | -
-char x = '\0';  | 0         | -
-char x = 0;     | 0         | -
+Declaration       | x (dec)   | y (dec)
+----------------- | -------   | -------
+`int x;`          | undefined | -
+`int x, y;`       | undefined | undefined
+`int x = 0, y;`   | 0         | undefined
+`char x = 'x';`   | 120       | -
+`char x = '\n';`  | 10        | -
+`char x = '\13';` | 11        | -
+`char x = '0';`   | 48        | -
+`char x = '\0';`  | 0         | -
+`char x = 0;`     | 0         | -
 
 
 ### Different notations for integer literals ###
@@ -138,8 +138,10 @@ The only implementation constraint is that
 Floating point types can be expressed with a decimal point or scientific
 notation:
 
-    float miles = 1.8;
-    double avogadro = 6.02e23; // 6.02 x 10^23
+```c
+float miles = 1.8;
+double avogadro = 6.02e23; // 6.02 x 10^23
+```
 
 
 ### Strings ###
@@ -156,18 +158,24 @@ notation:
 - `&` can be used to "mask" or turn off all bits except certain ones. For
   example:
 
-      n = n & 0177; // n bitwise-and 00000001111111
+  ```c
+  n = n & 0177; // n bitwise-and 00000001111111
+  ```
 
 - `|` can be used to set on all bits:
 
-      n = n | 0177; // n bitwise-or 00000001111111
+  ```c
+  n = n | 0177; // n bitwise-or 00000001111111
+  ```
 
 - It's easy to confuse bitwise and `&` with logical and `&&`:
 
-      int x = 1;
-      int y = 2;
-      printf("%d\n", x & y);  // 0
-      printf("%d\n", x && y); // 1
+  ```c
+  int x = 1;
+  int y = 2;
+  printf("%d\n", x & y);  // 0
+  printf("%d\n", x && y); // 1
+  ```
 
 - `^` is a bitwise exclusive or. The resulting bit is 1 if the inputs were
   different, and 0 if they were the same.
@@ -178,9 +186,11 @@ notation:
   the right operand. Left shifting fills vacated bits by zero. Right shifting
   typically fills with whatever the MSB was.
 
-      int x = 2;
-      x = x << 2; // x == 8
-      x = x >> 1; // x == 4
+  ```c
+  int x = 2;
+  x = x << 2; // x == 8
+  x = x >> 1; // x == 4
+  ```
 
 
 ### Order of Operations ###
