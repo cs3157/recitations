@@ -454,20 +454,42 @@ To demonstrate:
     bar() && foo();     // only prints bar!
     bar() || foo();     // prints bar! foo!
 
-This means that for some short-circuited statement like `X && Y`,
-even if calling` Y` somehow crashes the system,
-we can avoid it all together by not ever reaching that codepath
+This means that for some short-circuited statement like `foo() && bar()`,
+as long as `foo()` returns a nonzero value, `bar()` will never even be called.
 
 
 #### Operator Precedence
+
+Like in any other programming or symbolic language,
+C defines an order of operations for each of its operators.
+This way, both the programmer and compiler can agree on
+what order to evalaute expressions.
+
+You should be familiar with a lot of the most common rules
+(like multiplication/division before addition/subtraction),
+but there is one note-worthy gotcha that is quite commonly used in C:
+
+    *p++
+
+This doesn't increment the variable you get from dereferencing `p`;
+instead, this expression takes on the _value_ of `*p`,
+and then increments `p` afterwards. It's not the same as `(*p)++`;
+it's more along the lines of something like, `*p, p++`,
+where the two operations are done upon `p` separately.
+
+Aside from that, C operators are pretty straightforward to read and write.
+[CPP Reference](http://en.cppreference.com/w/c/language/operator_precedence)
+has a pretty clear listing of each operator, their precedence,
+and their associativity.
+
 
 #### L-values and R-values
 
 
 
-## Statements ##
+## Statements
 
-### If-Else Statements ###
+### If-Else Statements
 
 ```c
 if(condition)
@@ -479,7 +501,7 @@ if(condition)
     printf("no conditions met");
 ```
 
-### Switch Statements ###
+### Switch Statements
 
 ```c
 switch(v) {
@@ -494,7 +516,7 @@ switch(v) {
 }
 ```
 
-### Loops ###
+### Loops
 
 ```c
 int i;
@@ -515,20 +537,6 @@ Using `break;` inside a loop will break out of the innermost loop. Using
 `continue;` will stop executing the current iteration of the loop and skip to
 the next iteration. `for(;;)` is an idiom for an infinite loop. `goto label`
 will jump to a line beginning with `label: `. Be careful with gotos.
-
-#### `const`
-
-The `const` keyword tells that compiler that once a variable is initialized,
-it shouldn't be assigned to again.
-The type modifer can come either before or after the type:
-
-    const int x;
-    int const y;
-
-Note that this is only compiler enforced,
-but like what we did above to print floats in binary, 
-we can trick the compiler 
-
 
 
 ## Appendix: Optional Language Reference Material
@@ -579,3 +587,17 @@ you can reuse some of your code from lab1 to do so:
 Note that this is also an example of casting pointers.
 By casting the `float` pointer to an `int` pointer, once we derefence it,
 we can interpret the same 4 bytes worth of data as integers rather than floats.
+
+
+#### The `const` Type Modifier
+
+The `const` keyword tells that compiler that once a variable is initialized,
+it shouldn't be assigned to again.
+The type modifer can come either before or after the type:
+
+    const int x;
+    int const y;
+
+Note that this is only compiler enforced,
+but like what we did above to print floats in binary, 
+we can trick the compiler 
