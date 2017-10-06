@@ -71,47 +71,17 @@ int main(void) {
 }
 ```
 
-When we declare an integer type, we can modify it with the keyword
-`signed` or `unsigned` to tell the compiler the signedness of the integer.
-When unspecified, most integer types are signed by default.
+There are some more technical details different ways of declaring integers,
+which you can find in the Appendix.
 
-C also allows the programmer to use `long` and `short` as modifiers for `int`,
-which are the same as not having used the keyword `int` at all.
-So don't be alarmed if you see a `long int` type! It's just a `long`.
-
-Also, if we don't write `int` and only specify the signedness, it's an `int`.
-
-The following are equivalent:
-
-`short`                 | `short int`               | `signed short`        | `signed short int`
-`long`                  | `long int`                | `signed long`         | `signed long int`
-`long long`             | `long long int`           | `signed long long`    | `signed long long int`
-`int`                   | `signed`                  | `signed int`
-`unsigned int`          | `unsigned`
-`unsigned short`        | `unsigned short int`
-`unsigned long`         | `unsigned long int`
-`unsigned long long`    | `unsigned long long int`
-
-This is just a detail to watch out for, but not super important.
-Most of the time we use the notation in the leftmost column, by convention.
 
 ### Floating-Point Types
 
 There are three types for floating-point numbers in C,
 for single-precision, double-precision, and extended-precision floating point.
 How they're bitwise represented differs from machine to machine,
-but most modern computers use the IEEE-754 floating-point standard.
-If you're curious to see what it looks like,
-you can reuse some of your code from lab1 to do so
-(don't worry about the casting stuff just yet, it'll make sense later on):
-
-    float f = 3.157;        // or whatever you want it to be!
-    int *i = (int *) &f;    // don't worry about what this means
-                            // we're tricking the compiler to think that
-                            // the float is a binary (;
-
-    print_hex(*i);
-    print_binary(*i);       // implementation left as an exercise to the reader
+but most modern computers use the IEEE-754 floating-point standard
+(if you're curious to see what that looks like in binary, see the Appendix).
 
 Like with integers, the sizes are defined relative to each other.
 They are:
@@ -143,7 +113,9 @@ int main(void) {
 
 ### Variable Declarations
 
-Just like in Java, we declare variables using the following syntactic structure:
+Just like in Java, we declare variables using the following syntactic structure
+(note that the `[]`s indicate that the type modifiers are optional,
+and the `..` indicate that there can be multiple modifiers):
 
     [<modifiers..>] <type> [<modifiers..>] <variable name>;
 
@@ -191,11 +163,13 @@ that takes a single `float` as its parameter:
 When we cast from an integer type to a floating-point type,
 the compiler produces instructions to convert our integer representation
 to floating-point representation.
+
 Keep in mind that when we convert between integer types, 
-we extend/truncate our integer (we often see non-zero MSBs are discarded).
-When we convert between floating-point types of different levels of precision,
-again the compiler helps us do the conversion, though we may lose precision
-if we're casting from a more precise floating-point type to a less precise one.
+we extend/truncate our integer in order to fit it into the size of the type
+we are casting it to. Note this can lead to some strange-looking results!
+For example, if we're casting from a positive `long` to an `int`,
+and the `long` happened to have a 1 value at the bit position
+corresponding to the MSB of an `int`, the result may be a negative number:
 
 ```c
 #include <stdio.h>
@@ -207,14 +181,24 @@ int main(void) {
 
     printf("char to int: %d\n", (int) c);       // prints 4
     printf("int to float: %f\n", (float) i);    // prints 4.000000
+
     printf("long (no cast): %ld\n", ll);        // prints 3000000000
     printf("long to int: %d\n", (int) ll);      // prints -1294967296
+
     return 0;
 }
 ```
 
 As you can see, downcasting the 8-byte `long` truncated our integer,
 which means something very different as a signed, 4-byte integer.
+
+When we convert between floating-point types of different levels of precision,
+again the compiler helps us do the conversion, though we may lose precision
+if we're casting from a more precise floating-point type to a less precise one.
+
+We can actually use casting to "cast away" some of the things the compiler
+tries to enforce for us, like pointer types and `const`ness.
+Check out the Appendix for more details.
 
 
 ### Literals
@@ -274,7 +258,7 @@ using suffixes `f`/`F` or `l/L` respectively.
 You might've noticed that, unlike in Python or Javascript,
 in C, single quotation marks `'` aren't the same as double quoatation marks `"`.
 This is becauase single quotation marks are used for single character literals,
-while double quotation marks are used for string literals (more on this later).
+while double quotation marks are used for string literals (see below).
 
 C uses ASCII encoding for characters, which assigns each character an integer.
 Recall that a `char` is usually 1 byte; this is because each ASCII character
@@ -323,17 +307,13 @@ you could do something like the following:
 
 #### String Literals
 
-We're not going to go too deep into this just yet
-until we look at pointers and arrays,
-but understand that there are no "real" strings in C.
-String literals represent an array of characters, which are what C strings are.
+We write string literals as a sequence of valid `char` literals
+(including escaped characters), surrounded by double quotation marks `"`:
 
-We can write them surrounded by double quotation marks `"`,
-with escape sequences too:
+    "I am a not really a 'string', just an array of characters.\n"
 
-    "I am a not really a string\n"
-
-We'll be talking a lot more about strings later on, so hold tight.
+String literals actually represent a null-terminated array of characters,
+which the compiler pre-allocates for us in static memory.
 
 
 ## Expressions and Statements
@@ -548,3 +528,54 @@ The type modifer can come either before or after the type:
 Note that this is only compiler enforced,
 but like what we did above to print floats in binary, 
 we can trick the compiler 
+
+
+
+## Appendix: Optional Language Reference Material
+
+### Integer Declarations
+
+There are a few modifiers we can use to specify exactly what kind of integer
+we want our compiler to declare for us.
+
+When we declare an integer type, we can modify it with the keyword
+`signed` or `unsigned` to tell the compiler the signedness of the integer.
+When unspecified, most integer types are signed by default.
+
+C also allows the programmer to use `long` and `short` as modifiers for `int`,
+which are the same as not having used the keyword `int` at all.
+So don't be alarmed if you see a `long int` type! It's just a `long`.
+
+Also, if we don't write `int` and only specify the signedness, it's an `int`.
+
+The following are equivalent:
+
+`short`                 | `short int`               | `signed short`        | `signed short int`
+`long`                  | `long int`                | `signed long`         | `signed long int`
+`long long`             | `long long int`           | `signed long long`    | `signed long long int`
+`int`                   | `signed`                  | `signed int`
+`unsigned int`          | `unsigned`
+`unsigned short`        | `unsigned short int`
+`unsigned long`         | `unsigned long int`
+`unsigned long long`    | `unsigned long long int`
+
+This is just a detail to watch out for, but not super important.
+Most of the time we use the notation in the leftmost column, by convention.
+
+
+### IEEE-754 Floating Point Standard and Casting Pointers
+
+If you're curious to see what IEEE-754 floating point numbers look like,
+you can reuse some of your code from lab1 to do so:
+
+    float f = 3.157;        // or whatever you want it to be!
+    int *i = (int *) &f;    // don't worry about what this means
+                            // we're tricking the compiler to think that
+                            // the float is a binary (;
+
+    print_hex(*i);
+    print_binary(*i);       // implementation left as an exercise to the reader
+
+Note that this is also an example of casting pointers.
+By casting the `float` pointer to an `int` pointer, once we derefence it,
+we can interpret the same 4 bytes worth of data as integers rather than floats.
