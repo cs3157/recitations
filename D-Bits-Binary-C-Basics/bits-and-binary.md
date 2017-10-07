@@ -168,7 +168,7 @@ Some of this may seem familiar if you've ever used `ls -la` or `chmod`.
 You'll come across this again later when we take a second look at UNIX!
 
 
-#### Bitwise XOR `~`
+#### Bitwise XOR `^`
 
 Also known as a bitwise eXclusive OR;
 behaves just like the bitwise AND and OR, except with an XOR operation.
@@ -229,7 +229,7 @@ Note that this is equivalent to dividing a number by 2^`n`
 (and discarding the remainder)!
 
     int x = 5;              // 0101 in binary
-    assert(x >> 1 == 1);    // 0001 (1)
+    assert(x >> 2 == 1);    // 0001 (1)
 
 ## Appendix: Truth Tables for Bitwise Operations ##
 ### AND
