@@ -30,7 +30,7 @@ Let's refresh our memory about memory:
 
 ### Two's Complement ###
 
--   MSB indicates whether number is positive (1) or negative (0)
+-   MSB indicates whether number is positive (0) or negative (1)
 -   If negative, invert all bits and add 1 to find out what number is
     represented
 
