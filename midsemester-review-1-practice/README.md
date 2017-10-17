@@ -10,9 +10,9 @@ Clone the recitation repository with this command:
 ```bash
 git clone https://github.com/cs3157/recitations.git
 ```
-Go into the midsemester-review-practice folder.
+Go into the midsemester-review-1-practice folder.
 ```bash
-cd midsemester-review-practice/
+cd midsemester-review-1-practice/
 ```
 Copy Jae's solution for mylist.c into the memory folder.
 ```bash
