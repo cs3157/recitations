@@ -199,7 +199,8 @@ this.
 * `"r+"` read and write. Opens file for update (file must already exist)
 * `"w+"` read and write. Creates new text file and discards previous contents if file already exists
 * `"a+"` append; can read and append. Adds to end in the same behavior as `"a"` **regardless** of file position
-* `"_b"` indicates binary file. Suppresses Windows addition of `"\r"` to `"`\n"`
+* `"rb"`, `"wb"`, `"ab"`, `"rb+"`, `"wb+"`, `"ab+"`  indicates binary file. If using Windows OS, these modes suppresse the Windows addition of `"\r"` to `"\n"`. The order of "b" and "+" does not matter (i.e.`"rb+"` and `"r+b"` are equivalent).
+
 
 ### fgets and fputs ###
 
@@ -220,7 +221,8 @@ location pointed to by `line`. If all is successful, it reads at most
 goes wrong (on end of file, or error) it returns `NULL`. It will keep the
 newline character it reads if it gets to one before it reaches `maxline-1`
 characters. It also ALWAYS appends the null character to the end of the string.
-Additionally, 
+`fgets` will advance the file position after each read by the space read into
+`line`.
 
 `fputs` returns EOF if there's an error and 0 otherwise. This will not append a
 newline to the file, nor does your string need to contain a newline character.
