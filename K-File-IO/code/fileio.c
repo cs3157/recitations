@@ -92,12 +92,12 @@ int main(){
 	fclose(fp);
 
 	FILE *fp1 = fopen("test3_fwrite", "w");
-	// buffer currently contains 'world\0\0\0\0\0hello\n' 
+	// buffer currently contains 'world\0\0\0\0\0hello' 
 	fwrite(buffer, 15, 1, fp1);
 	fclose(fp1);
 
 	FILE *fp2 = fopen("test3_fputs", "w+");
-	// buffer currently contains 'world\0\0\0\0\0hello\n' 
+	// buffer currently contains 'world\0\0\0\0\0hello' 
 	fputs(buffer, fp2); // writes buffer to fp2 up to but not including '\0'
 	fclose(fp2);
 

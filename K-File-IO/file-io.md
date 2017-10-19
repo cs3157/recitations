@@ -169,8 +169,7 @@ You can use function like `fopen` and `fclose` instead of the more low-level
 first is a string representing the path to the file you want to open, and the
 second is the mode with which you will open it. The mode tells whether or not
 you are going to be reading, writing, or appending to the file and also how you
-want to read the file in. Make sure you know the difference between "r", "w",
-"a", "r+", "w+", "a+", and all of the above with a "b" on the end. If `fopen()`
+want to read the file in. The list of different modes and their uses are listed below. If `fopen()`
 fails it will return a NULL pointer. This can happen because a file doesn't
 exist (in the case of r's) or because you don't have permissions to
 access the file. If you fopen a non-existent file with the 'a' or 'w' option, the file will, however, be created. `fclose()` will close the file when you're done.
@@ -193,6 +192,16 @@ that the status of the open file can be maintained. This means that **if you
 don't `fclose` your `FILE *`s, you'll have memory leaks**. Be careful about
 this.
 
+**Modes**
+* `"r"` read only (file must already exist) 
+* `"w"` write only. Creates new text file and discards previous contents if file already exists
+* `"a"` append only; opens text file or creates file, all writes go to end of the file
+* `"r+"` read and write. Opens file for update (file must already exist)
+* `"w+"` read and write. Creates new text file and discards previous contents if file already exists
+* `"a+"` append; can read and append. Adds to end in the same behavior as `"a"` **regardless** of file position
+* `"rb"`, `"wb"`, `"ab"`, `"rb+"`, `"wb+"`, `"ab+"`  indicates binary file. If using Windows OS, these modes suppresse the Windows addition of `"\r"` to `"\n"`. The order of "b" and "+" does not matter (i.e.`"rb+"` and `"r+b"` are equivalent).
+
+
 ### fgets and fputs ###
 
 **THESE FUNCTIONS ARE FOR LINE INPUT AND LINE OUTPUT**
@@ -212,6 +221,8 @@ location pointed to by `line`. If all is successful, it reads at most
 goes wrong (on end of file, or error) it returns `NULL`. It will keep the
 newline character it reads if it gets to one before it reaches `maxline-1`
 characters. It also ALWAYS appends the null character to the end of the string.
+`fgets` will advance the file position after each read by the space read into
+`line`.
 
 `fputs` returns EOF if there's an error and 0 otherwise. This will not append a
 newline to the file, nor does your string need to contain a newline character.
@@ -233,7 +244,8 @@ to be read into the right size memory space, you'll need to tell it the `size`
 of each item, and the number of items `nmemb` to read/write from/to the
 `stream`. `fwrite` promises not to modify the data that `ptr` references as
 well. The return the number of bytes read/written. If it's anything less than
-what you expected, you should check what happened using `ferror` or `feof`.
+what you expected, you should check what happened using `ferror` or `feof`. `fread`
+and `fwrite` advances the position of the file to the end of the space read or written. 
 
 ### fseek ###
 
