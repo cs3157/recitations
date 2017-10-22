@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -g
 LDFLAGS = -g
 
-default: main leaky
+default: main leaky bad_access
 
 main: mymath.o
 
