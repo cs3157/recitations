@@ -1,26 +1,25 @@
-
 ## *nix Systems ##
 
 ### The Stack ###
 
-  1. Hardware: physical components - processor, disk, keyboard, etc...
-  2. OS Kernel: core of an operating system that loads first, controls resources, performs fundamental tasks
-  3. System Calls: a call/request for a kernel operation, e.g. `open()`, `signal()`, `fork()` and `exec()` 
-  4. Library Functions: inbuilt functions that come with programming language performing specific functions, e.g. `printf()`, `malloc()`
-  5. Applications: end-user programs like emacs, gcc, and executables you build in class. 
+  1. Hardware: These are the physical components, i.e. the processor, disk, keyboard, etc...
+  2. OS Kernel: The kernel is the core of an operating system that loads first, controls resources, and performs fundamental tasks.
+  3. System Calls: These are calls/requests for kernel operations. Some examples are `open()`, `signal()`, `fork()` and `exec()`. We'll see `fork` and `exec` in detail in this document.  
+  4. Library Functions: These are inbuilt functions that come with programming language and perform specific functions, e.g. `printf()`, `malloc()`
+  5. Applications: These are the end-user programs like emacs, gcc, and executables you build in class. 
 
 ### Users and Permissions ###
 
 Unix systems have three different ways to allocate permissions: owner (a user),
-group, and everyone else. The owner can always assign owner permissions to another user. (root users !!)
+group, and everyone else. The owner can always assign owner permissions to another user. The *root user* has all permissions by default. 
 
 There are three UNIX file permissions. Read, write, and execute. Always think of
 them in this order. Permissions are conventionally represented as combinations of 3 binary digits.
-Each digit represents one of read write and execute. So for example, 110 is the
+Each digit represents one of read, write and execute. So for example, 110 is the
 ability to write and read and is a value of 6. (100-> read-> value of 4. 111 -> read, write, execute -> value of 7). Conventionally, you could combine these in the order owner-group-other in a string like "644" which would mean the owner can
 write/read, and the group and others can only read. `chmod ### path` can
 be used to set permissions for a path. Note that you can view permissions 
-(among other things) of files in your current directory by entering `ls -al`.
+(among other things) of files in your current directory by entering `ls -al`. See the `ls` man page for more information. 
 
 ### Processes ###
 
@@ -34,7 +33,7 @@ Each process has a unique, non-negative numeric identifier known as the **proces
 
 #### Creating New Processes with fork/exec ####
 
-We can create new processes using the `fork` system call from an existing process. `fork()` creates a new process by duplicating the current process, and each process executes from the point of the `fork()` call. (duplicates tasks, stack, etc... specify) The caller of fork is known as 
+We can create new processes using the `fork` system call from an existing process. `fork()` creates a new process by duplicating the current process, and each process executes from the point of the `fork()` call. Fork duplicates the entire virtual address space when creating the new process. This means it duplicates the stack, the heap, the tasks, etc. The caller of fork is known as 
 the parent process and the process getting created is known as the child process. `fork()` returns 0 in the child process, and the process ID of the new (child) process in the parent process. One of the most common uses of forking--which is what you'll be using forking for
 in lab 5--is to run other programs via an existing process. That is, you'll have
 a running process that will fork itself and, while the parent continues executing
@@ -54,13 +53,6 @@ following a call to `exec()` will only be executed if the call to `exec()` fails
 Fork and executing is how the entire operating system works. The kernel starts
 an `init` process and everything is fork/exec'ed from there.
 
-(Cut more of this part ?)
-
-#### Communicating Between Processes ###
-Check out [recitation L](https://github.com/cs3157/recitations/blob/master/L-IPC-TCP-IP/ipc-tcpip.md) about interprocess communication (IPC).
-
-(keep?)
-
 #### Dealing with Terminated Processes ####
 
 So what happens when the child process terminates before the parent process?
@@ -76,13 +68,9 @@ you can check out the optional part 2 of lab 5.
 For a fun fork/exec example, check out the `jsh` program in the 
 [recitation-J-code directory](https://github.com/cs3157/recitations/tree/master/J-Fork-Exec/code). 
 
-(Needs editing)
-(moved Signals to bottom)
-(need better transition to shell.c)
+Now, let's go through Jae's shell.c program from lecture and see these system calls in action. You can find the complete code in /home/jae/cs3157-pub/sample-code/fork-exec. 
 
 ## Jae's shell.c Program ##
-
-Let's go through shell.c and see these system calls in action. (shell.c is found in -- put in recitations?)
 
 ### Variables ### 
 ```c
@@ -102,11 +90,11 @@ Aside from the buffer, we declare a variable `pid` of type `pid_t`. `pid_t` is a
 twice: once in the parent and once in the child. The return value of `fork()` 
 depends on if it's executing within the child process or parent process. `fork()` 
 will return the process id of the child if it's executing within the parent, and 
-it will return 0 of it's executing within the child process. `fork()` returns (??/) if there is an error. This means you can 
+it will return 0 of it's executing within the child process. `fork()` returns -1 if it fails. This means you can 
 identify which process you are in simply by checking the return of `fork()`. Note
 that the process ID of the child process is **NOT** equal to 0. Also note that
 the order of execution of the child and parent processeses relative to each other
-is unpredictable. 
+is unpredictable (which `waitpid` can remedy).  
 
 
 ```c
@@ -117,7 +105,7 @@ else if (pid == 0) {
         }
 ```
 
-The above block of code is only executed in the child process (where `pid == 0`). `execl()` completely replaces the child process image with the new one - an instance of the program passed through `buf`. The first argument of `exec()` family of functions is the path of the file to be executed. The second argument, by convention, is the filename of the file to be executed (hence `buf` being passed in twice). Subsequent arguments are arguments to pass into the file to be executed. The list of parameters must **always** be ended by `NULL` pointer cast to `char *` to show the end of the argument list. The above block calls `execl()` with just the file to be run and no arguments. Once `execl()` is called and succeeds, the process is turned into an instance of the program pointed to by `buf` - nothing beyond the `execl()` call in the original program is executed. 
+The above block of code is only executed in the child process (where `pid == 0`). `execl()` completely replaces the child process image with the new one - an instance of the program passed through `buf`. The first argument of `exec()` family of functions is the path of the file to be executed. The second argument, by convention, is the filename of the file to be executed (hence `buf` being passed in twice). Subsequent arguments are arguments to pass into the file to be executed. The list of parameters must **always** be ended by `NULL` pointer cast to `char *` to show the end of the argument list. The above block calls `execl()` with just the file to be run and no arguments. Once `execl()` is called and succeeds, the process is turned into an instance of the program pointed to by `buf` - nothing beyond the `execl()` call in the original program is executed unless `execl()` fails. 
 
 ```c
 else {
@@ -127,18 +115,16 @@ else {
         }
 ``` 
 
-The above block of code is only executed in the parent process (where `p > 0`). `waitpid()` is used to wait or check for state changes in child processes. `waitpid()` takes in three arguments. The first is a number of type `pid_t`. This can be a specific process ID of a child process, or an integer representing other categories of process. In the case above, it passes in the process ID of its child to `waitpid()`. In lab 5, you'll see a case where `waitpid()` is called with -1. (explain? refer to man?) The second argument is a pointer to `status`, telling `waitpid()` to save state information in that variable. State information could be signals set in the process, exits and terminations or errors. (Point to info on signals ???) If `NULL` is passed instead of a pointer to variable, then state information is not saved. `status` can be used with a variety of functions to inspect/get information about child process. (man page) The third arguments is an option parameter. `0` tells `waitpid()` to wait put off returning until child process has changed state or terminated. In lab5, we'll see the `WNOHANG` option that tells `waitpid()` to **not** wait for child processes to terminate and return immediately if children are still running. In the above block, `waitpid()` returns the process ID of the child it waited for. For different return values with different options, check out man page (improve sentence, refer to man page only once).
+The above block of code is only executed in the parent process (where `p > 0`). `waitpid()` is used to wait or check for state changes in child processes. `waitpid()` takes in three arguments. The first is a number of type `pid_t`. This can be a specific process ID of a child process, or an integer representing other categories of process. In the case above, it passes in the process ID of its child to `waitpid()`. In lab 5, you'll see a case where `waitpid()` is called with -1. The second argument is a pointer to `status`, telling `waitpid()` to save state information in that variable. State information could be signals set in the process, exits and terminations or errors. (There's an **optional** section at the bottom of this argument on Signals if you'd like to know more. [This](http://titania.ctie.monash.edu.au/signals/) is also a good resource for Unix Signals.) If `NULL` is passed instead of a pointer to variable, then state information is not saved. `status` can be used with a variety of functions to inspect/get information about child process. The third argument is an option parameter. `0` tells `waitpid()` to put off returning until child process or processes have changed state or terminated. In lab5, we'll see the `WNOHANG` option that tells `waitpid()` to **not** wait for child processes to terminate and return immediately if children are still running. In the above block, `waitpid()` returns the process ID of the child it waited for. For different return values with different options and arguments, check out the `waitpid` man page.
 
 ```c
 printf("AP> ");
 ```
 
-The `printf()` statement above is executed only by the parent process, once the child process has terminated. Remember, the child process never gets to this point because it was replaced by a different instance, and the parent has to wait for the child before it continues through the loop. After printing, the while loop will star over, going through everything again until parent process is terminated. 
+The `printf()` statement above is executed only by the parent process, once the child process has terminated. Remember, the child process never gets to this point because it was replaced by a different instance, and the parent has to wait for the child before it continues through the loop. After printing, the while loop will star over, going through everything again until the parent process is terminated. 
 
 
-### Signals ###
-
-(keep?) 
+### Signals (Optional) ### 
 
 Signals are an OS's way of communicating with a process outside of the I/O
 streams. They can be sent at any time and a process has three options upon
