@@ -5,10 +5,9 @@ Our final review session typically goes through practice exam questions written
 by the TAs. We're also providing this outline of some important topics in case
 it helps organize your studying (but it's not meant to be exhaustive).
 
-Use the link in each section to see the full review session notes for that
-topic. You can also read the midterm review session notes for a condensed
-version.
-
+If you find a topic you're not familiar with, click the link to the full review
+session notes. Make sure you understand the topic thoroughly before moving on.
+Remember, the exams are written to test how deep your knowledge goes!
 
 Topics from Midterm 1
 ---------------------
