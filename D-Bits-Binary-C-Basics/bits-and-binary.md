@@ -12,7 +12,7 @@ let's take a bit of time to refresh our memory about bits:
     - Can take on 2^8 = 256 different values (from 0 to 255, inclusive)
   - **Hexadecimal**:
     - A base-16 numerical notation that can represent up to 15 in a single digit
-    - Uses base-10 + first 5 letters of alphabet:
+    - Uses base-10 + first 6 letters of alphabet:
       { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f }
     - By convention, we prefix numbers in hexadecimal notation with "0x"
       e.g. 0x3157
@@ -184,7 +184,7 @@ For example:
 #### Bitwise NOT `~`
 
 Also known as a bitwise complement.
-Takes two integers as operands and returns an integer with all its bits flipped.
+Takes integer as operand and returns an integer with all its bits flipped.
 
     unsigned int x = 5; // 0101 in binary, unsigned
     int y = 5;          // 0101 in binary, signed
