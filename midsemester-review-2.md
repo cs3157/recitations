@@ -19,7 +19,7 @@ It is possible to redirect the source of `stdin` or the destination of `stderr` 
 Remember `|`? We'll talk about that in the Pipes section below.
 
 ### File I/O ###
-`FILE *`'s (file descriptors) are your best friends; they're just fancy pointers
+`FILE *`'s (file handles) are your best friends; they're just fancy pointers
 for files. As noted above, all C programs start with `FILE *`s `stdin`,
 `stdout`, and `stderr`.
 
