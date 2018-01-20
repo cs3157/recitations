@@ -170,7 +170,7 @@ really wanted, but it might get annoying.)
 Vim is a difficult to use text editor and can be confusing at first. Its goal is
 to be incredibly efficient by preventing unnecessary movement of your hands
 around the keyboard. It operates in different modes, the most important of
-which will be **edit mode** and **insert mode.**
+which will be **normal (command) mode** and **insert mode.**
 
 Launch Vim and tell it the filename you want to edit:
 
