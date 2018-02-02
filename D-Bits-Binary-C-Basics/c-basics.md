@@ -294,8 +294,8 @@ So, consider the following:
     char c = '\0';
     char d = '\x0';
 
-    assert(a == b);
-    assert(a != c);
+    assert(a != b);
+    assert(a == c);
     assert(a == d);
 
 `char` literals can be added and subtracted just like any other number,
