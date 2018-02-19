@@ -126,11 +126,11 @@ but we've not actually put anything there yet!
 There's no guarantee what garbage might be written in the piece of memory
 we're given, so trying to access it will result in **undefined behavior**
 (no guarantees for what will happen during compilation or execution;
-you'll here us talk about this _a lot_, specifically about avoiding it).
+you'll hear us talk about this _a lot_, specifically about avoiding it).
 
     int x;              // x is declared, but uninitialized
     printf("%d", x);    // undefined behavior; don't do this!
-    x = 4;              // x is now initialized to 6
+    x = 4;              // x is now initialized to 4
 
 We can also declare multiple variables of the same type all at once,
 separating the variable names with a `,`:
