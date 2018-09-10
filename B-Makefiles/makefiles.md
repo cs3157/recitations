@@ -100,6 +100,24 @@ With this as the only thing our `Makefile`, if we run `make`, we'll see that
 `myadd.o` is built for us!
 
 
+### Step 1
+
+Now, let's also write the rule for building `main.o`. Since `main.c` also
+`#include`s `myadd.h`, we should also specify that as a dependency:
+
+    main.o: main.c myadd.h
+        gcc -g -Wall -c main.c
+
+Now, what happens when you type `make` will depend on _where_ you've written
+this rule. If `make` is given no arguments, it will just build the first target
+that is explicitly specified in the `Makefile`. In the demo, we've written the
+`main.o` rule above the `myadd.o` rule, so if you type `make` now, you should
+see only `main.o` building.
+
+We can still build targets that aren't the default (top) target. If we wanted
+to explicitly tell Make to build `myadd.o`, we can run `make myadd.o`.
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
