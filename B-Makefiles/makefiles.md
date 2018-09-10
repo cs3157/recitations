@@ -141,6 +141,70 @@ projects, rebuilding from scratch every time can be very inefficient. Instead,
 Make just rebuilds outdated targets as necessary.
 
 
+### Step 3
+
+It's sometimes useful to clean up your project directory and get rid of all
+your build products. In this case, the `main` executable and any `.o` files.
+If we built anything by hand, we may also have produced an executable named
+`a.out`, which we'll want to get rid of too. We can do that with the following:
+
+    rm -rf main *.o a.out
+
+We want to sure `rm` just does what its told (and doesn't choke on, say, some
+directory mischieviously named `main`), so we pass it the `-rf` flag.
+But having to type this all the time can be pretty cumbersome.
+
+It turns out that Make targets don't have to be files! We can create a shortcut
+for ourselves with the following rule:
+
+    clean:
+        rm -f main *.o a.out
+        
+Now we can just clean up our project by running `make clean`. Isn't that neat?
+
+
+### Step 4
+
+Actually, there's a problem with the `Makefile` we left off with from step 3.
+Consider the following sequence of commands:
+
+    $ make
+    gcc -g -Wall -c main.c
+    gcc -g -Wall -c myadd.c
+    gcc -g main.o myadd.o -o main
+    $ touch clean
+    $ make clean
+    make: `clean' is up to date.
+
+If you run `ls` now, you'll find that nothing has been cleaned. You'll also find
+a file named `clean`, that was created by the `touch clean` command. Because
+this file already exists, and its timestamp is not older than any of its
+dependencies (since it has none), Make will not try to "build" the `clean`
+target.
+
+This kind of situation doesn't happen very often, but can be very frustrating
+when it does. To get around it, we need to tell Make that this is a "phony"
+target, using the special `.PHONY` directive, so that it ignores the timestamp
+and runs the `clean` target every time:
+
+    .PHONY: clean
+    clean:
+        rm -f main *.o a.out
+
+
+### Interlude
+
+At this point, you now have the basis complete `Makefile`. Every target in here
+is explicit, which means for larger software projects, you'll be doing a _lot_
+of typing, but it'll do for the rest of 3157. You can jump to this part of the
+demo by running:
+    
+    ./demo explicit
+
+In the following sections, we'll be explaining some of the fancier things you
+can do with your Makefile by leveraging variables, implicit rules, and other
+nifty features.
+
 
 ## Jae's myadd Makefile ##
 
