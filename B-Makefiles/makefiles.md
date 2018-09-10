@@ -206,6 +206,47 @@ can do with your Makefile by leveraging variables, implicit rules, and other
 nifty features.
 
 
+### Step 5
+
+Make actually comes with a lot of the same features as shell scripting languages
+like Bash and Python. One of these is the ability to assign variables.
+
+Notice that every time compile, we use the same `-g -Wall` flags (in addition to
+the `-c` flag). It doesn't seem like a big deal now, but if we were compiling
+hundreds of compilation units and wanted to remove the `-Wall` flag from all of
+them, that could get really annoying. (More annoying than those pesky warnings
+you're trying to silence! But please leave in the `-Wall` flag for this class,
+it's a good habit make.)
+
+Instead, we add one more level ofindirection by assigning those flags to a
+compiler flags variable instead:
+
+    CFLAGS = -g -Wall
+
+Now, in our rules, Make will substitute any instance of `$(CFLAGS)` it comes
+across with `-g -Wall`. For example:
+
+    gcc $(CFLAGS) -c main.c
+
+We can do the same with the compiler command itself, `gcc`, as well as the `-g`
+flag we're passing to the linking rule:
+
+    CC = gcc
+    LDFLAGS = -g
+
+`CC` stands for "C Compiler," and `LDFLAGS` means "linking flags." Now we can
+compile and link with the following:
+    
+    $(CC) $(CFLAGS) -c main.c
+    $(CC) $(LDFLAGS) main.o myadd.o -o main
+
+It's not entirely obvious yet why we chose to substitute these particular parts
+of our build commands, or why we're using such particular variable names. Why
+this is important will become clear in step 8 when we use implicit rules.
+
+
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
