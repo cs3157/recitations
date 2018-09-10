@@ -268,6 +268,8 @@ We can rewrite the linking rule as follows:
 Within the `main` rule, `$@` will expand to `main`. Now, if we change `main`,
 the output executable name will change accordingly.
 
+You can try this out by playing around with your Makefile, then running `make`.
+
 
 ### Step 7
 
@@ -291,6 +293,29 @@ using. For example, there's no mention of `main.o`, `main.c`, or `myadd.h` in
 `main.o`'s build commands. There's probably another opportunity to simplify our
 `Makefile` even more just around the corner...
 
+
+### Step 8
+
+The guys who wrote Make also realized that there are some pretty common patterns
+when it comes to compiling C software projects, so they built the ability to
+recognize these patterns into Make. These are what we call "implicit rules."
+
+The built-in implicit rules will use the file extensions of the targets and
+dependencies to infer what build command pattern to invoke. It will then fill in
+build command automatically, which will be looking for extra configuration
+options like compiler flags from specially designated build variables.
+
+Specifically, the built-in C implicit rules will look for build variables such
+as `CC`, `CFLAGS`, and `LDFLAGS`... which we've already defined for ourselves!
+So we can just go ahead and remove the build commands, and just write the
+targets and dependencies on their own:
+
+    main: main.o myadd.o
+    main.o: main.c myadd.h
+    myadd.o: myadd.c myadd.h
+
+This will still build -- try running `make` to see for yourself. For larger
+software projects, implicit rules like these can go a long way.
 
 
 ## Jae's myadd Makefile ##
