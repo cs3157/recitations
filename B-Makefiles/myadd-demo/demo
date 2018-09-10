@@ -3,7 +3,7 @@
 mkl="Makefile"
 mks="Makefiles/Makefile"
 final_state="9"
-explicit_state="5"
+explicit_state="4"
 
 get_state() {
     if [[ ! -L "${mkl}" ]]; then
