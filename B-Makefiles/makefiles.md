@@ -1,12 +1,17 @@
-# Makefiles #
+Makefiles
+=========
 
-Make is a UNIX utility that follows a blueprint you create for compiling
-programs. Calling `make` will automatically search your current directory for a
-file called "Makefile" and use it to call various compiler commands according 
-to the rules outlined therein. 
+Make is a UNIX utility that helps you compile programs by following a blueprint
+you specify.
 
-In other words, by using Makefiles, you can execute all the preprocessing,
-compiling, and linking commands just by typing `make`.
+Calling `make` will first automatically search your current directory for a
+file called `Makefile`. Then, Make will use it to call various shell commands,
+according to the rules outlined therein. This allows you to chain together
+complex sequences of commands you would use to compile a program.
+
+In other words, you can execute all the preprocessing, compiling, and linking
+commands just by typing `make`. It's also a handy way to automate cumbersome
+tasks, like cleaning up build products.
 
 ## Jae's myadd Makefile ##
 
