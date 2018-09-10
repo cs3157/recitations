@@ -343,6 +343,92 @@ to find out the full extent of what this utility can do.
 [man-make]: https://www.gnu.org/software/make/manual/make.html
 
 
+Other Useful Make Variables
+---------------------------
+
+### Compiling with Libraries
+
+The `Makefile` is a great way to manage how your software project interacts with
+other libraries. As you'll learn later, you'll need to pass extra flags to `gcc`
+in order for it to be aware of where the library files are. It's a common
+pattern for `Makefile`s to incorporate these flags while invoking implicit
+rules.
+
+#### `INCLUDES`
+
+In order to tell `gcc` where to search for non-standard header files, you pass
+it the `-I` flag during compilation (but not linking). This can be passed in
+alongside `CFLAGS`, but you'll often see the following pattern:
+
+    INCLUDES = -Imy/include/path
+    CFLAGS = -g -Wall $(INCLUDES)
+
+We create a separate `INCLUDES` variable to distinguish between include paths
+and other compilation flags, but we pass it along with the `CFLAGS`.
+
+#### `LDLIBS`
+
+After everything is compiled, you'll need to link your project against a library
+where the library functions and variables are located. This is done using the
+`-l` flag. However, unlike with `INCLUDES`, we can't just stow away our `-l`
+flags alongside our `LDFLAGS`, because order does matter when you're linking.
+
+Thankfully, Make's implicit rules take this into account, and give us a separate
+build variable we can use. The `LDLIBS` variable comes after the `.o` files,
+while the `LDFLAGS` comes before. The full implicit rule actually looks
+something like this:
+
+    $(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+If you haven't assigned anything to `LDLIBS`, `$(LDLIBS)` will just silently
+disappear when it's expanded. We can use the implicit build variables like this:
+
+    LDFLAGS = -g -Lmy/libary/path
+    LDLIBS = -lmylib
+
+
+### Compiling C++
+
+When we compile C++ programs later on, we'll need a different compiler, though
+most of how it works is very similar. Specifically, we'll be using `g++`.
+We still need to compile and link in separate stages, and will still need to
+pass each stage compiler and linking flags.
+
+#### `CXX`
+
+When compiling C++ `.cpp` files, the implicit rule will look for `CXX` instead
+of `CC`, so we can make sure it uses the right compiler by doing the following:
+
+    CXX = g++
+
+#### `CXXFLAGS`
+
+Make will also expect a separate build variable for compiling C++, `CXXFLAGS`.
+If we just want to have `g++` use the same flags as when compiling C, we can
+use the following trick:
+
+    CXXFLAGS = $(CFLAGS)
+
+`$(CFLAGS)` can be followed by any number of C++-specific flags.
+
+The implicit rule for compiling C++ programs looks something like the following:
+
+    $(CXX) $(CXXFLAGS) -c $<
+
+You may want to revisit these notes once you begin writing C++ programs later in
+the semester.
+
+
+all
+
+default target
+
+test target
+
+
+
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
