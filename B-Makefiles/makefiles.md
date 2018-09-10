@@ -240,10 +240,56 @@ compile and link with the following:
     $(CC) $(CFLAGS) -c main.c
     $(CC) $(LDFLAGS) main.o myadd.o -o main
 
+Now we can easily swap out the compiler and linking flags for our entire project
+by modifying the build variables we've defined at the top of our `Makefile`.
+
 It's not entirely obvious yet why we chose to substitute these particular parts
 of our build commands, or why we're using such particular variable names. Why
 this is important will become clear in step 8 when we use implicit rules.
 
+
+### Step 6
+
+In the rule to build `main`, the shell command takes an argument of `-o main`,
+which tells `gcc` to name the output executable `main`. What if we just wanted
+to name it whatever the name of our target is?
+
+Make also provides special variables whose values are dependent on the rule in
+which they appear. They can be invoked using a `$` followed by a special
+character. You won't need to know any of these for the purposes of this course,
+but they provide useful notation to understand how implicit rules work.
+
+The special variable that is substituted with the name of the target is `$@`.
+We can rewrite the linking rule as follows:
+
+    main: main.o myadd.o
+        $(CC) $(LDFLAGS) main.o myadd.o -o $@
+
+Within the `main` rule, `$@` will expand to `main`. Now, if we change `main`,
+the output executable name will change accordingly.
+
+
+### Step 7
+
+We can use a couple more special variables to eliminate some of the filenames
+we explicitly reference in the shell commands for each rule.
+
+First, we can use `$^`, which will be substituted with every dependency of the
+target. We can use this for the `main` target once again:
+
+    $(CC) $(LDFLAGS) $^ -o $@
+
+Make also provides a special variable which will expand to only the first
+dependency of a target, `$<`. This is especially handy for the compilation
+rules:
+
+    $(CC) $(CFLAGS) -c $<
+
+Notice that at this point, the build commands in our `Makefile` don't explicitly
+mention anything about the target they're building or the dependencies they're
+using. For example, there's no mention of `main.o`, `main.c`, or `myadd.h` in
+`main.o`'s build commands. There's probably another opportunity to simplify our
+`Makefile` even more just around the corner...
 
 
 
