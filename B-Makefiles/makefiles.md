@@ -13,6 +13,60 @@ In other words, you can execute all the preprocessing, compiling, and linking
 commands just by typing `make`. It's also a handy way to automate cumbersome
 tasks, like cleaning up build products.
 
+Jae's `myadd` `Makefile` in 10 Steps
+------------------------------------
+
+In this repository, you'll find a directory named `myadd-demo`, which contains
+an interactive, step-by-step demo which shows you how to create a simple
+Makefile from scratch. You may use the `./demo` to step through different
+versions of the `Makefile`, and use it to run `make` during each step. You may
+also inspect the `Makefile`s for each step under `myadd-demo/Makefiles`.
+
+This guide will follow the demo and explain what's happening with the `Makefile`
+at each step.
+
+
+### Introduction
+
+#### Source code
+
+Before we get started, let's (re)familiarize ourselves with the files we're
+compiling:
+
+##### `myadd.h`
+
+This is where the function prototype for the `add()` function is declared.
+It tells the compiler that somewhere in the final program, we'll have an
+implementation of the `add()` function, with the given type signature.
+If you're familiar with Java, you can think of this as something like a Java
+`interface` (though without the notion of a class).
+
+##### `myadd.c`
+
+This is where the `add()` function is actually implemented. Note that this
+`#include`s `myadd.h` because we want to make sure that the compiler knows which
+`add()` function we're implementing, and so that it can check that we're using
+the right type signature.
+
+##### `main.c`
+
+This is where we call the `add()` function, and print its result. We `#include`
+`myadd.h` because we're calling a function that we haven't implemented in this
+`.c` file (also called a compilation unit).
+
+#### Compilation
+
+Recall that there are three actions we need to perform in order to build `main`:
+
+    gcc -g -Wall -c myadd.c         # compiles myadd.c => myadd.o
+    gcc -g -Wall -c main.c          # compiles main.c => main.o
+    gcc -g main.o myadd.o -o main   # links main.o and myadd.o => main
+
+We use the `-g` and `-Wall` flags to include debugger symbols and enable all
+compiler warnings. The `-o` flag specifies that the resulting file shall be
+named as the argument after it, `main`.
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
