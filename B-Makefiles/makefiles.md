@@ -118,6 +118,30 @@ We can still build targets that aren't the default (top) target. If we wanted
 to explicitly tell Make to build `myadd.o`, we can run `make myadd.o`.
 
 
+### Step 2
+
+Time to link! Let's put our linking rule at the very top, to make sure it's the
+default target when we run `make`:
+
+    main: main.o myadd.o
+        gcc -g main.o myadd.o -o main
+
+Note that we did not specify `myadd.h` as a dependency. That's because linking
+doesn't need this header file at all. `main` will still be rebuilt if `myadd.h`
+is updated, but because it implicitly inherits this dependency from its own
+dependencies, `main.o` and `myadd.o`.
+
+Now that we have a more complex `Makefile`, we can dig deeper into what it means
+for a target to "depend" on others. Recall that every file in UNIX has a
+"last modified" timestamp, which is updated any time the file is changed or
+`touch`ed. A target is built only if it does not exist, or if one or more of its
+dependencies have a later timestamp than it. The reason Make does this rather
+than rebuilding the entire program from scratch is because for large software
+projects, rebuilding from scratch every time can be very inefficient. Instead,
+Make just rebuilds outdated targets as necessary.
+
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
