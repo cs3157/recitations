@@ -13,8 +13,9 @@ In other words, you can execute all the preprocessing, compiling, and linking
 commands just by typing `make`. It's also a handy way to automate cumbersome
 tasks, like cleaning up build products.
 
-Jae's `myadd` `Makefile` in 10 Steps
-------------------------------------
+
+The `myadd` `Makefile` in 10 Steps
+----------------------------------
 
 In this repository, you'll find a directory named `myadd-demo`, which contains
 an interactive, step-by-step demo which shows you how to create a simple
@@ -24,6 +25,14 @@ also inspect the `Makefile`s for each step under `myadd-demo/Makefiles`.
 
 This guide will follow the demo and explain what's happening with the `Makefile`
 at each step.
+
+If you prefer to just see a completed, annotated `Makefile`, you can check out
+the [`sample-Makefile`](sample-Makefile) in this directory. Note that it does
+not use all the features touched upon in this guide, but is sufficient for the
+entire 3157 course.
+
+You may also explore the [`practice`](practice) directory for some practice with
+`Makefile`s.
 
 
 ### Introduction
