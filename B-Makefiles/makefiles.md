@@ -419,14 +419,72 @@ You may want to revisit these notes once you begin writing C++ programs later in
 the semester.
 
 
-all
+Common Make Practices
+---------------------
 
-default target
+### More `.PHONY` Targets
 
-test target
+Make can be used for a lot more than just building files. As with `make clean`,
+we can use it as a repository for commands that we would commonly use during
+the development process.
 
 
+#### `all`
 
+Sometimes, you might want to clean up everything and build everything from
+scratch. The target conventionally used for this is `all`. Its rule is usually
+written as follows:
+
+    .PHONY: all
+    all: clean main
+
+`main` should be replaced with whatever your default build target is.
+
+The reason this works is because Make satisfies dependencies from left to right.
+So, running `make all` will first run `make clean`, then run `make main`.
+Since no build commands are specified underneath, Make will not do anything
+after satisfying `clean` and `main`.
+
+
+#### `TARGETS` and `default`
+
+When you're building multiple targets, it can be useful to have a single
+variable to keep track of them. For example, if we're building two executables,
+`foo` and `bar`, alongside `main`, we would write the following at the top of my
+`Makefile`:
+
+    TARGETS = main foo bar
+
+Then, in order to build all of these by default, we would write the topmost rule
+as a `.PHONY` rule:
+
+    .PHONY: default
+    default: $(TARGETS)
+
+Now we can build `main`, `foo`, and `bar` all at once by just typing `make`!
+
+Make sure that `clean` is aware of all of the `TARGETS`, not just `main`:
+
+    .PHONY: clean
+    clean:
+        rm -rf $(TARGETS) *.o a.out
+
+
+#### `test`
+
+The `Makefile` can also be a handy place to stash test commands, especially ones
+that are really cumbersome to type. Later on, you may find yourself running
+the following quite often:
+
+    valgrind --leak-check=yes ./myprogram arg1 arg2
+
+Instead of having to type all that out, we can just write the following in our
+`Makefile`:
+
+    test: default
+        valgrind --leak-check=yes ./myprogram arg1 arg2
+
+Now, we can just test our code with `make test`!
 
 
 ## Jae's myadd Makefile ##
