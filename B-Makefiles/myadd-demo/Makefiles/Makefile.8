@@ -1,0 +1,13 @@
+CC = gcc
+CFLAGS = -g -Wall
+LDFLAGS = -g
+
+main: main.o myadd.o
+
+main.o: main.c myadd.h
+
+myadd.o: myadd.c myadd.h
+
+.PHONY: clean
+clean:
+	rm -rf main *.o a.out

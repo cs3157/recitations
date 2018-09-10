@@ -1,0 +1,11 @@
+main: main.o myadd.o
+	gcc -g main.o myadd.o -o main
+
+main.o: main.c myadd.h
+	gcc -g -Wall -c main.c
+
+myadd.o: myadd.c myadd.h
+	gcc -g -Wall -c myadd.c
+
+clean:
+	rm -rf main *.o a.out

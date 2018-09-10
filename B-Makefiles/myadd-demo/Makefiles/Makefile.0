@@ -1,0 +1,2 @@
+myadd.o: myadd.c myadd.h
+	gcc -g -Wall -c myadd.c

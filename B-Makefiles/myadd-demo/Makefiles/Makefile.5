@@ -1,0 +1,16 @@
+CC = gcc
+CFLAGS = -g -Wall
+LDFLAGS = -g
+
+main: main.o myadd.o
+	$(CC) $(LDFLAGS) main.o myadd.o -o main
+
+main.o: main.c myadd.h
+	$(CC) $(CFLAGS) -c main.c
+
+myadd.o: myadd.c myadd.h
+	$(CC) $(CFLAGS) -c myadd.c
+
+.PHONY: clean
+clean:
+	rm -rf main *.o a.out
