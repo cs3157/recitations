@@ -67,6 +67,39 @@ compiler warnings. The `-o` flag specifies that the resulting file shall be
 named as the argument after it, `main`.
 
 
+### Step 0
+
+First, let's get the `Makefile` building just one thing. To do so, we write a
+**rule** to build a **target**. The syntax of a Makefile is as follows:
+
+    [target]: [dependencies...]
+        [shell command]
+        ...
+
+This says that to build `target`, we must first satisfy the one or more
+`dependencies` that come after the `:`. Then, once dependencies are satisfied,
+we build the target with one or more shell commands.
+
+_Note that before the shell command you must use a TAB character (and not just
+4 or 8 spaces). Make sure your text editor is aware of this if you've configured
+it to expand your tabs._
+
+Let's write our rule to build `myadd.o`, from `myadd.c`:
+
+    myadd.o: myadd.c myadd.h
+        gcc -g -Wall -c myadd.c
+
+Note that just because a file is a dependency doesn't mean that it actually
+needs to be used in the build command. We don't need to tell `gcc` about
+`myadd.h` because the `#include` preprocessor macro handles that for us. But
+we still need to let Make know that it should rebuild `myadd.o` if updates are
+made to either `myadd.c` or `myadd.h`, which is why we specify `myadd.h` as a
+dependency.
+
+With this as the only thing our `Makefile`, if we run `make`, we'll see that
+`myadd.o` is built for us!
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
