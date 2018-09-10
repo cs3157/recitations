@@ -318,6 +318,31 @@ This will still build -- try running `make` to see for yourself. For larger
 software projects, implicit rules like these can go a long way.
 
 
+### Step 9
+
+There's something else that the Make developers realized about the file naming
+conventions we use for C software projects: the name of the build target is
+often related to that of one of its dependencies. For example, `myadd.o` comes
+from `myadd.c`, and `main` comes from `main.o`.
+
+If you omit those dependencies, Make will look for them any way and use them
+during the compilation process. Thus we end up with a set of incredibly terse
+build rules:
+
+    main: myadd.o
+    main.o: myadd.h
+    myadd.o: myadd.h
+
+And this _still_ builds.
+
+There's a lot more fancy stuff you can do with your `Makefile`, but they're
+beyond the scope of this class, and certainly beyond the scope of our toy
+`myadd` software project. You can check out GNU's [Make manual][man-make] online
+to find out the full extent of what this utility can do.
+
+[man-make]: https://www.gnu.org/software/make/manual/make.html
+
+
 ## Jae's myadd Makefile ##
 
 Take Jae's Makefile piece by piece. It can be found in this git repository as
