@@ -59,7 +59,7 @@ previous() {
 }
 
 final() {
-    echo "Going to final Makefil (step ${final_state})"
+    echo "Going to final Makefile (step ${final_state})"
     goto "${final_state}"
 }
 
