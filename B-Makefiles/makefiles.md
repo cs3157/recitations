@@ -167,7 +167,7 @@ It turns out that Make targets don't have to be files! We can create a shortcut
 for ourselves with the following rule:
 
     clean:
-        rm -f main *.o a.out
+        rm -rf main *.o a.out
         
 Now we can just clean up our project by running `make clean`. Isn't that neat?
 
