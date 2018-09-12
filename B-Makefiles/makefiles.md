@@ -259,6 +259,11 @@ this is important will become clear in step 8 when we use implicit rules.
 
 ### Step 6
 
+**Step 6 and step 7 reference special symbols that are beyond the scope of 3157.
+This tutorial only uses them to explicitly notate the intuitions behind the
+implicit rules. You may skip directly to step 8 to avoid getting caught up in
+the details.**
+
 In the rule to build `main`, the shell command takes an argument of `-o main`,
 which tells `gcc` to name the output executable `main`. What if we just wanted
 to name it whatever the name of our target is?
@@ -307,7 +312,7 @@ using. For example, there's no mention of `main.o`, `main.c`, or `myadd.h` in
 
 The guys who wrote Make also realized that there are some pretty common patterns
 when it comes to compiling C software projects, so they built the ability to
-recognize these patterns into Make. These are what we call "implicit rules."
+recognize these patterns into Make. These are what we call "**implicit rules**."
 
 The built-in implicit rules will use the file extensions of the targets and
 dependencies to infer what build command pattern to invoke. It will then fill in
@@ -316,6 +321,8 @@ options like compiler flags from specially designated build variables.
 
 Specifically, the built-in C implicit rules will look for build variables such
 as `CC`, `CFLAGS`, and `LDFLAGS`... which we've already defined for ourselves!
+They will also use the dependencies you've listed to figure what needs to be
+compiled, what needs to be linked, and what needs to be used as the output name.
 So we can just go ahead and remove the build commands, and just write the
 targets and dependencies on their own:
 
