@@ -198,7 +198,7 @@ and runs the `clean` target every time:
 
     .PHONY: clean
     clean:
-        rm -f main *.o a.out
+        rm -rf main *.o a.out
 
 
 ### Interlude
