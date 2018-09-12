@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+
+mkl="Makefile"
+mks="Makefiles/Makefile"
+final_state="9"
+explicit_state="4"
+
+get_state() {
+    if [[ ! -L "${mkl}" ]]; then
+        echo "-1"
+    else
+        local link="$(readlink ${mkl})"
+        echo "${link##*.}"
+    fi
+}
+
+goto() {
+    rm -f "${mkl}"
+    ln -s "${mks}.${1}" "${mkl}"
+    echo "Now at step ${1}"
+}
+
+start() {
+    echo "(Re)starting demo..."
+    goto 0
+}
+
+next() {
+    local state="$(get_state)"
+    case "${state}" in
+        "-1")
+            start
+            ;;
+        "${final_state}")
+            echo "Already at final step (${final_state})!"
+            echo "To restart demo: ${0} start"
+            ;;
+        *)
+            goto "$((state + 1))"
+            ;;
+    esac
+}
+
+previous() {
+    local state="$(get_state)"
+    case "${state}" in
+        0)
+            echo "Already at first step (0)!"
+            echo "To proceed to next step: ${0} next"
+            ;;
+        -1)
+            echo "Demo not initialized. Doing so now..."
+            start
+            ;;
+        *)
+            goto "$((state - 1))"
+            ;;
+    esac
+}
+
+final() {
+    echo "Going to final Makefile (step ${final_state})"
+    goto "${final_state}"
+}
+
+explicit() {
+    echo "Going to explicit Makefile (step ${explicit_state})"
+    goto "${explicit_state}"
+}
+
+clean() {
+    echo "Cleaning up demo byproducts..."
+    rm -f *.o main a.out Makefile
+}
+
+help() {
+    echo "Interactive myadd Makefile demo"
+    echo "Available commands:"
+    echo "  [s]tart:    (re)initialize demo"
+    echo "  [n]ext:         go to next step"
+    echo "  [p]revious:     go to previous step"
+    echo "  e[x]plicit:     go to explicit Makefile (step ${explicit_state})"
+    echo "  [f]inal:        go to final Makefile (step ${final_state})"
+    echo "  [c]lean:        clean up demo"
+    echo "  [h]elp:         print this help message again"
+}
+
+case "${1}" in
+    "start"|"s")
+        start
+        ;;
+    "next"|"n")
+        next
+        ;;
+    "previous"|"p")
+        previous
+        ;;
+    "explicit"|"x")
+        explicit
+        ;;
+    "final"|"f")
+        final
+        ;;
+    "clean"|"c")
+        clean
+        ;;
+    "help"|"")
+        help
+        ;;
+    *)
+        echo "error: command not recognized: ${1}"
+        help
+        exit 2
+        ;;
+esac
