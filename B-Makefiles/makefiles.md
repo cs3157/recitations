@@ -203,12 +203,14 @@ and runs the `clean` target every time:
 
 ### Interlude
 
-At this point, you now have the basis complete `Makefile`. Every target in here
-is explicit, which means for larger software projects, you'll be doing a _lot_
-of typing, but it'll do for the rest of 3157. You can jump to this part of the
-demo by running:
-    
+At this point, you now have the basis complete `Makefile`. You can jump to this
+part of the demo by running:
+
     ./demo explicit
+
+Every target in here is explicit, which means for larger software projects,
+you'll be doing a _lot_ of typing. But as you'll soon find out, Make is powerful
+enough to do some of the thinking for you, and save you from doing busy work.
 
 In the following sections, we'll be explaining some of the fancier things you
 can do with your Makefile by leveraging variables, implicit rules, and other
