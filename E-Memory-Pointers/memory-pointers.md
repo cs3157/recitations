@@ -315,17 +315,18 @@ Some useful string functions (need to `#include string.h`):
 ```c
 char d[20];
 char c[] = "abc";
+
 strcpy(d, "123");
 strcat(d, c);
 
-printf("%s\n", d); //prints 123abc
-printf("%lu\n", strlen(d)); //prints 6
+printf("%s\n", d);          // prints 123abc
+printf("%lu\n", strlen(d)); // prints 6
 
-//to only copy/cat the first n chars:
-strncpy(d, "456", 2); 
-strncat(d, "def", 2);
+strncpy(d, "456", 2);       // only copy first n chars
+d[2] = '\0';                // null terminate string
+strncat(d, "def", 2);       // only cat first n chars
 
-printf("%s\n", d); //what does this print?
+printf("%s\n", d);          // what does this print?
 ```
 For a closer look at the strcpy function, see [`E-Memory-Pointers/code/strcpy.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/strcpy.c).
 
