@@ -16,6 +16,10 @@ In this class, we require that you make git commits to get full credit for your
 work. We want you to learn git because in industry, you will without a doubt be
 using version control.
 
+## Version Control ##
+
+A Version Control System (VCS) records changes made to a set of files. This allows programmers to maintain backups of their previous work without manually copying their files
+
 ## Configuration ##
 
 You need to set your name and email so that your commits are associated with
@@ -106,6 +110,18 @@ Undoing changes:
 Going back in time:
 
     git checkout <commit hash>
+
+## Examples ##
+
+Case 1: Adding a new file
+
+![git-existing-file.png](../images/git-existing-file.png)
+
+
+Case 2: Working on an existing file from git repository
+
+![git-create-new-file.png](../images/git-create-new-file.png)
+
 
 ## Other Tools ##
 
