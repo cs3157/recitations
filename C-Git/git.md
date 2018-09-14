@@ -18,7 +18,7 @@ using version control.
 
 ## Version Control ##
 
-It is a system that records changes to keep track of versions of a set of files. Programmers no longer have to keep many copies of files on their hard drives manually
+A Version Control System (VCS) records changes made to a set of files. This allows programmers to maintain backups of their previous work without manually copying their files
 
 ## Configuration ##
 
@@ -117,9 +117,11 @@ Case 1: Adding a new file
 
 ![git-existing-file.png](../images/git-existing-file.png)
 
-* Case 2: Working on an existing file from git repository
+
+Case 2: Working on an existing file from git repository
 
 ![git-create-new-file.png](../images/git-create-new-file.png)
+
 
 ## Other Tools ##
 
