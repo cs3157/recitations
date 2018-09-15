@@ -115,13 +115,11 @@ Going back in time:
 
 Case 1: Adding a new file
 
-![git-existing-file.png](../images/git-existing-file.png)
-
+![git-create-new-file.png](../images/git-create-new-file.png)
 
 Case 2: Working on an existing file from git repository
 
-![git-create-new-file.png](../images/git-create-new-file.png)
-
+![git-existing-file.png](../images/git-existing-file.png)
 
 ## Other Tools ##
 
