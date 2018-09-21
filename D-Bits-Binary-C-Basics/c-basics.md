@@ -570,25 +570,6 @@ The following are equivalent:
 This is just a detail to watch out for, but not super important.
 Most of the time we use the notation in the leftmost column, by convention.
 
-
-### IEEE-754 Floating Point Standard and Casting Pointers
-
-If you're curious to see what IEEE-754 floating point numbers look like,
-you can reuse some of your code from lab1 to do so:
-
-    float f = 3.157;        // or whatever you want it to be!
-    int *i = (int *) &f;    // don't worry about what this means
-                            // we're tricking the compiler to think that
-                            // the float is a binary (;
-
-    print_hex(*i);
-    print_binary(*i);       // implementation left as an exercise to the reader
-
-Note that this is also an example of casting pointers.
-By casting the `float` pointer to an `int` pointer, once we derefence it,
-we can interpret the same 4 bytes worth of data as integers rather than floats.
-
-
 #### The `const` Type Modifier
 
 The `const` keyword tells that compiler that once a variable is initialized,
