@@ -1,10 +1,24 @@
-## Variables ##
+<Insert pointer one-liner> 
 
-### Stack Variables ###
 
-When you declare a variable in C, it is defined for the current scope and will
-be released at the end of the scope. If you redeclare a variable inside a scope
-within a scope (see below) you won't be able to change the outer variable.
+## Memory ##
+
+### Address Space ###
+
+Every process, i.e a running program, gets 512G of virtual memory space. The memory layout is given in the diagram below.
+
+![hi](./MemoryLayout.png "Memory Layout Diagram")
+
+The stack grows downward starting from 512G while the program code, static
+variables, and heap variables are all at the bottom (0). This means that when functions are called, space for them is built up on the stack and then cleared as they complete. Imagine function calls being stacked on top of eachother (but upside down) and then being popped off last to first as they return. The stack is a *temporary* storage space.
+
+The heap is where you dynamically allocate memory - it is a storage space that is not automatically managed like the stack. You use the heap if you want to manage how long something is stored in memory, which means you are responsible for clearing any space you allocate on the heap. You also use the heap if what you’re storing is considerably large. This is because there is an OS dependent limit on how much data can be stored in the stack, so the heap is a good choice if you don’t want your storage needs to saturate your stack.
+
+### Variables ###
+
+#### Stack Variables ####
+
+When you declare a variable in C, it is defined for the current scope and will be released (removed from memory) at the end of the scope. If you re-declare a variable inside a scope within a ‘nested’ scope (see below), you won't be able to change the outer variable.
 
 ```c
 int x;
@@ -19,30 +33,26 @@ x = 0;
 ```
 
 The variables inside the curly braces are **stack variables** (also known as 
-automatic variables). Their scope is local to a block (meaning code enclosed 
-by curly braces, as shown above) -- they are created when entering the block
- and destroyed upon exit.
+automatic variables), and are stored on the stack. Their scope is local to a block (meaning code enclosed by curly braces, as shown above). They are created (pushed on the stack) when entering the block and destroyed (popped off the stack) upon exit.
 
-### Static Variables ###
+#### Heap Variables ####
 
-'static' has different meanings depending on where you declare your value. 
-In general, global and static variables are created when the program runs and
-persist until the program ends. This means they will not be re-declared or
-re-initialized.
+Heap variables are allocated on the heap and, unlike stack variables, are not cleared after the scope in which they were called finishes executing. These variables can be accessed globally. (We’ll cover how to allocate heap variables later).
+
+#### Static and Global Variables ####
+
+Static and Global variables are stored in the static section of the C memory layout (see diagram above). 'static' has different meanings depending on where you declare your value. In general, **global** and **static** variables are created when the program runs, and they persist until the program ends. *They have the lifetime of the program*. They cannot be re-declared or re-initialized.
 
 ```c
 static int file_static = 0; // static global variable
 
 int foo(int auto_1) {
-    static int block_static = 0;
+    static int block_static = 0; //static variable
 }
 ```
+A  **static global variable** is declared by using the ‘static’ keyword on a variable declaration outside of any code blocks in the file, i.e outside of any function. Its scope is limited to the current file. It’s accessible anywhere in the file it is declared in, but not in any other file. 
 
-A global static variable's scope is limited to the current file.
-
-A static variable defined inside a function is initialized once and retains 
-its value over successive calls of that function, as shown here 
-([source](http://stackoverflow.com/a/23777789)):
+A **static variable** is declared by using the ‘static’ keyword on a variable declaration inside a function. It is initialized once and retains its value over successive calls of that function, as shown here ([source](http://stackoverflow.com/a/23777789)):
 ```c
 int foo()
 {
@@ -58,12 +68,7 @@ int main()
     return 0;
 }
 ```
-
-### Global Variables ###
-
-Global variables are like a special case of static variables. They are
-accessible from all files in the program, and can be accessed from other 
-files using the `extern` keyword. See below:
+A **global variable** is like a special case of static variables. It is accessible from all files in the program, and can be accessed from other files using the `extern` keyword. See below:
 
 In one file:
 ```c
@@ -85,15 +90,6 @@ void magic_print() {
 }
 ```
 
-## Address Space ##
-
-Every process gets 512G of virtual memory space. The stack grows downward (see Jae's
-notes for a diagram) starting from 512G while the program code, static
-variables, and heap variables are all at the bottom (0). Basically, this means
-when functions are called, space for them is built up on the stack and cleared
-as they complete. Heap variables (you'll learn more about these later) will be
-allocated on the heap and therefore, like static variables, will not be cleared
-after each function call.
 
 ## Pointers ##
 
@@ -187,7 +183,7 @@ For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`.
 
 ---- 
 
-## Arrays ##
+## Arrays ## 
 
 C has arrays, but they're very similar to pointers to beginning of a large
 enough chunk of memory on the stack to hold the specified number of elements
@@ -229,7 +225,7 @@ a[10]` was declared, `sizeof(a)` returns the number of bytes of the array `a`,
 ie 40. But if you pass `a` into a function as `arr`, then `sizeof(arr)` is NOT
 40, but 8, the size of a pointer.
 
-## Pointer Arithmetic ##
+## Pointer Arithmetic ## 
 
 If you have a pointer, you can do basic arithmetic with it to address adjacent
 elements. All arithmetic is with respect to the type of element being addressed,
@@ -315,17 +311,18 @@ Some useful string functions (need to `#include string.h`):
 ```c
 char d[20];
 char c[] = "abc";
+
 strcpy(d, "123");
 strcat(d, c);
 
-printf("%s\n", d); //prints 123abc
-printf("%lu\n", strlen(d)); //prints 6
+printf("%s\n", d);          // prints 123abc
+printf("%lu\n", strlen(d)); // prints 6
 
-//to only copy/cat the first n chars:
-strncpy(d, "456", 2); 
-strncat(d, "def", 2);
+strncpy(d, "456", 2);       // only copy first n chars
+d[2] = '\0';                // null terminate string
+strncat(d, "def", 2);       // only cat first n chars
 
-printf("%s\n", d); //what does this print?
+printf("%s\n", d);          // what does this print?
 ```
 For a closer look at the strcpy function, see [`E-Memory-Pointers/code/strcpy.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/strcpy.c).
 
@@ -481,3 +478,5 @@ Tips:
   - ALWAYS check the return value of malloc to make sure you were actually given
     allocated memory.
   - Name your executables properly. For part1, `isort` and for part2, `twecho`.
+
+
