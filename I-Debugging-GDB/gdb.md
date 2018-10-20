@@ -168,15 +168,10 @@ There are three main types of breakpoints:
 2. `break mymath.c:14` to break on line 14 of mymath.c
 3. `break multiply` to break at the very beginning of the function `multiply`
 
-![gdb-break](../img/gdb-break.png)
+![gdb-break](../images/gdb-break.png)
 
-Type `run` and it will start again and stop at the break point. If you want to go to the next break point, all you need to do is type `continue`. While you're at each break point, you can print the value of a specific variable by 
-
-```c
-
-```
-
-![gdb-continue](../img/gdb-continue.png)
+Type `run` and it will start again and stop at the break point. If you want to go to the next break point, all you need to do is type `continue`. While you're at each break point, you can print the value of a specific variable by `print [variable name]`
+![gdb-continue](../images/gdb-continue.png)
 
 You can take your breakpoints to the next level with conditional breakpoints.
 You set these up just like normal breakpoints, but add `if expression` to only
