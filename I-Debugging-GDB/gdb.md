@@ -144,13 +144,10 @@ $ gdb -tui main
 
 That opens gdb with a Text User Interface, TUI in short, which is a terminal interface which uses the curses library to show the source file, the assembly output, the program registers and GDB commands in separate text windows.
 
-![gdb-land](../images/gdb-land.png | width=245)
-
 You need to give gdb instructions now, which is where it gets scary.
 
 However it's really easy! Once you hit the enter key, you will see the source code of the main.c file. 
 
-![gdb-start](../images/gdb-start.png | width=245)
 
 Type `run` and it will start (include any arguments
 after run if your program needs them, ie `run hello world`). You'll notice that
@@ -168,10 +165,21 @@ There are three main types of breakpoints:
 2. `break mymath.c:14` to break on line 14 of mymath.c
 3. `break multiply` to break at the very beginning of the function `multiply`
 
-![gdb-break](../images/gdb-break.png)
+```c
+(gdb) break 10
+Breakpoint 1 at 0x6de: file main.c, line 10.
+(gdb) break mymath.c:14
+Breakpoint 2 at 0x78d: file mymath.c, line 14.
+(gdb) break multiply
+Note: breakpoint 2 also set at pc 0x78d.
+Breakpoint 3 at 0x78d: file mymath.c, line 15.
+```
 
 Type `run` and it will start again and stop at the break point. If you want to go to the next break point, all you need to do is type `continue`. While you're at each break point, you can print the value of a specific variable by `print [variable name]`
+
+
 ![gdb-continue](../images/gdb-continue.png)
+
 
 You can take your breakpoints to the next level with conditional breakpoints.
 You set these up just like normal breakpoints, but add `if expression` to only
