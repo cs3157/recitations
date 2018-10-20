@@ -17,7 +17,8 @@ int main(int argc, char **argv) {
  
 	char buf2[100];
 	while (fgets(buf2, sizeof(buf2), stdin)) {
-		int buf-length = strlen(buf2);
+		int bufLength = strlen(buf2);
+		printf("%d\n", bufLength);
 		fprintf(stdout, "%s\n", buf2);
 		fflush(stdout);
 	}
