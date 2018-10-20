@@ -7,10 +7,18 @@ int main(int argc, char **argv) {
 	
 	fseek(fp, 2, SEEK_SET);
 
-	char buf[200];
+	char buf[10];
 
-	fgets(buf, 100-1, fp);
-	fprintf(stdout, "%s\n", buf);
-	fflush(stdout);
-	fclose(fp); 
+	while (fread(buf, sizeof(buf), 1, fp)) {
+		fprintf(stdout, "%s\n", buf);
+	}
+
+	fclose(fp);
+ 
+	char buf2[100];
+	while (fgets(buf2, sizeof(buf2), stdin)) {
+		int buf-length = strlen(buf2);
+		fprintf(stdout, "%s\n", buf2);
+		fflush(stdout);
+	}
 }
