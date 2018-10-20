@@ -144,13 +144,13 @@ $ gdb -tui main
 
 That opens gdb with a Text User Interface, TUI in short, which is a terminal interface which uses the curses library to show the source file, the assembly output, the program registers and GDB commands in separate text windows.
 
-![gdb-land](../img/gdb-land.png | width=245)
+![gdb-land](../images/gdb-land.png | width=245)
 
 You need to give gdb instructions now, which is where it gets scary.
 
 However it's really easy! Once you hit the enter key, you will see the source code of the main.c file. 
 
-![gdb-start](../img/gdb-start.png | width=245)
+![gdb-start](../images/gdb-start.png | width=245)
 
 Type `run` and it will start (include any arguments
 after run if your program needs them, ie `run hello world`). You'll notice that
