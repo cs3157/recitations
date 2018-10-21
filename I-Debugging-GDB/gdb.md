@@ -134,11 +134,22 @@ or just type `help` alone to list all commands.
 
 #### Loading a program ####
 
-To get started we just need to compile our program (using `-g` of course), then
-run `$ gdb -tui ./program`. That opens gdb with a "text user interface," and
-waits. You need to give gdb instructions now, which is where it gets scary.
+To get started we just need to compile our program (using `-g` of course). You can go into our `code` directory, and simply call make. Then, run `gdb -tui [program name]`
 
-However it's really easy! Type `run` and it will start (include any arguments
+In our case, 
+
+```c
+$ gdb -tui main
+```  
+
+That opens gdb with a Text User Interface, TUI in short, which is a terminal interface which uses the curses library to show the source file, the assembly output, the program registers and GDB commands in separate text windows.
+
+You need to give gdb instructions now, which is where it gets scary.
+
+However it's really easy! Once you hit the enter key, you will see the source code of the main.c file. 
+
+
+Type `run` and it will start (include any arguments
 after run if your program needs them, ie `run hello world`). You'll notice that
 the program just runs straight through, but I promised you could stop time!
 
@@ -153,6 +164,22 @@ There are three main types of breakpoints:
 1. `break 10` to break on line 10 of the current source file
 2. `break mymath.c:14` to break on line 14 of mymath.c
 3. `break multiply` to break at the very beginning of the function `multiply`
+
+```c
+(gdb) break 10
+Breakpoint 1 at 0x6de: file main.c, line 10.
+(gdb) break mymath.c:14
+Breakpoint 2 at 0x78d: file mymath.c, line 14.
+(gdb) break multiply
+Note: breakpoint 2 also set at pc 0x78d.
+Breakpoint 3 at 0x78d: file mymath.c, line 15.
+```
+
+Type `run` and it will start again and stop at the break point. If you want to go to the next break point, all you need to do is type `continue`. While you're at each break point, you can print the value of a specific variable by `print [variable name]`
+
+
+![gdb-continue](../images/gdb-continue.png)
+
 
 You can take your breakpoints to the next level with conditional breakpoints.
 You set these up just like normal breakpoints, but add `if expression` to only
