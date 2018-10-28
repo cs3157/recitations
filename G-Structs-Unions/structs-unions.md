@@ -100,7 +100,7 @@ struct {
     Node parent;
 } Node;
 ```
-### Union ###
+### Union (optional) ###
 
 A union is really nifty. It's like a structure, but, wait for it, all of its
 members are stored at the same location in memory. This means when you allocate
