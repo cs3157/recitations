@@ -1,16 +1,11 @@
 CC = gcc
-CFLAGS = -Wall -g
-LDFAGS = -g
+CFLAGS = -g -Wall
+LDFLAGS = -g
 
-jsh: 
+.PHONY:
+default: shell fork-example
 
-jsh.o:
 
-.PHONY: clean all valgrind
+.PHONY:
 clean:
-	rm -f *.o jsh 
-
-all: clean jsh 
-
-valgrind: jsh
-	valgrind --leak-check=full ./jsh
+	rm -f *.o fork-example shell a.out
