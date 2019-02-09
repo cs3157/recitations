@@ -3,7 +3,6 @@
 //COMS 3157
 
 void foo_1(int x, int *z){
-        
         x++;
         
         int a = *z;
@@ -12,7 +11,6 @@ void foo_1(int x, int *z){
 }
 
 int main(){
-        
         int x = 5;
         int y = 7;
         int *z = &y;
