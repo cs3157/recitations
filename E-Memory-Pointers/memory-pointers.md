@@ -1,4 +1,6 @@
-<Insert pointer one-liner> 
+# Memory and Pointers #
+
+Understanding pointers and the ins and outs of memory usage in your program is a fundamental part of what makes you a strong C programmer! This note breaks down important elements that go into this understanding.   
 
 
 ## Memory ##
@@ -9,10 +11,9 @@ Every process, i.e a running program, gets 512G of virtual memory space. The mem
 
 ![hi](./MemoryLayout.png "Memory Layout Diagram")
 
-The stack grows downward starting from 512G while the program code, static
-variables, and heap variables are all at the bottom (0). This means that when functions are called, space for them is built up on the stack and then cleared as they complete. Imagine function calls being stacked on top of eachother (but upside down) and then being popped off last to first as they return. The stack is a *temporary* storage space.
+The stack grows downward starting from 512G while the program code, static variables, and heap variables are all at the bottom (0), sitting in that order (Check the diagram above). This means that when functions are called, space for them is built up on the stack and then cleared as they complete. Imagine function calls being stacked on top of each other (but upside down) and then being popped off last to first as they return. The stack is a *temporary* storage space.
 
-The heap is where you dynamically allocate memory - it is a storage space that is not automatically managed like the stack. You use the heap if you want to manage how long something is stored in memory, which means you are responsible for clearing any space you allocate on the heap. You also use the heap if what you’re storing is considerably large. This is because there is an OS dependent limit on how much data can be stored in the stack, so the heap is a good choice if you don’t want your storage needs to saturate your stack.
+The heap is where you dynamically allocate memory - it is a storage space that is not automatically managed like the stack. You use the heap if you want to manage how long something is stored in memory, which means you are responsible for clearing any space you allocate on the heap. You also use the heap if what you’re storing is considerably large. This is because there is an OS dependent limit on how much data can be stored in the stack, so the heap is a good choice if you don’t want your storage needs to saturate your stack. Also note that unlike the stack, the heap grows upwards (towards the stack). 
 
 ### Variables ###
 
@@ -34,10 +35,6 @@ x = 0;
 
 The variables inside the curly braces are **stack variables** (also known as 
 automatic variables), and are stored on the stack. Their scope is local to a block (meaning code enclosed by curly braces, as shown above). They are created (pushed on the stack) when entering the block and destroyed (popped off the stack) upon exit.
-
-#### Heap Variables ####
-
-Heap variables are allocated on the heap and, unlike stack variables, are not cleared after the scope in which they were called finishes executing. These variables can be accessed globally. (We’ll cover how to allocate heap variables later).
 
 #### Static and Global Variables ####
 
