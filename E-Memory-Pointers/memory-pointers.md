@@ -182,16 +182,16 @@ For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`.
 
 ## Arrays ## 
 
-C has arrays, but they're very similar to pointers to beginning of a large
-enough chunk of memory on the stack to hold the specified number of elements
-of that type.
+As per the C99 Standard: 
 
+>An array type describes a contiguously allocated nonempty set of objects with a particular member object type, called the element type. Array types are characterized by their element type and by the number of elements in the array.
+
+What exactly does that mean? Let's look at an example declaration and try to figure out.
 ```c
 int a[10];
 ```
 
-This would allocate space on the stack for 10 integers. The array is in
-contiguous memory locations. i.e., `a[1]` is located immediately after `a[0]`.
+This would allocate space on the stack for 10 elements of type `int`. The array is in contiguous memory locations. i.e., `a[1]` is located immediately after `a[0]`.
 Within the scope they were declared, arrays generally operate like you're used
 to in Java or other languages:
 
@@ -216,13 +216,16 @@ Declaring multidimensial arrays is also possible, but fairly rare.
 
     int matrix[50][20];
 
-Note that once you pass an array into a function, the array becomes a pointer to
-the first element, and loses all its array-ness. So within the scope where `int
-a[10]` was declared, `sizeof(a)` returns the number of bytes of the array `a`,
-ie 40. But if you pass `a` into a function as `arr`, then `sizeof(arr)` is NOT
-40, but 8, the size of a pointer.
+The size of an array in C is returned by the `sizeof()` operator.
+```c
+int a[10];
+printf("%d", sizeof(a)); // This will print "40"
+```
+The `sizeof()` operator returns the number of bytes occupied by the array. In this case, `a` is an array of 10 `int` elements. The `sizeof(int)` is 4, therefore the `sizeof(a)` = 40.
 
-## Pointer Arithmetic ## 
+
+
+## Pointer Arithmetic ##   
 
 If you have a pointer, you can do basic arithmetic with it to address adjacent
 elements. All arithmetic is with respect to the type of element being addressed,
@@ -237,8 +240,29 @@ p+1; //this is a pointer-to-int that's point to an integer that immediately foll
      //the above is VERY common when looping over arrays in C
 ```
 
-Because arrays are just contiguous blocks of memory, you can access them using
-both pointer arithmetic and array notation:
+
+## Arrays and Pointers ## 
+
+You may have heard that "arrays are pointers." While this is not true, arrays and pointers behave very similarly and it is important to know the differences!
+
+**Jae's Grand Unified Theory of Pointers** </br>
+Also known as Jae's GUT
+
+> Given pointer `p` of type `T*` and integer `i` </br>
+> `*(p+i) == p[i]`
+
+What does this mean? And how does it unify anything? Let's break it down. </br>
+
+Given any pointer `p` of type `T*`, we can use pointer arithmetic to get the address of the next element with `p+1`. This address is `sizeof(T)` bytes after `p`. If this doesn't make sense, review the pointer arithmetic section above! </br>
+
+We can understand `p+i` in the same way as above. The address returned by the expression is `sizeof(T)` * `i` bytes after `p`, or the address of the `i`th element of type `T` after `p`. E.g. `i=3`, and `T` is a `char`, then `p+i` returns a `char *` that holds the address three characters after `p`. 
+
+Does it make sense that `p+i` is 3 bytes after `p`? If not, make sure to understand before moving on!
+
+What Jae's **GUT** says, other than *feed me*, is that the `p[i]` is exactly the same thing as `*(p+i)`. Essentially, we can use the square brackets `[]` with a pointer to find the address of the `i`th element away from `p`. Then we can dereference the new address and voilá, we have the `i`th element itself!
+
+If this is sounding a lot like an array, that's because it basically is! If we set a pointer to the beginning of an array, we can use the exact same syntax to access the elements in the array that we want.
+
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -248,28 +272,22 @@ int *p = &a[0]; //p still points to 0
 *(p+5) == a[5]; // 5 == 5
 
 p+5 == a+5; // p+5 is a pointer to the 5th element of the array, so is a+5
-p++; // ok: `p` is just a pointer like any other, p now points to the next element in the array
-a++; // illegal (will throw an error): `a` is an array name, a constant variable
-size_t x = sizeof(a); // x == 40
-size_t y = sizeof(p); // y == 8
-/* NOTE: sizeof is an operator, not a function!
-    sizeof is evaluated at COMPILE TIME, so the
-    size must be known based on only the source,
-    not any runtime parameters.
-    It can tell the difference between a pointer and
-    an array INSIDE the scope in which it was declared.
-    */
 ```
 
-In almost all cases using the variable name of an array with no brackets, ie `a` above,
-is treated as pointer-to pointing to the first element of the array, not an array-of.
-The majors exceptions are `sizeof` inside the scope in which the array was declared,
-and when used as the left hand side of an assignment. When passed into functions,
-dereferenced with `*`, used in arithematic it behaves like a pointer-to-type that
-points to the first element of the array.
+Jae's **GUT** goes the other way too! Arrays, in cases of pointer arithmetic, operate as pointers to the first element.
+> i.e. Given an array `a` of type `T` elements </br>
+> a+1 == &a[0]+1
 
-Unlike a pointer, though, an array is a constant variable. You cannot change its
-assignment after it has been created, it must point to the same chunk of memory.
+So aren't pointers and arrays the same? **Wrong**! Here are the cases in which arrays do not act like pointers.
+
+**`sizeof` operator**
+
+As mentioned above, the size of an array is
+Note that as discussed above, `sizeof` is an operator, not a function. 
+Which means that for classic C `sizeof` is evaluated at *compile time*, so the
+value of the operator cannot be anything that depends on user input.
+
+**Array is a constant variable**
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -279,12 +297,17 @@ p++; // ok: `p` is just a pointer like any other, p now points to the next eleme
 a++; // illegal (will throw an error): `a` is an array name, a constant variable
 ```
 
-Note that as discussed above, `sizeof` is an operator, not a function. 
-Which means that for classic C `sizeof` is evaluated at *compile time*, so the
-value of the operator cannot be anything that depends on user input.
+Unlike a pointer, though, an array is a constant variable. You cannot change its
+assignment after it has been created, it must point to the same chunk of memory.
 
-(The above breaks down with C99's Variable Length Arrays, which we won't discuss
-here). 
+
+**Arrays cannot be passed into functions**
+
+Note that once you pass an array into a function, the array becomes a pointer to
+the first element, and loses all its array-ness. So within the scope where `int
+a[10]` was declared, `sizeof(a)` returns the number of bytes of the array `a`,
+ie 40. But if you pass `a` into a function as `arr`, then `sizeof(arr)` is NOT
+40, but 8, the size of a pointer.
 
 
 ### Strings in C ###
