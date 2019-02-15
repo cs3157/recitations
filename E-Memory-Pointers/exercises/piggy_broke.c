@@ -2,6 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+ * This is a broken version of piggy.c
+ * Use valgrind to try and fix all memory erros and leaks!
+ */
+
 char *convert(char *word, char *pig_word) {
 
 	/*
