@@ -7,8 +7,4 @@ int main(int argc, char **argv) {
     char *tas[] = {"hansy", "aunosy", "nelsy", "chansy"};
     printf("%ld\n", (tas + 4) - tas);
     printf("%ld\n", (int *) (tas + 4) - (int *) (tas));
-    
-    char *coolTas[] = {tas[0], tas[3]};
-    printf("%ld\n",  *(coolTas + 1) - *coolTas);
-   
 }
