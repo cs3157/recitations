@@ -1,10 +1,25 @@
-## Variables ##
+# Memory and Pointers #
 
-### Stack Variables ###
+Understanding pointers and the ins and outs of memory usage in your program is a fundamental part of what makes you a strong C programmer! This note breaks down important elements that go into this understanding.   
 
-When you declare a variable in C, it is defined for the current scope and will
-be released at the end of the scope. If you redeclare a variable inside a scope
-within a scope (see below) you won't be able to change the outer variable.
+
+## Memory ##
+
+### Address Space ###
+
+Every process, i.e a running program, gets 512G of virtual memory space. The memory layout is given in the diagram below.
+
+![hi](./MemoryLayout.png "Memory Layout Diagram")
+
+The stack grows downward starting from 512G while the program code, static variables, and heap variables are all at the bottom (0), sitting in that order (Check the diagram above). This means that when functions are called, space for them is built up on the stack and then cleared as they complete. Imagine function calls being stacked on top of each other (but upside down) and then being popped off last to first as they return. The stack is a *temporary* storage space. Check out [this](./stack-diagram.jpg) diagram to build intuition on how the stack changes throughout your program. 
+
+The heap is where you dynamically allocate memory - it is a storage space that is not automatically managed like the stack. You use the heap if you want to manage how long something is stored in memory, which means you are responsible for clearing any space you allocate on the heap. You also use the heap if what you’re storing is considerably large. This is because there is an OS dependent limit on how much data can be stored in the stack, so the heap is a good choice if you don’t want your storage needs to saturate your stack. Also note that unlike the stack, the heap grows upwards (towards the stack). 
+
+### Variables ###
+
+#### Stack Variables ####
+
+When you declare a variable in C, it is defined for the current scope and will be released (removed from memory) at the end of the scope. If you re-declare a variable inside a scope within a ‘nested’ scope (see below), you won't be able to change the outer variable.
 
 ```c
 int x;
@@ -19,30 +34,22 @@ x = 0;
 ```
 
 The variables inside the curly braces are **stack variables** (also known as 
-automatic variables). Their scope is local to a block (meaning code enclosed 
-by curly braces, as shown above) -- they are created when entering the block
- and destroyed upon exit.
+automatic variables), and are stored on the stack. Their scope is local to a block (meaning code enclosed by curly braces, as shown above). They are created (pushed on the stack) when entering the block and destroyed (popped off the stack) upon exit.
 
-### Static Variables ###
+#### Static and Global Variables ####
 
-'static' has different meanings depending on where you declare your value. 
-In general, global and static variables are created when the program runs and
-persist until the program ends. This means they will not be re-declared or
-re-initialized.
+Static and Global variables are stored in the static section of the C memory layout (see diagram above). 'static' has different meanings depending on where you declare your value. In general, **global** and **static** variables are created when the program runs, and they persist until the program ends. *They have the lifetime of the program*. They cannot be re-declared or re-initialized.
 
 ```c
 static int file_static = 0; // static global variable
 
 int foo(int auto_1) {
-    static int block_static = 0;
+    static int block_static = 0; //static variable
 }
 ```
+A  **static global variable** is declared by using the ‘static’ keyword on a variable declaration outside of any code blocks in the file, i.e outside of any function. Its scope is limited to the current file. It’s accessible anywhere in the file it is declared in, but not in any other file. 
 
-A global static variable's scope is limited to the current file.
-
-A static variable defined inside a function is initialized once and retains 
-its value over successive calls of that function, as shown here 
-([source](http://stackoverflow.com/a/23777789)):
+A **static variable** is declared by using the ‘static’ keyword on a variable declaration inside a function. It is initialized once and retains its value over successive calls of that function, as shown here ([source](http://stackoverflow.com/a/23777789)):
 ```c
 int foo()
 {
@@ -58,12 +65,7 @@ int main()
     return 0;
 }
 ```
-
-### Global Variables ###
-
-Global variables are like a special case of static variables. They are
-accessible from all files in the program, and can be accessed from other 
-files using the `extern` keyword. See below:
+A **global variable** is like a special case of static variables. It is accessible from all files in the program, and can be accessed from other files using the `extern` keyword. See below:
 
 In one file:
 ```c
@@ -85,15 +87,6 @@ void magic_print() {
 }
 ```
 
-## Address Space ##
-
-Every process gets 512G of virtual memory space. The stack grows downward (see Jae's
-notes for a diagram) starting from 512G while the program code, static
-variables, and heap variables are all at the bottom (0). Basically, this means
-when functions are called, space for them is built up on the stack and cleared
-as they complete. Heap variables (you'll learn more about these later) will be
-allocated on the heap and therefore, like static variables, will not be cleared
-after each function call.
 
 ## Pointers ##
 
@@ -187,18 +180,18 @@ For more pointer examples, see `E-Memory-Pointers/code/basicpointers.c`.
 
 ---- 
 
-## Arrays ##
+## Arrays ## 
 
-C has arrays, but they're very similar to pointers to beginning of a large
-enough chunk of memory on the stack to hold the specified number of elements
-of that type.
+As per the C99 Standard: 
 
+>An array type describes a contiguously allocated nonempty set of objects with a particular member object type, called the element type. Array types are characterized by their element type and by the number of elements in the array.
+
+What exactly does that mean? Let's look at an example declaration and try to figure out.
 ```c
 int a[10];
 ```
 
-This would allocate space on the stack for 10 integers. The array is in
-contiguous memory locations. i.e., `a[1]` is located immediately after `a[0]`.
+This would allocate space on the stack for 10 elements of type `int`. The array is in contiguous memory locations. i.e., `a[1]` is located immediately after `a[0]`.
 Within the scope they were declared, arrays generally operate like you're used
 to in Java or other languages:
 
@@ -223,13 +216,16 @@ Declaring multidimensial arrays is also possible, but fairly rare.
 
     int matrix[50][20];
 
-Note that once you pass an array into a function, the array becomes a pointer to
-the first element, and loses all its array-ness. So within the scope where `int
-a[10]` was declared, `sizeof(a)` returns the number of bytes of the array `a`,
-ie 40. But if you pass `a` into a function as `arr`, then `sizeof(arr)` is NOT
-40, but 8, the size of a pointer.
+The size of an array in C is returned by the `sizeof()` operator.
+```c
+int a[10];
+printf("%d", sizeof(a)); // This will print "40"
+```
+The `sizeof()` operator returns the number of bytes occupied by the array. In this case, `a` is an array of 10 `int` elements. The `sizeof(int)` is 4, therefore the `sizeof(a)` = 40.
 
-## Pointer Arithmetic ##
+
+
+## Pointer Arithmetic ##   
 
 If you have a pointer, you can do basic arithmetic with it to address adjacent
 elements. All arithmetic is with respect to the type of element being addressed,
@@ -244,8 +240,29 @@ p+1; //this is a pointer-to-int that's point to an integer that immediately foll
      //the above is VERY common when looping over arrays in C
 ```
 
-Because arrays are just contiguous blocks of memory, you can access them using
-both pointer arithmetic and array notation:
+
+## Arrays and Pointers ## 
+
+You may have heard that "arrays are pointers." While this is not true, arrays and pointers behave very similarly and it is important to know the differences!
+
+**Jae's Grand Unified Theory of Pointers** </br>
+Also known as Jae's GUT
+
+> Given pointer `p` of type `T*` and integer `i` </br>
+> `*(p+i) == p[i]`
+
+What does this mean? And how does it unify anything? Let's break it down. </br>
+
+Given any pointer `p` of type `T*`, we can use pointer arithmetic to get the address of the next element with `p+1`. This address is `sizeof(T)` bytes after `p`. If this doesn't make sense, review the pointer arithmetic section above! </br>
+
+We can understand `p+i` in the same way as above. The address returned by the expression is `sizeof(T)` * `i` bytes after `p`, or the address of the `i`th element of type `T` after `p`. E.g. `i=3`, and `T` is a `char`, then `p+i` returns a `char *` that holds the address three characters after `p`. 
+
+Does it make sense that `p+i` is 3 bytes after `p`? If not, make sure to understand before moving on!
+
+What Jae's **GUT** says, other than *feed me*, is that the `p[i]` is exactly the same thing as `*(p+i)`. Essentially, we can use the square brackets `[]` with a pointer to find the address of the `i`th element away from `p`. Then we can dereference the new address and voilá, we have the `i`th element itself!
+
+If this is sounding a lot like an array, that's because it basically is! If we set a pointer to the beginning of an array, we can use the exact same syntax to access the elements in the array that we want.
+
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -255,28 +272,22 @@ int *p = &a[0]; //p still points to 0
 *(p+5) == a[5]; // 5 == 5
 
 p+5 == a+5; // p+5 is a pointer to the 5th element of the array, so is a+5
-p++; // ok: `p` is just a pointer like any other, p now points to the next element in the array
-a++; // illegal (will throw an error): `a` is an array name, a constant variable
-size_t x = sizeof(a); // x == 40
-size_t y = sizeof(p); // y == 8
-/* NOTE: sizeof is an operator, not a function!
-    sizeof is evaluated at COMPILE TIME, so the
-    size must be known based on only the source,
-    not any runtime parameters.
-    It can tell the difference between a pointer and
-    an array INSIDE the scope in which it was declared.
-    */
 ```
 
-In almost all cases using the variable name of an array with no brackets, ie `a` above,
-is treated as pointer-to pointing to the first element of the array, not an array-of.
-The majors exceptions are `sizeof` inside the scope in which the array was declared,
-and when used as the left hand side of an assignment. When passed into functions,
-dereferenced with `*`, used in arithematic it behaves like a pointer-to-type that
-points to the first element of the array.
+Jae's **GUT** goes the other way too! Arrays, in cases of pointer arithmetic, operate as pointers to the first element.
+> i.e. Given an array `a` of type `T` elements </br>
+> a+1 == &a[0]+1
 
-Unlike a pointer, though, an array is a constant variable. You cannot change its
-assignment after it has been created, it must point to the same chunk of memory.
+So aren't pointers and arrays the same? **Wrong**! Here are the cases in which arrays do not act like pointers.
+
+**`sizeof` operator**
+
+As mentioned above, the size of an array is
+Note that as discussed above, `sizeof` is an operator, not a function. 
+Which means that for classic C `sizeof` is evaluated at *compile time*, so the
+value of the operator cannot be anything that depends on user input.
+
+**Array is a constant variable**
 
 ```c
 int a[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -286,12 +297,17 @@ p++; // ok: `p` is just a pointer like any other, p now points to the next eleme
 a++; // illegal (will throw an error): `a` is an array name, a constant variable
 ```
 
-Note that as discussed above, `sizeof` is an operator, not a function. 
-Which means that for classic C `sizeof` is evaluated at *compile time*, so the
-value of the operator cannot be anything that depends on user input.
+Unlike a pointer, though, an array is a constant variable. You cannot change its
+assignment after it has been created, it must point to the same chunk of memory.
 
-(The above breaks down with C99's Variable Length Arrays, which we won't discuss
-here). 
+
+**Arrays cannot be passed into functions**
+
+Note that once you pass an array into a function, the array becomes a pointer to
+the first element, and loses all its array-ness. So within the scope where `int
+a[10]` was declared, `sizeof(a)` returns the number of bytes of the array `a`,
+ie 40. But if you pass `a` into a function as `arr`, then `sizeof(arr)` is NOT
+40, but 8, the size of a pointer.
 
 
 ### Strings in C ###
@@ -482,3 +498,5 @@ Tips:
   - ALWAYS check the return value of malloc to make sure you were actually given
     allocated memory.
   - Name your executables properly. For part1, `isort` and for part2, `twecho`.
+
+
