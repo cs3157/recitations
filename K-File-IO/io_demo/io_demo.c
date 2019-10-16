@@ -66,7 +66,7 @@ void scan_print_demo(const struct DemoPacket *packet)
 }
 
 // Demo of fgets and fputs.
-void get_put_demo(struct DemoPacket *packet) 
+void get_put_demo(const struct DemoPacket *packet) 
 {
     FILE *file = NULL;
     char buffer[BUFFERSIZE] = {0};
@@ -111,7 +111,7 @@ void get_put_demo(struct DemoPacket *packet)
 }
 
 // Demo of fread and fwrite.
-void read_write_demo(struct DemoPacket *packet)
+void read_write_demo(const struct DemoPacket *packet)
 {
     FILE *file = NULL;
 
