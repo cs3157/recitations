@@ -1,53 +1,82 @@
 #include <iostream>
 #include "matrix.hpp"
-#include "test_tools.hpp"
 
-void test_ctor(const Matrix& M)
+static const std::string BARS = "===================";
+
+// Prints testname formatted as such:
+// ===================testname test===================
+void print_test(const std::string& testname)
 {
-    utils::print_test("constructor");
-    std::cout << "Printing M:" << std::endl;
-    // print contents
-    M.print();
+    std::cout << BARS << testname << " test" << BARS << std::endl;
 }
 
-void test_cctor(const Matrix& M)
+// Creates a matrix of size 3 x 2 and initializes entries.
+// Returns the created matrix.
+Matrix make_matrix()
 {
-    utils::print_test("copy constructor");
-    // copy constructor
-    Matrix tmp = M;
+    Matrix M(3, 2);
+    M(0,0) = 1; M(0,1) = 3;
+    M(1,0) = 5; M(1,1) = -2;
+    M(2,0) = 9; M(2,1) = -5;
+    return M;
+}
+
+// Tests constructor.
+// Prints the contents of a constructed and initialized matrix.
+void test_ctor()
+{
+    print_test("constructor");
+    Matrix M(1, 2);
+    M(0,0) = 6; M(0,1) = 9;
     std::cout << "Printing M:" << std::endl;
-    M.print();
+    M.print(); // prints the contents of M
+}
+
+// Tests copy constructor.
+// Creates a copy constructed Matrix object from return value of make_matrix().
+// Prints the contents of copy constructed object.
+void test_cctor()
+{
+    print_test("copy constructor");
+    Matrix M = make_matrix(); // copy constructed
     std::cout << "Printing copy constructed matrix:" << std::endl;
-    tmp.print();
+    M.print();
 }
 
-void test_cass(const Matrix& M)
+// Tests copy assignment.
+// Creates Matrix M from return value of make_matrix(), Matrix A, and copy assigns M to A.
+// Prints the contents of M and the contents of A before and after copy assignment.
+void test_cass()
 {
-    utils::print_test("copy assignment");
+    print_test("copy assignment");
+    Matrix M = make_matrix();
     Matrix A(1, 2);
-    A(0,0) = 10;
-    A(0,1) = -3;
+    A(0,0) = 10; A(0,1) = -3;
     std::cout << "Printing A:" << std::endl;
     A.print();
     std::cout << "Printing M:" << std::endl;
     M.print();
     std::cout << "Printing A after copy assigned from M:" << std::endl;
-    // copy assignment
-    A = M;
+    A = M; // copy assignment
     A.print();
 }
 
-// Add M with a nontrivial matrix.
-void test_add(const Matrix& M)
+// Tests adding Matrix M with a nontrivial matrix.
+// We chose the nontrivial matrix to be
+// [
+//  0, 1
+//  1, 2
+//  2, 3
+// ]
+void test_add()
 {
-    utils::print_test("add");
+    print_test("add");
+    Matrix M = make_matrix();
     Matrix N(3, 2);
-    // initialization
-    for (int i = 0; i < N.nrows(); ++i) {
-        for (int j = 0; j < N.ncols(); ++j) {
-            N(i,j) = i + j;
-        }
-    }
+    N(0,0) = 0; N(0,1) = 1;
+    N(1,0) = 1, N(1,1) = 2;
+    N(2,0) = 2; N(2,1) = 3;
+
     Matrix res = M + N;
     
     std::cout << "Printing M:" << std::endl;
@@ -62,31 +91,11 @@ void test_add(const Matrix& M)
 
 int main()
 {
-    // constructor
-    Matrix M(3, 2);
-    // initialization
-    M(0,0) = 1;
-    M(0,1) = 3;
-    M(1,0) = 5;
-    M(1,1) = -2;
-    M(2,0) = 9;
-    M(2,1) = -5;
-
-#ifdef CTOR
-    test_ctor(M);
-#endif
-    
-#ifdef CCTOR
-    test_cctor(M);
-#endif
-
-#ifdef CASS
-    test_cass(M);
-#endif
-
-#ifdef ADD
-    test_add(M);
-#endif
+    // run tests
+    test_ctor();
+    test_cctor();
+    test_cass();
+    test_add();
 
     return 0;
 }

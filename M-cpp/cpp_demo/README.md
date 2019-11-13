@@ -7,20 +7,8 @@ Note that the user of this class `Matrix` does not need to know **how** memory m
 but only that such functionalities exist.
 This is one of the hallmarks of object-oriented programming (OOP).
 
-# Run
-There are several tests defined in `cpp_demo.cpp` with the following names:
-```
-CTOR: tests constructor and initialization of a Matrix object
-CCTOR: tests copy constructor
-CASS: tests copy assignment
-ADD: tests addition of two matrices
-```
+### Matrix Addition
+See the following [link](https://en.wikipedia.org/wiki/Matrix_(mathematics)#Addition,_scalar_multiplication,_and_transposition) for an explanation and an example of how to add two matrices.
 
-Simply choose any subset of the tests and run the following command:
-```
-make all ADDED_CXXFLAGS="-D<T1> -D<T2> ..."
-```
-As an example, to run test `CTOR` and `ADD`, run:
-```
-make all ADDED_CXXFLAGS="-DCTOR -DADD"
-```
+## Run
+Type `make` to build the executable and run `./cpp_demo`.

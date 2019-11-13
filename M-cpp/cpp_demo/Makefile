@@ -1,6 +1,6 @@
 CC = g++
 CXX = g++
-CXXFLAGS = $(ADDED_CXXFLAGS) -std=c++11 -g -Wall $(INCLUDES)
+CXXFLAGS = -std=c++11 -g -Wall $(INCLUDES)
 LDFLAGS = -g
 
 .PHONY: default
@@ -9,7 +9,7 @@ default: cpp_demo
 
 cpp_demo: matrix.o 
 
-cpp_demo.o: matrix.hpp test_tools.hpp
+cpp_demo.o: matrix.hpp 
 
 matrix.o: matrix.hpp
 
