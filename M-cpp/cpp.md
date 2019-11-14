@@ -71,7 +71,9 @@ And we can call it like this:
 Pt myPt2(4, 4);
 ```
 
-When we define member functions for our classes, we can choose to define them within the class definition (the part enclosed by the curly braces of `struct Pt`), or just declare them within the class definition and define them elsewhere. Member functions defined within a class definition are implicitly **inline**. Inline functions are kind of like macros in that calls to them are replaced with the body of the function. Inline functions should be short. If we don't define functions inside the class definition, we need to use the scope resolution operator, `::`, to indicate that it's a member of the class. 
+When we define member functions for our classes, we can choose to define them within the class definition (the part enclosed by the curly braces of `struct Pt`), or just declare them within the class definition and define them elsewhere. Member functions defined within a class definition are implicitly **inline**. Inline functions are kind of like macros in that calls to them are replaced with the body of the function. Inline functions should be short. 
+Note that functions declared `inline` are not guaranteed to be inlined; it is only a suggestion to the compiler! 
+If we don't define functions inside the class definition, we need to use the scope resolution operator, `::`, to indicate that it's a member of the class. 
 
 A word of caution, though: if we define *any* constructors ourselves, we can no longer rely on the synthesized default constructor. Now that we've defined a constructor for `Pt` that takes two `double`s, we lose our synthesized default constructor. A declaration like this would be illegal now:
 ```cpp
