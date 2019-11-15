@@ -27,7 +27,7 @@ public:
     // 
     // M(1, 2) = 69; 
     //
-    // which assigns 69 to row 2, column 3 entry of matrix M.
+    // which assigns 69 to row 1, column 2 entry of matrix M.
     // If operator() returns an int (no reference) the above code does not even compile.
     int& operator()(int i, int j);              
     const int& operator()(int i, int j) const;  // const version

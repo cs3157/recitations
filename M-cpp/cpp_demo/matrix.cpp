@@ -16,17 +16,22 @@ Matrix::~Matrix()
 
 Matrix::Matrix(const Matrix& m)
 {
-    // good practice to use this keyword to make it clear
-    // what is associated with current object.
     this->copy_from(m);
 }
 
 Matrix& Matrix::operator=(const Matrix& m)
 {
+    // If m is the same object as current object, 
+    // there is nothing to do but return reference to current object.
+    // If this check were not done and continued with code,
+    // we would free this->data_ and copy contents of m.data_, 
+    // but m.data_ points to freed memory since m and *this are the same objects!
     if (this == &m) {
         return *this;
     }
 
+    // MUST free existing data before reassigning
+    // Otherwise, memory leak!
     delete[] this->data_;
     this->copy_from(m);
 
