@@ -1,8 +1,8 @@
 Final Exam Review
 =================
 
-Our final review session typically goes through practice exam questions written
-by the TAs. We're also providing this outline of some important topics in case
+Our final review session typically goes through one of the sample exams. 
+We're also providing this outline of some important topics in case
 it helps organize your studying (but it's not meant to be exhaustive).
 
 If you find a topic you're not familiar with, click the link to the full review
