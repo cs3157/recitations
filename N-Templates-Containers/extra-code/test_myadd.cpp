@@ -1,5 +1,25 @@
 #include <iostream>
-#include "myadd.h"
+//#include "myadd.h"
+
+struct Complex 
+{
+//...
+};
+
+int myadd(int x, int y)
+{
+    return x + y;
+}
+
+double myadd(double x, double y)
+{
+    return x + y;
+}
+
+Complex myadd(Complex x, Complex y)
+{
+    return x + y;
+}
 
 int main()
 {
