@@ -21,7 +21,7 @@ Contents:
       interesting experiments with pointers and memory addresses.
 * [Recitation Note F](F-Function-Pointers/function-pointers.md): Function pointers.
 * [Recitation Note G](G-Structs-Unions/structs-unions.md): Structs, Unions, Const, C strings.
-* [Recitation Note H](H-Linked-Lists/linked-lists.md): Linked lists and similar data structures.
+* Recitation Note H: Linked lists and similar data structures (REMOVED).
 * [Recitation Note I](I-Debugging-GDB/gdb.md) Using GDB and valgrind for debugging.
 * [Recitation Note J](J-Fork-Exec/fork-exec.md): The UNIX stack. Users, permissions, file
   attributes. Processes, forking, and signals. 
