@@ -243,7 +243,7 @@ Each of these functions accept pointers of type `void`. So if you want each item
 to be read into the right size memory space, you'll need to tell it the `size`
 of each item, and the number of items `nmemb` to read/write from/to the
 `stream`. `fwrite` promises not to modify the data that `ptr` references as
-well. The return the number of bytes read/written. If it's anything less than
+well. These return the number of items succesfully read/written. If it's anything less than
 what you expected, you should check what happened using `ferror` or `feof`. `fread`
 and `fwrite` advances the position of the file to the end of the space read or written. 
 
