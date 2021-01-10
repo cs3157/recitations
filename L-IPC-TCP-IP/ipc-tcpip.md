@@ -1,4 +1,4 @@
-##Interprocess Communication: pipes, FIFOs, and sockets ##
+## Interprocess Communication: pipes, FIFOs, and sockets ##
 _How do processes running on the same system talk to each other? What about
 processes on different systems?_
 
