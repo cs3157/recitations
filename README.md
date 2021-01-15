@@ -13,7 +13,7 @@ Contents:
 * [Recitation Note B](B-Makefiles/makefiles.md): Makefiles. 
     * You may find the [sample-Makefile](B-Makefiles/sample-Makefile) a useful reference.
 * [Recitation Note C](C-Git/git.md): Configuring and using Git for version control and file tracking.
-* [Recitation Note D](D-Bits-Binary-C-Basics/bits-binary-and-c-basics.md): C Basics: data types, bitwise, complex expressions and statements.
+* [Recitation Note D](D-Bits-Binary-C-Basics): C Basics: data types, bitwise, complex expressions and statements.
 * [Recitation Note E](E-Memory-Pointers/memory-pointers.md): Parts of memory, pointers, and arrays.
 (i.e. malloc).
     * See also the very useful [code](E-Memory-Pointers/code/) directory,
