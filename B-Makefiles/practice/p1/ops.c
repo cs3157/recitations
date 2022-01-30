@@ -1,3 +1,4 @@
+#include "ops.h"
 #include "opsprinter.h"
 
 int add(int x, int y) {

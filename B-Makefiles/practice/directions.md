@@ -61,6 +61,7 @@ int multiply(int x, int y);
 p1/ops.c
 
 ```c
+#include "ops.h"
 #include "opsprinter.h"
 
 int add(int x, int y) {
