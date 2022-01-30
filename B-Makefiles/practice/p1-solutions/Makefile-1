@@ -7,16 +7,16 @@ MAIN = main
 default: all run
 
 $(MAIN): main.o ops.o opsprinter.o
-	gcc $(LDFLAGS) main.o ops.o opsprinter.o -o $(MAIN)
+	$(CC) $(LDFLAGS) main.o ops.o opsprinter.o -o $(MAIN)
 
 main.o: main.c ops.h
-	gcc $(CFLAGS) -c -o main.o main.c
+	$(CC) $(CFLAGS) -c -o main.o main.c
 
 ops.o: ops.c ops.h opsprinter.h
-	gcc $(CFLAGS) -c -o ops.o ops.c
+	$(CC) $(CFLAGS) -c -o ops.o ops.c
 
 opsprinter.o: opsprinter.c opsprinter.h
-	gcc $(CFLAGS) -c -o opsprinter.o opsprinter.c
+	$(CC) $(CFLAGS) -c -o opsprinter.o opsprinter.c
 
 .PHONY: all
 all: clean main
