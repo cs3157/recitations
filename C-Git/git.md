@@ -173,13 +173,13 @@ have time we'll come back to this during recitation, but here's some GitHub 101.
 
 1. Create an account by going to [github.com](http://github.com) and signing up.
 Then, [configure git for use with remote
-servers](https://help.github.com/articles/set-up-git).
+servers](https://docs.github.com/en/get-started/quickstart/set-up-git).
 
 2. Add your SSH keys to github. They have [a handy
-tutorital](https://help.github.com/articles/generating-ssh-keys) to help out.
+tutorital](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to help out.
 All you should need to do is Step 4 - adding ssh keys.
 
-3. Try [forking](https://help.github.com/articles/fork-a-repo) [this
+3. Try [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) [this
 repository](https://github.com/cs3157/recitations). Pull your fork to
 your local machine.
 
@@ -218,5 +218,5 @@ Proficiency in git and github is a desirable trait to have when job-hunting.
 
 Other useful tutorials:
 
-- [Be Social](https://help.github.com/articles/be-social)
-- [Create a Repository](https://help.github.com/articles/create-a-repo)
+- [Be Social](https://docs.github.com/en/get-started/quickstart/be-social)
+- [Create a Repository](https://docs.github.com/en/get-started/quickstart/create-a-repo)
