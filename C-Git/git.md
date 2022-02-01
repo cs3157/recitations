@@ -176,7 +176,7 @@ Then, [configure git for use with remote
 servers](https://docs.github.com/en/get-started/quickstart/set-up-git).
 
 2. Add your SSH keys to github. They have [a handy
-tutorital](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to help out.
+tutorial](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to help out.
 All you should need to do is Step 4 - adding ssh keys.
 
 3. Try [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) [this
