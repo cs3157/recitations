@@ -36,7 +36,9 @@ is their size, which is also related to the range of values they can represent.
 
 C only defines the size of each type in relation to the others:
 
-    char <= short <= int <= long <= long long
+```c
+char <= short <= int <= long <= long long
+```
 
 Technically there's nothing stopping them from all of them being the same size,
 but it's all dependent on what kind of machine and compiler you're using.
@@ -86,7 +88,9 @@ but most modern computers use the IEEE-754 floating-point standard
 Like with integers, the sizes are defined relative to each other.
 They are:
 
-    float <= double <= long double
+```c
+float <= double <= long double
+```
 
 The sizes on CLAC are as follows:
 
@@ -109,6 +113,7 @@ int main(void) {
     return 0;
 }
 ```
+
 ## Declarations, Casting, Literals
 
 ### Variable Declarations
@@ -128,20 +133,25 @@ we're given, so trying to access it will result in **undefined behavior**
 (no guarantees for what will happen during compilation or execution;
 you'll here us talk about this _a lot_, specifically about avoiding it).
 
-    int x;              // x is declared, but uninitialized
-    printf("%d", x);    // undefined behavior; don't do this!
-    x = 4;              // x is now initialized to 4
+```c
+int x;              // x is declared, but uninitialized
+printf("%d", x);    // undefined behavior; don't do this!
+x = 4;              // x is now initialized to 4
+```
 
 We can also declare multiple variables of the same type all at once,
 separating the variable names with a `,`:
 
-    int y, z;           // y and z are declared, but both uninitialized
+```c
+int y, z;           // y and z are declared, but both uninitialized
+```
 
 Just like in Java, we can declare and initialize our variables all at once:
 
-    int x = 2;          // x is declared and initialized to 2
-    int y = 0, z;       // y and z are declared, only y is initialized (to 0)
-
+```c
+int x = 2;          // x is declared and initialized to 2
+int y = 0, z;       // y and z are declared, only y is initialized (to 0)
+```
 
 ### Type Casting
 
@@ -157,9 +167,10 @@ or to trick the compiler (as you saw before).
 For example, let's say that we have a function `foo()`
 that takes a single `float` as its parameter:
 
-    int x = 34;
-    foo((float) x);
-
+```c
+int x = 34;
+foo((float) x);
+```
 When we cast from an integer type to a floating-point type,
 the compiler produces instructions to convert our integer representation
 to floating-point representation.
@@ -268,10 +279,12 @@ Have a look at [The ASCII Table](asciitable.com) to see what's what.
 Instead of assigning raw numbers to `char`s,
 we can alternatively write them as character literals:
 
-    char a = 'a';           // same as writing char a = 97
-    char newline = '\n';    // same as writing char newling = 10
-    assert(a == 97);
-    assert(newline == 10;
+```c
+char a = 'a';           // same as writing char a = 97
+char newline = '\n';    // same as writing char newling = 10
+assert(a == 97);
+assert(newline == 10;
+```
 
 The backslash `\` is used to specify an **escape sequence**,
 to denote characters that might be difficult to otherwise type out.
@@ -289,14 +302,16 @@ A `\` may also be followed by a numeric value in octal notation;
 `\x` may be followed by a numeric value in hexadecimal notation.
 So, consider the following:
 
-    char a = 0;
-    char b = '0';       // 48 in binary
-    char c = '\0';
-    char d = '\x0';
+```c
+char a = 0;
+char b = '0';       // 48 in binary
+char c = '\0';
+char d = '\x0';
 
-    assert(a != b);
-    assert(a == c);
-    assert(a == d);
+assert(a != b);
+assert(a == c);
+assert(a == d);
+```
 
 `char` literals can be added and subtracted just like any other number,
 so if you wanted to find what position in the alphabet the letter `j` is,
@@ -344,14 +359,16 @@ the following are examples of expressions:
     x += y
     x++
     foo(x, y + 3157)
-
+    
 Note that an assignment `=` operation is also an expression!
 It assigns the value of its right operand to its left operand,
 and yields the value of the left operand.
 This might seem weird at first, but it allows us to do things like:
 
-    x = y = 3157
-    x = (y = 3157)
+```c
+x = y = 3157
+x = (y = 3157)
+```
 
 The second line unpacks it a little bit:
 it's saying, assign `3157` to `y`, and then assign the value of that to `x`.
@@ -377,9 +394,11 @@ increments/decrements first, and yields the value after the operation
 the postfix version `x++` `x--` (appears on the right of the operand)
 increments/decrements as well, but yields the value _before_ the operation.
 
-   int b1 = 5, a1 = 5;
-   int b2 = ++b1;           // b2 is assigned the value of 6
-   int a2 = a1++;           // a2 is assigned the value of 5
+```c
+int b1 = 5, a1 = 5;
+int b2 = ++b1;           // b2 is assigned the value of 6
+int a2 = a1++;           // a2 is assigned the value of 5
+```
 
 ##### Ternary conditional operator `? :`
 
@@ -393,9 +412,11 @@ If `<expression-1>` is non-zero, then the conditional value yields the value
 of `<expression-2>`; otherwise it yields the value of `<expression-3>`.
 Here's an example:
 
-    int t = 1, f = 0;
-    int a = t ? 42 : 24;        // a is assigned the value of 42
-    double b = f ? 4.2 : 1e20   // b is assigned the value of 1e20
+```c
+int t = 1, f = 0;
+int a = t ? 42 : 24;        // a is assigned the value of 42
+double b = f ? 4.2 : 1e20;   // b is assigned the value of 1e20
+```
 
 It's sort of the same idea as an if/then/else, but keep in mind that
 those are separate, syntactic constructs in C (which we will cover below).
@@ -415,7 +436,9 @@ This includes the comparison operators, `<` `>` `<=` `>=` `==` `=!`,
 and the logical operators `&&` `||` `!`.
 We can confirm this with the following code:
 
-    printf("'true': %d\n", 0 < 3);  // prints 1
+```c
+printf("'true': %d\n", 0 < 3);  // prints 1
+```
 
 ##### Short circuit evaluation `&&` `||`
 
@@ -425,15 +448,17 @@ will first evaluate those subexpressions
 before evaluating the greater overall expression.
 So let us consider the following two functions:
 
-    int foo(void) {
-        printf("foo!\n");
-        return 1;
-    }
+```c
+int foo(void) {
+    printf("foo!\n");
+    return 1;
+}
 
-    int bar(void) {
-        printf("bar!\n");
-        return 0;
-    }
+int bar(void) {
+    printf("bar!\n");
+    return 0;
+}
+```
 
 The following expression will evaluate both `foo()` and `bar()` function calls:
 
@@ -449,10 +474,12 @@ regardless of what happens with `R`.
 The operators skip the operands which they know are no longer necessary.
 To demonstrate:
 
-    foo() && bar();     // prints foo! bar!
-    foo() || bar();     // only prints foo!
-    bar() && foo();     // only prints bar!
-    bar() || foo();     // prints bar! foo!
+```c
+foo() && bar();     // prints foo! bar!
+foo() || bar();     // only prints foo!
+bar() && foo();     // only prints bar!
+bar() || foo();     // prints bar! foo!
+```
 
 This means that for some short-circuited statement like `foo() || bar()`,
 as long as `foo()` returns a nonzero value, `bar()` will never even be called.
@@ -576,8 +603,10 @@ The `const` keyword tells that compiler that once a variable is initialized,
 it shouldn't be assigned to again.
 The type modifer can come either before or after the type:
 
-    const int x;
-    int const y;
+```c
+const int x;
+int const y;
+```
 
 Note that this is only compiler enforced,
 but like what we did above to print floats in binary, 
