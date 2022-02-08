@@ -130,7 +130,7 @@ you'll here us talk about this _a lot_, specifically about avoiding it).
 
     int x;              // x is declared, but uninitialized
     printf("%d", x);    // undefined behavior; don't do this!
-    x = 4;              // x is now initialized to 6
+    x = 4;              // x is now initialized to 4
 
 We can also declare multiple variables of the same type all at once,
 separating the variable names with a `,`:
@@ -139,7 +139,7 @@ separating the variable names with a `,`:
 
 Just like in Java, we can declare and initialize our variables all at once:
 
-    int x = 2;          // x is declared and initialized to 9
+    int x = 2;          // x is declared and initialized to 2
     int y = 0, z;       // y and z are declared, only y is initialized (to 0)
 
 
@@ -454,7 +454,7 @@ To demonstrate:
     bar() && foo();     // only prints bar!
     bar() || foo();     // prints bar! foo!
 
-This means that for some short-circuited statement like `foo() && bar()`,
+This means that for some short-circuited statement like `foo() || bar()`,
 as long as `foo()` returns a nonzero value, `bar()` will never even be called.
 
 
