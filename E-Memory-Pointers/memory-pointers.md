@@ -47,9 +47,11 @@ int foo(int auto_1) {
     static int block_static = 0; //static variable
 }
 ```
-A  **static global variable** is declared by using the ‘static’ keyword on a variable declaration outside of any code blocks in the file, i.e outside of any function. Its scope is limited to the current file. It’s accessible anywhere in the file it is declared in, but not in any other file. 
+
+A **static global variable** is declared by using the ‘static’ keyword on a variable declaration outside of any code blocks in the file, i.e outside of any function. Its scope is limited to the current file. It’s accessible anywhere in the file it is declared in, but not in any other file. 
 
 A **static variable** is declared by using the ‘static’ keyword on a variable declaration inside a function. It is initialized once and retains its value over successive calls of that function, as shown here ([source](http://stackoverflow.com/a/23777789)):
+
 ```c
 int foo()
 {
@@ -65,9 +67,11 @@ int main()
     return 0;
 }
 ```
+
 A **global variable** is like a special case of static variables. It is accessible from all files in the program, and can be accessed from other files using the `extern` keyword. See below:
 
 In one file:
+
 ```c
 int global_static = 0;
 
@@ -87,7 +91,6 @@ void magic_print() {
 }
 ```
 
-
 ## Pointers ##
 
 Pointers are what will get you a job. Understanding pointers is crucial and
@@ -104,6 +107,7 @@ In a variable declaration, an asterisk denotes the fact that the variable is a
 pointer.
 
 Here's an example:
+
 ```c
 int x = 5; // x is a plain int
 int *p; // p is a pointer-to-int
@@ -187,6 +191,7 @@ As per the C99 Standard:
 >An array type describes a contiguously allocated nonempty set of objects with a particular member object type, called the element type. Array types are characterized by their element type and by the number of elements in the array.
 
 What exactly does that mean? Let's look at an example declaration and try to figure out.
+
 ```c
 int a[10];
 ```
@@ -214,16 +219,18 @@ a[10000]; //the compiler lets you do this, but it's undefined
 
 Declaring multidimensial arrays is also possible, but fairly rare.
 
-    int matrix[50][20];
+```c
+int matrix[50][20];
+```
 
 The size of an array in C is returned by the `sizeof()` operator.
+
 ```c
 int a[10];
 printf("%d", sizeof(a)); // This will print "40"
 ```
+
 The `sizeof()` operator returns the number of bytes occupied by the array. In this case, `a` is an array of 10 `int` elements. The `sizeof(int)` is 4, therefore the `sizeof(a)` = 40.
-
-
 
 ## Pointer Arithmetic ##   
 
@@ -236,7 +243,7 @@ bytes later. *Think in terms of elements, not in terms of bytes.*
 int *p = q; //p is a pointer to int; it's pointing to the same place as q, exactly where doesn't matter now
 p+1; //this is a pointer-to-int that's point to an integer that immediately follows p
 *(p+1); //this is an integer, the dereferenced value pointed to by the previous line
-*p++; //this returns the current derefenced value (ie the integer), and advanced the pointer to the next element
+*p++; //this returns the current derefenced value (ie the integer), and advances the pointer to the next element
      //the above is VERY common when looping over arrays in C
 ```
 
@@ -328,6 +335,7 @@ means you can't move where it points to: it's always going to point to the chara
 however you like. `"my string"`, however, can't be modified; it's a string literal! 
 
 Some useful string functions (need to `#include string.h`):
+
 ```c
 char d[20];
 char c[] = "abc";
@@ -344,6 +352,7 @@ strncat(d, "def", 2);       // only cat first n chars
 
 printf("%s\n", d);          // what does this print?
 ```
+
 For a closer look at the strcpy function, see [`E-Memory-Pointers/code/strcpy.c`](https://github.com/cs3157/recitations/blob/master/E-Memory-Pointers/code/strcpy.c).
 
 So how about an array of strings? Well that would be an array of arrays.
@@ -367,6 +376,7 @@ within the function as a return value, it won't be there when you try to access
 it. To alleviate this you can allocate space on the heap using malloc.
 
 (From Jae's notes)
+
 ```c
 int *p = (int *) malloc(100 * sizeof(int));
 // malloc returns NULL if it cannot allocate the requested memory
@@ -409,10 +419,11 @@ targets in your Makefile? We can use that to have it run Valgrind for us.
 For example, using Jae's Makefile template from lecture note 1, you can add a
 stanza at the end:
 
-    .PHONY: valgrind
-    valgrind: main
-        valgrind --leak-check=full ./main
-      
+```make
+.PHONY: valgrind
+valgrind: main
+	valgrind --leak-check=full ./main
+```
 
 Then instead of running `make` followed by `./main` you can just run
 `make valgrind` and it will compile your code and run it under valgrind.
@@ -478,11 +489,13 @@ and then when you're finished with that, free the higher order array.
 ### Uninitialized values ###
 
 Valgrind will also inform you when the visible behavior of the program is affected by usage of uninitialized values. For example, let's say you want to increment a variable, but forget to initialize it:
+
 ```c
 int *d = (int *)malloc(sizeof(int));
 ++*d;
 printf("%d\n", *d);
 ```
+
 Valgrind will inform you that the visible behavior of your program depends on an uninitialized, hence unpredictable, values. Always be sure to initialize your variables before using them! 
 
 ## Lab 2 ##
@@ -494,7 +507,7 @@ Tips:
   - Watch out for being just inside your bounds on freeing. If you have a leak,
     its probably because you forgot to free one last element.
   - Don't forget that in C, strings are characters arrays followed by a *null
-    character*. Without the null character, C has no idea where you string ends!
+    character*. Without the null character, C has no idea where your string ends!
   - ALWAYS check the return value of malloc to make sure you were actually given
     allocated memory.
   - Name your executables properly. For part1, `isort` and for part2, `twecho`.
