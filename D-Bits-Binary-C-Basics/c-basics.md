@@ -570,8 +570,8 @@ will jump to a line beginning with `label: `. Be careful with gotos.
 
 ### Integer Declarations
 
-There are a few modifiers we can use to specify exactly what kind of integer
-we want our compiler to declare for us.
+There are a few type modifiers we can use to specify exactly what kind
+of integer we want our compiler to declare for us.
 
 When we declare an integer type, we can modify it with the keyword
 `signed` or `unsigned` to tell the compiler the signedness of the integer.
@@ -583,31 +583,32 @@ So don't be alarmed if you see a `long int` type! It's just a `long`.
 
 Also, if we don't write `int` and only specify the signedness, it's an `int`.
 
-The following are equivalent:
+The following types in each row are equivalent:
 
-`short`                 | `short int`               | `signed short`        | `signed short int`
-`long`                  | `long int`                | `signed long`         | `signed long int`
-`long long`             | `long long int`           | `signed long long`    | `signed long long int`
-`int`                   | `signed`                  | `signed int`
-`unsigned int`          | `unsigned`
-`unsigned short`        | `unsigned short int`
-`unsigned long`         | `unsigned long int`
-`unsigned long long`    | `unsigned long long int`
+```
+| `short`                 | `short int`               | `signed short`        | `signed short int`     |
+| `long`                  | `long int`                | `signed long`         | `signed long int`      |
+| `long long`             | `long long int`           | `signed long long`    | `signed long long int` |
+| `int`                   | `signed`                  | `signed int`          |                        |
+| `unsigned int`          | `unsigned`                |                       |                        |
+| `unsigned short`        | `unsigned short int`      |                       |                        |
+| `unsigned long`         | `unsigned long int`       |                       |                        |
+| `unsigned long long`    | `unsigned long long int`  |                       |                        |
+```
 
 This is just a detail to watch out for, but not super important.
-Most of the time we use the notation in the leftmost column, by convention.
+By convention, most of the time we use the notation in the leftmost column.
 
-#### The `const` Type Modifier
+#### The `const` Type Qualifier
 
 The `const` keyword tells that compiler that once a variable is initialized,
 it shouldn't be assigned to again.
-The type modifer can come either before or after the type:
+The type qualifier can come either before or after the type:
 
 ```c
 const int x;
 int const y;
 ```
 
-Note that this is only compiler enforced,
-but like what we did above to print floats in binary, 
-we can trick the compiler 
+Note that this is only compile-time enforced. We can trick the compiler in
+the same way we did above in order to print floats in binary.
