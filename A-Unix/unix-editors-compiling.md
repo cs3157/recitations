@@ -301,8 +301,9 @@ And if you want mouse support, you'll have to add the following:
 Just like Java code, C code can't be run directly on the CPU. It's converted to
 an executable in these three steps:
 
-  1. **Preprocessing:** This is when lines that start with a hashmark (`#`) are processed. For example, a line like `#include "somefile.h"` would
-     be replaced with the contents of `somefile.h`. All other lines are passed
+  1. **Preprocessing:** This is when lines that start with a hashmark (`#`) are
+     processed. For example, a line like `#include "somefile.h"` would be
+     replaced with the contents of `somefile.h`. All other lines are passed
      onto the next step without modification.
 
   2. **Compiling:** This converts the C source code into a lower level language
@@ -342,17 +343,27 @@ int add(int a, int b);
 
 Notice the preprocessor directive `#include`. This instructs the preprocessor to
 copy and paste the specified file into the current file at that location.
-We use this line in `main.c` so that function declarations in the `#include`d files are visible.
+We use this line in `main.c` so that function declarations in the included
+files are visible.
 
-For example, in `main.c` we have the function call `add(1, 2)`. The compiler wants to ensure
-that this is a valid function call, but doesn't know anything about `add()`,
-what type it will return, or what its explicit parameters are. After including `myadd.h`, the compiler knows that `add()` returns type `int` and accepts two `int` parameters.
+For example, in `main.c` we have the function call `add(1, 2)`. The compiler
+wants to ensure that this is a valid function call, but doesn't know anything
+about `add()`, what type it will return, or what its explicit parameters are.
+After including `myadd.h`, the compiler knows that `add()` returns type `int`
+and accepts two `int` parameters.
 
-You might have recognized a slight difference in syntax between the first two lines. Within `#include`s, files with names enclosed in `""` are assumed to be user-defined; files with names enclosed in `<>`,  are assumed to be system-defined. `stdio.h` is a common system-defined header file that declares input and output functions, like `printf()`.
+You might have recognized a slight difference in syntax between the first two
+lines. Within `#include`s, files with names enclosed in `""` are assumed to be
+user-defined; files with names enclosed in `<>`,  are assumed to be system-defined.
+`stdio.h` is a common system-defined header file that declares input and output
+functions, like `printf()`.
 
-There is one other set of directives that we've used now: `#ifndef`
-`#define` and `#endif`. `#ifndef` and `#endif` define a block of code
-that should only be included if a preprocessor variable is *not* defined. This will prevent any conflicts caused by headers being included multiple times. The first time it encounters `#include "myadd.h"`, the preprocessor will define the macro `__MYADD_H__`, so if the file is included again, the `#ifndef` condition will be false.
+There is one other set of directives that we've used now: `#ifndef`, `#define`, and
+`#endif`. `#ifndef` and `#endif` define a block of code that should only be included
+if a preprocessor variable is *not* defined. This will prevent any conflicts caused
+by headers being included multiple times. The first time it encounters `#include
+"myadd.h"`, the preprocessor will define the macro `__MYADD_H__`, so if the file
+is included again, the `#ifndef` condition will be false.
 
 ### How to Compile and Link
 
@@ -360,12 +371,13 @@ Now, let's compile `main.c` with the following command:
 
     gcc -g -Wall -c main.c
 
-What do these parameters mean?
+What do these flags mean?
 
   - `-g` — include extra information so that, if the program crashes, we can
     know which line and function caused the crash
   - `-Wall` — turns on several compile-time warnings. Warnings are likely
-    problems with your code, but they aren't severe enough to stop the program from running. The sources of warnings can cause bigger problems
+    problems with your code, but they aren't severe enough to stop the program from
+    running. The sources of warnings can cause bigger problems
     later, so it's best to turn this on when compiling and fix all warnings.
   - `-c` — only preprocess and compile the files (do not link them yet)
 
@@ -373,13 +385,13 @@ After running the command above, you should have a `main.o` in your directory.
 
 
 
-Hold on—we haven't written the `add()` function yet! However,
-`gcc` let us compile `main.c` without warning. `gcc` knows
-that the function call in `main()` is valid from its declaration in the included header `myadd.h`. That's all the compiler needs; it
-doesn't care how `add()` works, just that it exists and is being validly
-used.
+Hold on—we haven't written the `add()` function yet! However, `gcc` let us compile
+`main.c` without warning. `gcc` knows that the function call in `main()` is valid
+from its declaration in the included header `myadd.h`. That's all the compiler needs;
+it doesn't care how `add()` works, just that it exists and is being validly used.
 
-It's only during linking—when the code for `add()` is actually needed—that we will get an error. Link with the following commmand:
+It's only during linking—when the code for `add()` is actually needed—that we will
+get an error. Link with the following commmand:
 
     gcc -g main.o -o main
 
