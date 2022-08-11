@@ -301,9 +301,8 @@ And if you want mouse support, you'll have to add the following:
 Just like Java code, C code can't be run directly on the CPU. It's converted to
 an executable in these three steps:
 
-  1. **Pre-processing:** This is when the compiler processes lines that start
-     with a hashmark `#`. For example, a line like `#include "somefile.h"` would
-     be replaced with the contents of somefile.h. All other lines are passed
+  1. **Preprocessing:** This is when lines that start with a hashmark (`#`) are processed. For example, a line like `#include "somefile.h"` would
+     be replaced with the contents of `somefile.h`. All other lines are passed
      onto the next step without modification.
 
   2. **Compiling:** This converts the C source code into a lower level language
@@ -318,7 +317,7 @@ an executable in these three steps:
 Let's take a look at this process in an actual program. We'll create a
 simple program that computes 1 + 2 by calling a function in another file.
 
-main.c
+`main.c`
 
 ```c
 #include <stdio.h>
@@ -330,7 +329,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-myadd.h
+`myadd.h`
 
 ```c
 #ifndef __MYADD_H__
@@ -339,19 +338,25 @@ int add(int a, int b);
 #endif
 ```
 
-Now let's try to compile myadd. First we'll build the object file for main.c.
-Notice the compiler directive `#include`. This tells the compiler to
-just copy paste the specified file into the current file at that location. The
-reason we include this line in main.c is so that if we reference a function in
-either of these files before it is defined, the compiler can know its header.
+### Preprocessor directives
 
-As an example, in main.c we have `add(1, 2);`. The compiler wants to make sure
-that this is a valid function call, but knows nothing of the function "add",
-what type it will return, or what its explicit parameters are. Including myadd.h
-will tell the compiler that "add" returns type int, and accepts two integer
-parameters.
+Notice the preprocessor directive `#include`. This instructs the preprocessor to
+copy and paste the specified file into the current file at that location.
+We use this line in `main.c` so that function declarations in the `#include`d files are visible.
 
-Let's compile `main.c`:
+For example, in `main.c` we have the function call `add(1, 2)`. The compiler wants to ensure
+that this is a valid function call, but doesn't know anything about `add()`,
+what type it will return, or what its explicit parameters are. After including `myadd.h`, the compiler knows that `add()` returns type `int` and accepts two `int` parameters.
+
+You might have recognized a slight difference in syntax between the first two lines. Within `#include`s, files with names enclosed in `""` are assumed to be user-defined; files with names enclosed in `<>`,  are assumed to be system-defined. `stdio.h` is a common system-defined header file that declares input and output functions, like `printf()`.
+
+There is one other set of directives that we've used now: `#ifndef`
+`#define` and `#endif`. `#ifndef` and `#endif` define a block of code
+that should only be included if a preprocessor variable is *not* defined. This will prevent any conflicts caused by headers being included multiple times. The first time it encounters `#include "myadd.h"`, the preprocessor will define the macro `__MYADD_H__`, so if the file is included again, the `#ifndef` condition will be false.
+
+### How to Compile and Link
+
+Now, let's compile `main.c` with the following command:
 
     gcc -g -Wall -c main.c
 
@@ -359,38 +364,30 @@ What do these parameters mean?
 
   - `-g` — include extra information so that, if the program crashes, we can
     know which line and function caused the crash
-  - `-Wall` — turns on a lot of compile-time warnings. Warnings are likely
-    problems with your code, but they aren't so severe as to be errors that mean
-    it won't run at all. These can be small problems now that cause big crashes
+  - `-Wall` — turns on several compile-time warnings. Warnings are likely
+    problems with your code, but they aren't severe enough to stop the program from running. The sources of warnings can cause bigger problems
     later, so it's best to turn this on when compiling and fix all warnings.
   - `-c` — only preprocess and compile the files (do not link them yet)
 
-After running the command above, you should have a main.o in your directory.
+After running the command above, you should have a `main.o` in your directory.
 
-There was one other set of directives that we've used now. The `#ifndef`
-`#define` and `#endif` directives. The first and the last define a block of code
-that should only be included if a pre-processor variable is *not* defined. This
-will prevent multiple header files from conflicting. If myadd.h is included more
-than once, the first time the pre-processor will define \__MYADD_H_ and each
-time thereafter will skip over the entire file.
 
-Pause here for a moment, and think: what haven't we done yet?
 
-We haven't even written the `add()` function yet. It's nowhere at all. However,
-gcc let us compile main.c without even giving us a warning! That's because we
-included `myadd.h`, which gives a prototype for the add function, so gcc knows
-that the function call in `main()` is valid. That's all the compiler needs, it
-doesn't care how `add()` works, just that it will exist and is being validly
+Hold on—we haven't written the `add()` function yet! However,
+`gcc` let us compile `main.c` without warning. `gcc` knows
+that the function call in `main()` is valid from its declaration in the included header `myadd.h`. That's all the compiler needs; it
+doesn't care how `add()` works, just that it exists and is being validly
 used.
 
-However if we try to link it into an executable, we get an error because during
-linking, it actually needs the code for `add()`:
+It's only during linking—when the code for `add()` is actually needed—that we will get an error. Link with the following commmand:
 
     gcc -g main.o -o main
 
-  - `-o filename` — tells GCC what to name the output file
+  - `-o filename` — tells `gcc` what to name the output file
 
-myadd.c
+Let's define `add()` in `myadd.c`.
+
+`myadd.c`
 
 ```c
 #include "myadd.h"
@@ -400,17 +397,17 @@ int add(int x, int y)
 }
 ```
 
-It's a good idea to `#include "myadd.h" in myadd.c even though we aren't
+It's a good idea to `#include "myadd.h"` in `myadd.c` even though we aren't
 required to. Doing this allows the compiler to make sure the functions we write
-in the .c file match the prototypes from the .h file. This feature will become
-more useful as our programs become more complicated.
+in the `.c` file match the prototypes from the `.h` file. This feature will become
+more useful as our programs get more complicated.
 
-Now let's compile `myadd.c`
+Compile `myadd.c`,
 
     gcc -g -Wall -c myadd.c
     ls
 
-And then finally link our two object files into the executable `main`.
+and, finally, link our two object files into the executable `main`.
 
     gcc -g myadd.o main.o -o main
     ls
