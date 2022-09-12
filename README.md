@@ -1,3 +1,10 @@
+# COMS 3157 Recitation Notes
+
+**NOTE FOR FALL 2022 STUDENTS: these recitations notes are for the version of
+COMS 3157 taught by Jae Woo Lee. John, who is teaching it in Fall 2022, is
+publishing links to his recitation notes directly to this semester's
+[course website](https://cs3157.github.io/www/2022-9).**
+
 This repository contains the recitation notes for Columbia's Advanced
 Programming class, COMSW3157, as taught by Jae Woo Lee. For more information
 about the class, visit the [course homepage](http://www.cs.columbia.edu/~jae/3157).
