@@ -1,5 +1,6 @@
 *.o
 a.out
 .DS_Store
-
 mylist.c
+*cpp_demo
+!cpp_demo/
